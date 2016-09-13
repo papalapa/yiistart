@@ -23,7 +23,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url" : "https://github.com/CodeSeven/toastr",
+            "url" : "https://github.com/CodeSeven/toastr"
         }
     ],
     "autoload"    : {
