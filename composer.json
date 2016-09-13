@@ -1,0 +1,44 @@
+{
+    "name"        : "papalapa/yii2",
+    "description" : "Papalapa yii2 components.",
+    "keywords"    : [
+        "yii2",
+        "widget",
+        "base",
+        "foundation"
+    ],
+    "homepage"    : "https://github.com/papalapa/yii2",
+    "type"        : "yii2-extension",
+    "license"     : "BSD-3-Clause",
+    "authors"     : [
+        {
+            "name"    : "Dmitriy Kim",
+            "email"   : "mail@dmitriy.kim",
+            "homepage": "http://dmitriy.kim/"
+        }
+    ],
+    "require"     : {
+        "codeseven/toastr": ">2.1"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url" : "https://github.com/CodeSeven/toastr",
+        }
+    ],
+    "autoload"    : {
+        "psr-4": {
+            "papalapa\\yii2-start\\"          : "",
+            "papalapa\\yii2-start\\models"    : "models",
+            "papalapa\\yii2-start\\widgets"   : "widgets",
+            "papalapa\\yii2-start\\helpers"   : "helpers",
+            "papalapa\\yii2-start\\interfaces": "interfaces",
+            "papalapa\\yii2-start\\validators": "validators"
+        }
+    },
+    "extra"       : {
+        "branch-alias": {
+            "dev-master": "1.0.0"
+        }
+    }
+}

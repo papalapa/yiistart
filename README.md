@@ -1,2 +1,2 @@
-# yii2-start
+# yii2-start-kit
 Yii2 components
