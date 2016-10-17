@@ -12,7 +12,7 @@
 
     /**
      * Class BasePixer
-     * @package vendor\papalapa\yii2start\helpers
+     * @package papalapa\yii2start\helpers
      */
     abstract class BasePixer extends yii\base\Object
     {
