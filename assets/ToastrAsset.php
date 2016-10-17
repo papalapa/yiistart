@@ -15,5 +15,6 @@
         ];
         public $js  = [
             'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.js.map',
         ];
     }
