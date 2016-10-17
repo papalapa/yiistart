@@ -1,12 +1,12 @@
 <?php
 
-    namespace vendor\papalapa\yii2\widgets;
+    namespace vendor\papalapa\yii2start\widgets;
 
     use yii\grid\DataColumn;
 
     /**
      * Class IpFilterColumn
-     * @package vendor\papalapa\yii2\widgets
+     * @package vendor\papalapa\yii2start\widgets
      */
     class IpFilterColumn extends DataColumn
     {

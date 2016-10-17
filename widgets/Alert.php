@@ -1,6 +1,6 @@
 <?php
 
-    namespace vendor\papalapa\yii2\widgets;
+    namespace vendor\papalapa\yii2start\widgets;
 
     use yii\bootstrap\Widget;
 
