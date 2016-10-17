@@ -19,7 +19,6 @@
     ],
     "autoload"    : {
         "psr-4": {
-            "papalapa\\yii2start\\"            : "",
             "papalapa\\yii2start\\assets\\"    : "assets",
             "papalapa\\yii2start\\helpers\\"   : "helpers",
             "papalapa\\yii2start\\widgets\\"   : "widgets",
