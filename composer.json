@@ -1,31 +1,28 @@
 {
-    "name"        : "papalapa/yii2-start",
-    "description" : "Papalapa yii2 components.",
-    "keywords"    : [
+    "name"       : "papalapa/yii2-start",
+    "description": "Papalapa yii2 components.",
+    "keywords"   : [
         "yii2",
         "widgets",
         "helpers",
         "components"
     ],
-    "homepage"    : "https://github.com/papalapa/yii2-start",
-    "type"        : "yii2-components",
-    "license"     : "MIT License",
-    "authors"     : [
+    "homepage"   : "https://github.com/papalapa/yii2-start",
+    "type"       : "yii2-components",
+    "license"    : "MIT License",
+    "authors"    : [
         {
             "name"    : "Dmitriy Kim",
             "email"   : "mail@dmitriy.kim",
             "homepage": "http://dmitriy.kim/"
         }
     ],
-    "autoload"    : {
+    "autoload"   : {
         "psr-4": {
-            "papalapa\\yii2start\\assets\\"    : "assets",
-            "papalapa\\yii2start\\helpers\\"   : "helpers",
-            "papalapa\\yii2start\\widgets\\"   : "widgets",
-            "papalapa\\yii2start\\validators\\": "validators"
+            "papalapa\\yii2start\\": ""
         }
     },
-    "extra"       : {
+    "extra"      : {
         "branch-alias": {
             "dev-master": "1.0.2"
         }
