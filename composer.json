@@ -31,8 +31,8 @@
     },
     "repositories": [
         {
-            "type": "git",
-            "url" : "git://github.com/CodeSeven/toastr.git"
+            "type": "vcs",
+            "url" : "https://github.com/CodeSeven/toastr"
         }
     ],
     "extra"       : {
