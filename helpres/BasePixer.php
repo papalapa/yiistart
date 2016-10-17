@@ -1,6 +1,6 @@
 <?php
 
-    namespace vendor\papalapa\yii2start\helpers;
+    namespace papalapa\yii2start\helpers;
 
     use Imagine\Exception\InvalidArgumentException;
     use Imagine\Exception\RuntimeException;
