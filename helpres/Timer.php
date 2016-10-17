@@ -1,10 +1,10 @@
 <?php
 
-    namespace vendor\papalapa\yii2\helpers;
+    namespace vendor\papalapa\yii2start\helpers;
 
     /**
      * Class Timer
-     * @package vendor\papalapa\yii2\helpers
+     * @package vendor\papalapa\yii2start\helpers
      */
     class Timer extends \DateTime
     {

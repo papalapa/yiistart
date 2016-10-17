@@ -1,6 +1,6 @@
 <?php
 
-    namespace vendor\papalapa\yii2\helpers;
+    namespace vendor\papalapa\yii2start\helpers;
 
     use yii;
     use yii\caching\DbDependency;
@@ -10,7 +10,7 @@
 
     /**
      * Class Memcacher
-     * @package vendor\papalapa\yii2\helpers
+     * @package vendor\papalapa\yii2start\helpers
      */
     class Memcacher extends MemCache
     {

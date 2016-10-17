@@ -1,10 +1,6 @@
 <?php
 
-    /**
-     * TODO change Imagine to Imagick
-     */
-
-    namespace vendor\papalapa\yii2\helpers;
+    namespace vendor\papalapa\yii2start\helpers;
 
     use Imagine\Exception\InvalidArgumentException;
     use Imagine\Exception\RuntimeException;
@@ -16,7 +12,7 @@
 
     /**
      * Class BasePixer
-     * @package vendor\papalapa\yii2\helpers
+     * @package vendor\papalapa\yii2start\helpers
      */
     abstract class BasePixer extends yii\base\Object
     {

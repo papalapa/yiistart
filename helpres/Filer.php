@@ -1,12 +1,12 @@
 <?php
 
-    namespace vendor\papalapa\yii2\helpers;
+    namespace vendor\papalapa\yii2start\helpers;
 
     use yii\helpers\FileHelper;
 
     /**
      * Class Filer
-     * @package vendor\papalapa\yii2\helpers
+     * @package vendor\papalapa\yii2start\helpers
      */
     class Filer extends FileHelper
     {
