@@ -305,7 +305,7 @@
          */
         protected function processingImage()
         {
-            return \Yii::getAlias('@vendor/papalapa/yii2/assets/default.png');
+            return \Yii::getAlias('@vendor/papalapa/yii2/assets/img/default.png');
         }
 
         /**
