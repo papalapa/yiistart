@@ -6,7 +6,7 @@
         "components"
     ],
     "homepage"   : "https://github.com/papalapa/yiistart",
-    "type"       : "yii2-components",
+    "type"       : "yii2-extension",
     "license"    : "MIT License",
     "authors"    : [
         {
