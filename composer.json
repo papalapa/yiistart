@@ -1,11 +1,11 @@
 {
-    "name"       : "papalapa/yii2-start",
+    "name"       : "papalapa/yiistart",
     "description": "Papalapa yii2 components.",
     "keywords"   : [
         "yii2",
         "components"
     ],
-    "homepage"   : "https://github.com/papalapa/yii2-start",
+    "homepage"   : "https://github.com/papalapa/yiistart",
     "type"       : "yii2-components",
     "license"    : "MIT License",
     "authors"    : [
