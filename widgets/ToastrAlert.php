@@ -1,5 +1,5 @@
 <?php
-    namespace vendor\papalapa\yii2start\widgets;
+    namespace papalapa\yii2start\widgets;
 
     use yii;
     use yii\base\Widget;
@@ -8,7 +8,7 @@
 
     /**
      * Class ToastrAlert
-     * @package vendor\papalapa\yii2start\widgets
+     * @package papalapa\yii2start\widgets
      */
     class ToastrAlert extends Widget
     {

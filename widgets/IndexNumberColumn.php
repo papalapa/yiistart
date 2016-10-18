@@ -1,13 +1,13 @@
 <?php
 
-    namespace vendor\papalapa\yii2start\widgets;
+    namespace papalapa\yii2start\widgets;
 
     use yii\grid\DataColumn;
     use yii\helpers\Html;
 
     /**
      * Class IndexNumberColumn
-     * @package vendor\papalapa\yii2start\widgets
+     * @package papalapa\yii2start\widgets
      */
     class IndexNumberColumn extends DataColumn
     {

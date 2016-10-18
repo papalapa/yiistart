@@ -6,7 +6,7 @@
 
     /**
      * Class Pixer
-     * @package vendor\papalapa\yii2start\helpers
+     * @package papalapa\yii2start\helpers
      */
     class Pixer extends BasePixer
     {

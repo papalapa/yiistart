@@ -1,6 +1,6 @@
 <?php
 
-    namespace vendor\papalapa\yii2start\validators;
+    namespace papalapa\yii2start\validators;
 
     use yii\base\InvalidConfigException;
     use yii\helpers\HtmlPurifier;
@@ -8,7 +8,7 @@
 
     /**
      * Class HtmlPurifyValidator
-     * @package vendor\papalapa\yii2start\validators
+     * @package papalapa\yii2start\validators
      */
     class HtmlPurifyValidator extends FilterValidator
     {

@@ -1,13 +1,13 @@
 <?php
 
-    namespace vendor\papalapa\yii2\widgets;
+    namespace papalapa\yii2\widgets;
 
     use yii\grid\DataColumn;
     use yii\helpers\Html;
 
     /**
      * Class ViewCountColumn
-     * @package vendor\papalapa\yii2\widgets
+     * @package papalapa\yii2\widgets
      */
     class ViewCountColumn extends DataColumn
     {

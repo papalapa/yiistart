@@ -1,13 +1,13 @@
 <?php
 
-    namespace vendor\papalapa\yii2start\validators;
+    namespace papalapa\yii2start\validators;
 
-    use vendor\papalapa\yii2start\helpers\Stringer;
+    use papalapa\yii2start\helpers\Stringer;
     use yii\validators\FilterValidator;
 
     /**
      * Class TextInlineValidator
-     * @package vendor\papalapa\yii2start\validators
+     * @package papalapa\yii2start\validators
      */
     class TextInlineValidator extends FilterValidator
     {
