@@ -1,12 +1,12 @@
 <?php
 
-    namespace papalapa\yii2start\helpers;
+    namespace papalapa\yiistart\helpers;
 
     use yii;
 
     /**
      * Class Pixer
-     * @package papalapa\yii2start\helpers
+     * @package papalapa\yiistart\helpers
      */
     class Pixer extends BasePixer
     {
@@ -15,7 +15,7 @@
          */
         protected function watermarkPath()
         {
-            return Yii::getAlias('@vendor/papalapa/yii2start/assets/img/default.png');
+            return Yii::getAlias('@vendor/papalapa/yiistart/assets/img/default.png');
         }
 
         /**

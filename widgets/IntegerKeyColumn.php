@@ -1,12 +1,12 @@
 <?php
 
-    namespace papalapa\yii2start\widgets;
+    namespace papalapa\yiistart\widgets;
 
     use yii\grid\DataColumn;
 
     /**
      * Class IntegerKeyColumn
-     * @package papalapa\yii2start\widgets
+     * @package papalapa\yiistart\widgets
      */
     class IntegerKeyColumn extends DataColumn
     {

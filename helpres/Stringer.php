@@ -1,12 +1,12 @@
 <?php
 
-    namespace papalapa\yii2start\helpers;
+    namespace papalapa\yiistart\helpers;
 
     use yii\helpers\StringHelper;
 
     /**
      * Class Stringer
-     * @package papalapa\yii2start\helpers
+     * @package papalapa\yiistart\helpers
      */
     class Stringer extends StringHelper
     {

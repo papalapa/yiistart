@@ -1,7 +1,7 @@
 <?php
-    namespace papalapa\yii2start\widgets;
+    namespace papalapa\yiistart\widgets;
 
-    use papalapa\yii2start\assets\ToastrAsset;
+    use papalapa\yiistart\assets\ToastrAsset;
     use yii;
     use yii\base\Widget;
     use yii\helpers\ArrayHelper;
@@ -10,7 +10,7 @@
 
     /**
      * Class Toastr
-     * @package papalapa\yii2start\widgets
+     * @package papalapa\yiistart\widgets
      */
     class Toastr extends Widget
     {

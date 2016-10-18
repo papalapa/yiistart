@@ -1,13 +1,13 @@
 <?php
 
-    namespace papalapa\yii2start\widgets;
+    namespace papalapa\yiistart\widgets;
 
     use yii;
 
     /**
      * Class Gravatar
      * @link https://www.gravatar.com/
-     * @package vendor\papalapa\yii2start\widgets
+     * @package papalapa\yiistart\widgets
      */
     class Gravatar extends yii\base\Widget
     {

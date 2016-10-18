@@ -1,6 +1,6 @@
 <?php
 
-    namespace papalapa\yii2start\helpers;
+    namespace papalapa\yiistart\helpers;
 
     use Imagine\Exception\InvalidArgumentException;
     use Imagine\Exception\RuntimeException;
@@ -12,7 +12,7 @@
 
     /**
      * Class BasePixer
-     * @package papalapa\yii2start\helpers
+     * @package papalapa\yiistart\helpers
      */
     abstract class BasePixer extends yii\base\Object
     {

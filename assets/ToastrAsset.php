@@ -1,13 +1,13 @@
 <?php
 
-    namespace papalapa\yii2start\assets;
+    namespace papalapa\yiistart\assets;
 
     use yii\web\AssetBundle;
 
     /**
      * Class ToastrAsset
      * @link    https://cdnjs.com/libraries/toastr.js
-     * @package papalapa\yii2start\assets
+     * @package papalapa\yiistart\assets
      */
     class ToastrAsset extends AssetBundle
     {

@@ -17,10 +17,10 @@
     ],
     "autoload"   : {
         "psr-4": {
-            "papalapa\\yii2start\\assets\\"    : "assets",
-            "papalapa\\yii2start\\helpers\\"   : "helpers",
-            "papalapa\\yii2start\\widgets\\"   : "widgets",
-            "papalapa\\yii2start\\validators\\": "validators"
+            "papalapa\\yiistart\\assets\\"    : "assets",
+            "papalapa\\yiistart\\helpers\\"   : "helpers",
+            "papalapa\\yiistart\\widgets\\"   : "widgets",
+            "papalapa\\yiistart\\validators\\": "validators"
         }
     },
     "extra"      : {
