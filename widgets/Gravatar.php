@@ -6,13 +6,13 @@
 
     /**
      * Class Gravatar
-     * @link https://www.gravatar.com/
+     * @link    https://www.gravatar.com/
      * @package papalapa\yiistart\widgets
      */
     class Gravatar extends yii\base\Widget
     {
         /**
-         * Types of gravatars
+         * Avatar types
          */
         const TYPE_CUBE    = 'retro';
         const TYPE_FACE    = 'wavatar';
@@ -25,22 +25,22 @@
          */
         public $name;
         /**
-         * Size in pixels
+         * Avatar size in pixels
          * @var int
          */
         public $size = 20;
         /**
-         * Selected type of gravatar
+         * Default selected type of avatar
          * @var string
          */
         public $type = self::TYPE_FACE;
         /**
-         * Image html options
+         * Image html attributes
          * @var array
          */
         public $options = ['class' => 'img-rounded'];
         /**
-         * URL to find gravatar
+         * API URL to find avatar
          * @var string
          */
         private $url = 'https://www.gravatar.com/avatar/';

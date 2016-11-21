@@ -12,8 +12,8 @@
     {
         public function init()
         {
-            $this->headerOptions = $this->headerOptions ?: ['width' => '150'];
-            $this->value         = $this->value ?: function ($model, $key, $index, $column) {
+            $this->headerOptions = ['width' => '150'];
+            $this->value         = function ($model, $key, $index, $column) {
                 return long2ip($model->ip);
             };
         }

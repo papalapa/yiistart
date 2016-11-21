@@ -7,6 +7,7 @@
 
     /**
      * Class WhiteSpaceNormalizeValidator
+     * Validator cleaning string by removing multi spaces, spaces in start of line or end of line
      * @package papalapa\yiistart\validators
      */
     class WhiteSpaceNormalizeValidator extends FilterValidator

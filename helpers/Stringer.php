@@ -96,7 +96,7 @@
          */
         public static function textInline($data = null)
         {
-            return null === $data ? null : preg_replace('~(\h|\v)+~u', ' ', $data);
+            return preg_replace('~(\h|\v)+~u', ' ', (string)$data);
         }
 
         /**
@@ -235,7 +235,7 @@
         {
             return substr(str_shuffle(str_repeat(static::pool($type), 5)), 0, $length);
         }
-        
+
         /**
          * Get the character pool for a given type of random string.
          * @param  string $type

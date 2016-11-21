@@ -4,9 +4,9 @@
 
     use Imagine\Exception\InvalidArgumentException;
     use Imagine\Exception\RuntimeException;
-    use Imagine\Gd\Imagine;
-    use Imagine\Image\Box;
     use Imagine\Image\ImageInterface;
+    use Imagine\Imagick\Imagine;
+    use Imagine\Image\Box;
     use Imagine\Image\Point;
     use yii;
 
@@ -36,7 +36,7 @@
         public $quality = 92;
         /**
          * Processing image instance
-         * @var ImageInterface
+         * @var Imagine|ImageInterface|null
          */
         private $image;
         /**
@@ -56,7 +56,7 @@
         private $height;
         /**
          * Watermark instance
-         * @var ImageInterface
+         * @var Imagine|ImageInterface|null
          */
         private $watermark;
         /**
@@ -258,7 +258,7 @@
         }
 
         /**
-         * @return ImageInterface
+         * @return Imagine
          */
         public function getImage()
         {

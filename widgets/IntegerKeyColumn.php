@@ -12,7 +12,9 @@
     {
         public function init()
         {
-            $this->headerOptions      = $this->headerOptions ?: ['width' => '100'];
+            $this->headerOptions      = [
+                'width' => '100',
+            ];
             $this->filterInputOptions = [
                 'class' => 'form-control',
                 'type'  => 'number',

@@ -13,13 +13,15 @@
     {
         public function init()
         {
-            $this->headerOptions      = $this->headerOptions ?: ['width' => '100'];
+            $this->headerOptions      = [
+                'width' => '100',
+            ];
             $this->filterInputOptions = [
                 'class' => 'form-control',
                 'type'  => 'number',
                 'min'   => '0',
             ];
-            $this->label              = $this->label ?: Html::tag('i', null, [
+            $this->label              = Html::tag('i', null, [
                 'class'       => 'fa fa-sort-numeric-asc',
                 'data-toggle' => 'tooltip',
                 'title'       => 'Порядковый номер',

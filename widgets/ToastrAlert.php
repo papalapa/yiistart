@@ -1,6 +1,7 @@
 <?php
     namespace papalapa\yiistart\widgets;
 
+    use papalapa\yiistart\assets\ToastrAsset;
     use yii;
     use yii\base\Widget;
     use yii\helpers\Html;
@@ -8,6 +9,21 @@
 
     /**
      * Class ToastrAlert
+     * ToastrAlert widget renders a message from session flash.
+     * First add toasters to session:
+     * ```php
+     * \Yii::$app->session->setFlash('mySuccessToastr', 'Hello world!');
+     * \Yii::$app->session->setFlash('myErrorToastr', 'Failed!');
+     * ```
+     * Display them in app:
+     * ```php
+     * echo ToastrAlert::widget(['toastrTypes' => ['mySuccessToastr' => Toastr::TYPE_SUCCESS]]);
+     * ```
+     * Or send through ajax:
+     * ```php
+     * echo ToastrAlert::widget(['isAjax' => true, 'toastrTypes' => ['myErrorToastr' => Toastr::TYPE_ERROR]]);
+     * ```
+     * @author Dmitriy Kim <mail@dmitriy.kim>
      * @package papalapa\yiistart\widgets
      */
     class ToastrAlert extends Widget
@@ -19,6 +35,10 @@
             'info'    => Toastr::TYPE_INFO,
             'warning' => Toastr::TYPE_WARNING,
         ];
+        /**
+         * Toastr plugin options
+         * @var array
+         */
         private $pluginOptions = [
             'closeButton'       => true,
             'debug'             => false,
@@ -41,11 +61,9 @@
         {
             ToastrAsset::register($this->view);
 
-            $session = \Yii::$app->session;
-            $flashes = $session->getAllFlashes();
             $options = Json::htmlEncode($this->pluginOptions);
 
-            foreach ($flashes as $type => $data) {
+            foreach (\Yii::$app->session->getAllFlashes() as $type => $data) {
                 if (isset($this->toastrTypes[$type])) {
                     if ($this->isAjax) {
                         $html = [];
@@ -55,7 +73,7 @@
                             }
                             $html[] = Html::script("toastr.{$this->toastrTypes[$type]}('{$message}', null, {$options});");
                         }
-                        $session->removeFlash($type);
+                        \Yii::$app->session->removeFlash($type);
 
                         return implode(PHP_EOL, $html);
                     } else {
@@ -65,7 +83,7 @@
                             }
                             $this->view->registerJs("toastr.{$this->toastrTypes[$type]}('{$message}', {$options});");
                         }
-                        $session->removeFlash($type);
+                        \Yii::$app->session->removeFlash($type);
                     }
                 }
             }
