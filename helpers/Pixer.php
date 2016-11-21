@@ -28,6 +28,10 @@
             return Yii::getAlias("@frontend/web{$path}");
         }
 
+        /**
+         * @param $path
+         * @return bool|string
+         */
         protected function saveTo($path)
         {
             // TODO: Implement saveTo() method.
