@@ -258,7 +258,7 @@
         }
 
         /**
-         * @return Imagine
+         * @return ImageInterface|Imagine|null
          */
         public function getImage()
         {
