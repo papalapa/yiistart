@@ -4,10 +4,11 @@
 
     use Imagine\Exception\InvalidArgumentException;
     use Imagine\Exception\RuntimeException;
-    use Imagine\Image\ImageInterface;
-    use Imagine\Imagick\Imagine;
     use Imagine\Image\Box;
+    use Imagine\Image\ImageInterface;
     use Imagine\Image\Point;
+    use Imagine\Imagick\Image;
+    use Imagine\Imagick\Imagine;
     use yii;
 
     /**
@@ -36,7 +37,7 @@
         public $quality = 92;
         /**
          * Processing image instance
-         * @var Imagine|ImageInterface|null
+         * @var Image|ImageInterface|null
          */
         private $image;
         /**
@@ -56,7 +57,7 @@
         private $height;
         /**
          * Watermark instance
-         * @var Imagine|ImageInterface|null
+         * @var Image|ImageInterface|null
          */
         private $watermark;
         /**
@@ -68,7 +69,7 @@
         /**
          * Path could not contain any '..' sub folders
          * @param $path
-         * @return $this|bool|null
+         * @return $this
          */
         public function path($path)
         {
@@ -258,7 +259,7 @@
         }
 
         /**
-         * @return ImageInterface|Imagine|null
+         * @return Image|ImageInterface|null
          */
         public function getImage()
         {
@@ -301,7 +302,7 @@
          */
         protected function processingImage()
         {
-            return \Yii::getAlias('@vendor/papalapa/yii2/assets/img/default.png');
+            return \Yii::getAlias('@vendor/papalapa/yiistart/assets/img/default.png');
         }
 
         /**
