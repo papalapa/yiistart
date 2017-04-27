@@ -45,28 +45,17 @@
 
             $session   = \Yii::$app->session;
             $flashes   = $session->getAllFlashes();
-<<<<<<< HEAD
             $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
-=======
-            $appendCss = isset($this->options['class']) ? ' '.$this->options['class'] : '';
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
 
             foreach ($flashes as $type => $data) {
                 if (isset($this->alertTypes[$type])) {
                     $data = (array)$data;
                     foreach ($data as $i => $message) {
                         /* initialize css class for each alert box */
-<<<<<<< HEAD
                         $this->options['class'] = $this->alertTypes[$type] . $appendCss;
 
                         /* assign unique id to each alert box */
                         $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
-=======
-                        $this->options['class'] = $this->alertTypes[$type].$appendCss;
-
-                        /* assign unique id to each alert box */
-                        $this->options['id'] = $this->getId().'-'.$type.'-'.$i;
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
 
                         echo \yii\bootstrap\Alert::widget([
                             'body'        => $message,
