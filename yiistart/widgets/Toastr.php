@@ -1,15 +1,8 @@
 <?php
-<<<<<<< HEAD
-
-    namespace papalapa\yiistart\widgets;
-
-    use papalapa\yiistart\assets\ToastrAsset;
-=======
     namespace papalapa\yiistart\widgets;
 
     use papalapa\yiistart\assets\ToastrAsset;
     use yii;
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
     use yii\base\Widget;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -31,11 +24,7 @@
         const TYPE_SUCCESS = 'success';
         const TYPE_WARNING = 'warning';
         /**
-<<<<<<< HEAD
-         * Toastr default type
-=======
          * Toastr type
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
          * @var string
          */
         public $type = self::TYPE_INFO;
@@ -82,23 +71,13 @@
             'hideMethod'        => 'fadeOut',
         ];
 
-<<<<<<< HEAD
-        /**
-         * @return null|string
-         */
-=======
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
         public function run()
         {
             $options = Json::htmlEncode(ArrayHelper::merge($this->pluginOptions, (array)$this->clientOptions));
             $js      = "toastr.{$this->type}('{$this->message}', '{$this->title}', {$options});";
 
             if ($this->isAjax) {
-<<<<<<< HEAD
-                /* TODO: If App global assets not depends of Toastr, uncomment this rows */
-=======
                 /* If App global assets not depends of Toastr, uncomment this rows */
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
                 // $view   = new View();
                 // $asset  = ToastrAsset::register($view);
                 // $script = Yii::$app->assetManager->getAssetUrl($asset, 'toastr.min.js');
@@ -111,10 +90,6 @@
             }
 
             ToastrAsset::register($this->view);
-<<<<<<< HEAD
-
-=======
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
             $this->view->registerJs($js);
 
             return null;

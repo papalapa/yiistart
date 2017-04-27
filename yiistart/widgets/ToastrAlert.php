@@ -1,15 +1,8 @@
 <?php
-<<<<<<< HEAD
-
-    namespace papalapa\yiistart\widgets;
-
-    use papalapa\yiistart\assets\CDN_CodeSeven_Toastr_Asset;
-=======
     namespace papalapa\yiistart\widgets;
 
     use papalapa\yiistart\assets\ToastrAsset;
     use yii;
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
     use yii\base\Widget;
     use yii\helpers\Html;
     use yii\helpers\Json;
@@ -30,28 +23,13 @@
      * ```php
      * echo ToastrAlert::widget(['isAjax' => true, 'toastrTypes' => ['myErrorToastr' => Toastr::TYPE_ERROR]]);
      * ```
-<<<<<<< HEAD
-     * @author  Dmitriy Kim <mail@dmitriy.kim>
-=======
      * @author Dmitriy Kim <mail@dmitriy.kim>
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
      * @package papalapa\yiistart\widgets
      */
     class ToastrAlert extends Widget
     {
-<<<<<<< HEAD
-        /**
-         * @var bool
-         */
-        public $isAjax      = false;
-        /**
-         * @var array
-         */
-        public $types = [
-=======
         public  $isAjax        = false;
         public  $toastrTypes   = [
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
             'error'   => Toastr::TYPE_ERROR,
             'success' => Toastr::TYPE_SUCCESS,
             'info'    => Toastr::TYPE_INFO,
@@ -81,31 +59,19 @@
 
         public function run()
         {
-<<<<<<< HEAD
-            CDN_CodeSeven_Toastr_Asset::register($this->view);
-=======
             ToastrAsset::register($this->view);
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
 
             $options = Json::htmlEncode($this->pluginOptions);
 
             foreach (\Yii::$app->session->getAllFlashes() as $type => $data) {
-<<<<<<< HEAD
-                if (isset($this->types[$type])) {
-=======
                 if (isset($this->toastrTypes[$type])) {
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
                     if ($this->isAjax) {
                         $html = [];
                         foreach ((array)$data as $message) {
                             if (is_array($message)) {
                                 $message = implode(Html::tag('br'), $message);
                             }
-<<<<<<< HEAD
-                            $html[] = Html::script("toastr.{$this->types[$type]}('{$message}', null, {$options});");
-=======
                             $html[] = Html::script("toastr.{$this->toastrTypes[$type]}('{$message}', null, {$options});");
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
                         }
                         \Yii::$app->session->removeFlash($type);
 
@@ -115,11 +81,7 @@
                             if (is_array($message)) {
                                 $message = implode(Html::tag('br'), $message);
                             }
-<<<<<<< HEAD
-                            $this->view->registerJs("toastr.{$this->types[$type]}('{$message}', {$options});");
-=======
                             $this->view->registerJs("toastr.{$this->toastrTypes[$type]}('{$message}', {$options});");
->>>>>>> c9533882f892991b3445528078ff419ba9a7b5b4
                         }
                         \Yii::$app->session->removeFlash($type);
                     }
