@@ -1,0 +1,23 @@
+{
+    "name"       : "papalapa/yiistart",
+    "description": "Papalapa yii2 components.",
+    "keywords"   : [
+        "yii2",
+        "components"
+    ],
+    "homepage"   : "https://github.com/papalapa/yiistart",
+    "type"       : "yii2-extension",
+    "license"    : "MIT License",
+    "authors"    : [
+        {
+            "name"    : "Dmitriy Kim",
+            "email"   : "mail@dmitriy.kim",
+            "homepage": "http://dmitriy.kim/"
+        }
+    ],
+    "autoload"   : {
+        "psr-4": {
+            "papalapa\\yiistart\\": ""
+        }
+    }
+}
