@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\validators;
 
+    use papalapa\yiistart\helpers\StringHelper;
     use yii\validators\FilterValidator;
 
     /**
@@ -14,7 +15,7 @@
         public function init()
         {
             $this->filter = function ($string) {
-                return trim(preg_replace('~(\h|\v)+~u', ' ', (string)$string));
+                return StringHelper::textInline($string);
             };
 
             parent::init();

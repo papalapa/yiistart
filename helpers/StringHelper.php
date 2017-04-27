@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\helpers;
 
     use yii\base\InvalidParamException;
+    use yii\helpers\ArrayHelper;
 
     /**
      * Class StringHelper
@@ -87,6 +88,16 @@
             ];
 
             return static::CP1251toUTF8(preg_replace($in, $out, $str));
+        }
+
+        /**
+         * Implode text rows to inline string
+         * @param $text
+         * @return string
+         */
+        public static function textInline($text)
+        {
+            return trim(preg_replace('~[\h\v]+~u', ' ', (string)$text));
         }
 
         /**
