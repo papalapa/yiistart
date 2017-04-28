@@ -136,7 +136,7 @@
             $authManager->addChild($admin, $viewUser);
             $authManager->addChild($admin, $indexUser);
             $authManager->addChild($admin, $updateUser);
-            authManager->addChild($admin, $deleteUser);
+            $authManager->addChild($admin, $deleteUser);
 
             echo 'All child permissions has been added.' . PHP_EOL;
             
