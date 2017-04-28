@@ -1,14 +1,14 @@
 <?php
 
-    namespace backend\modules\settings\controllers;
+    namespace papalapa\yiistart\modules\settings\controllers;
 
-    use backend\modules\settings\models\SettingsSearch;
-    use common\ManageController;
-    use common\models\Settings;
+    use papalapa\yiistart\controllers\ManageController;
+    use papalapa\yiistart\modules\settings\models\Settings;
+    use papalapa\yiistart\modules\settings\models\SettingsSearch;
 
     /**
      * Class DefaultController
-     * @package backend\modules\settings\controllers
+     * @package papalapa\yiistart\modules\settings\controllers
      */
     class DefaultController extends ManageController
     {

@@ -3,7 +3,7 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model common\models\Settings */
+    /* @var $model papalapa\yiistart\modules\settings\models\Settings */
 
     $this->title                   = 'Создание настройки';
     $this->params['breadcrumbs'][] = ['label' => 'Настройки', 'url' => ['index']];

@@ -1,11 +1,12 @@
 <?php
 
-    use common\models\User;
+
+    use papalapa\yiistart\models\User;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
 
     /* @var $this yii\web\View */
-    /* @var $model common\models\Settings */
+    /* @var $model papalapa\yiistart\modules\settings\models\Settings */
     /* @var $form yii\widgets\ActiveForm */
 ?>
 

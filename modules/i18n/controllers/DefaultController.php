@@ -1,6 +1,6 @@
 <?php
 
-    namespace backend\modules\i18n\controllers;
+    namespace papalapa\yiistart\modules\i18n\controllers;
 
     use papalapa\yiistart\controllers\ManageController;
     use papalapa\yiistart\modules\i18n\models\SourceMessage;
@@ -11,7 +11,7 @@
 
     /**
      * Class DefaultController
-     * @package backend\modules\i18n\controllers
+     * @package papalapa\yiistart\modules\i18n\controllers
      */
     class DefaultController extends ManageController
     {

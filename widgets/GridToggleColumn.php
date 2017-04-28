@@ -39,13 +39,19 @@
         /**
          * @var string
          */
-        public $label = '<i class="fa fa-check" data-toggle="tooltip" title="Вкл. / Выкл."></i>';
+        public $labelTitle;
+        /**
+         * @var string
+         */
+        public $labelIco;
 
         /**
          * @inheritdoc
          */
         public function init()
         {
+            $this->label = Html::tag('i', null, ['class' => $this->labelIco, 'data-toggle' => 'tooltip', 'title' => $this->labelTitle]);
+
             $this->value = function ($model, $key, $index, $column) {
                 return $this->enableAjax ? $this->renderDynamic($model) : $this->renderStatic($model);
             };

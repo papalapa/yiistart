@@ -1,15 +1,15 @@
 <?php
 
-    use backend\widgets\Permissions;
-    use common\models\Settings;
-    use common\models\User;
-    use common\widgets\ToggleColumn;
+    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\modules\settings\models\Settings;
+    use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papapala\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
     /* @var $this yii\web\View */
-    /* @var $searchModel backend\modules\settings\models\SettingsSearch */
+    /* @var $searchModel papalapa\yiistart\modules\settings\models\SettingsSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
     $this->title                   = 'Настройки';
@@ -20,7 +20,7 @@
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
-        echo Permissions::widget([
+        echo ControlButtonsPanel::widget([
             'items' => [
                 'createSetting' => [
                     'title' => 'Создать',
@@ -44,7 +44,7 @@
                 'key',
                 'value:ntext',
                 [
-                    'class'      => ToggleColumn::className(),
+                    'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
                     'labelTitle' => 'Активность',
                     'labelIco'   => 'fa fa-eye',

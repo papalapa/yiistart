@@ -1,17 +1,17 @@
 <?php
 
-    namespace papalapa\yiistart\modules\settings;
+    namespace papalapa\yiistart\modules\identity;
 
     /**
      * Class Module
-     * @package papalapa\yiistart\modules\settings
+     * @package papalapa\yiistart\modules\identity
      */
     class Module extends \yii\base\Module
     {
         /**
          * @inheritdoc
          */
-        public $controllerNamespace = 'papalapa\yiistart\modules\settings\controllers';
+        public $controllerNamespace = 'papalapa\yiistart\modules\identity\controllers';
 
         /**
          * @inheritdoc

@@ -1,7 +1,7 @@
 <?php
 
-    use backend\widgets\Permissions;
-    use common\models\User;
+    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\widgets\ControlButtonsPanel;
     use yii\helpers\Html;
     use yii\widgets\DetailView;
 
@@ -17,7 +17,7 @@
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php
-        echo Permissions::widget([
+        echo ControlButtonsPanel::widget([
             'items' => [
                 'updateSetting' => [
                     'title' => 'Изменить',

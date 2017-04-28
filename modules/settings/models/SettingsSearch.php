@@ -1,12 +1,12 @@
 <?php
 
-    namespace backend\modules\settings\models;
+    namespace papalapa\yiistart\modules\settings\models;
 
-    use common\models\Settings;
     use yii\data\ActiveDataProvider;
 
     /**
-     * SettingsSearch represents the model behind the search form about `common\models\Settings`.
+     * Class SettingsSearch
+     * @package papalapa\yiistart\modules\settings\models
      */
     class SettingsSearch extends Settings
     {

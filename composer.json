@@ -15,7 +15,7 @@
             "homepage": "http://dmitriy.kim/"
         }
     ],
-    "require": {
+    "require"    : {
         "yiisoft/yii2"                     : "~2.0.6",
         "yiisoft/yii2-bootstrap"           : "~2.0.0",
         "yiisoft/yii2-swiftmailer"         : "~2.0.0",
@@ -25,7 +25,8 @@
         "mihaildev/yii2-ckeditor"          : "~1.0",
         "mihaildev/yii2-elfinder"          : "~1.2",
         "omgdef/yii2-multilingual-behavior": "~2.1",
-        "codemix/yii2-localeurls"          : "~1.4"
+        "codemix/yii2-localeurls"          : "~1.4",
+        "yiister/yii2-gentelella"          : "~1.2"
     },
     "autoload"   : {
         "psr-4": {
