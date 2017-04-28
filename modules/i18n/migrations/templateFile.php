@@ -21,25 +21,25 @@ public $translationTable = '';
 public function up()
 {
 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
-$this->createTable("{{$translationTable}}", [
+$this->createTable("{{{$this->translationTable}}}", [
 'id' => $this->primaryKey(),
 'language' => $this->string(16)->notNull(),
 'content_id' => $this->integer()->unsigned()->notNull(),
 '' => $this->string(),
 ], $tableOptions);
 
-$this->alterColumn('{{$translationTable}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-$this->createIndex("idx_$translationTable_content_id", "{{$translationTable}}", ['[[content_id]]']);
-$this->createIndex("idx_$translationTable_language", "{{$translationTable}}", ['[[language]]']);
-$this->createIndex("idx_$translationTable_language_content_id", "{{$translationTable}}", ['[[language]]', '[[content_id]]'], true);
-$this->addForeignKey('fk_$translationTable_content_id__pages_id', "{{$translationTable}}", ['[[content_id]]'],
-"{{$table}}", ['[[id]]'],
+$this->alterColumn('{{{$this->translationTable}}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+$this->createIndex("idx_{$this->translationTable}_content_id", "{{{$this->translationTable}}}", ['[[content_id]]']);
+$this->createIndex("idx_{$this->translationTable}_language", "{{{$this->translationTable}}}", ['[[language]]']);
+$this->createIndex("idx_{$this->translationTable}_language_content_id", "{{{$this->translationTable}}}", ['[[language]]', '[[content_id]]'], true);
+$this->addForeignKey("fk_{$this->translationTable}_content_id__{$this->table}_id", "{{{$this->translationTable}}}", ['[[content_id]]'],
+"{{{$this->table}}}", ['[[id]]'],
 'CASCADE', 'CASCADE');
 }
 
 public function down()
 {
-$this->dropForeignKey("fk_$translationTable_content_id__$table_id", "{{$translationTable}}");
-$this->dropTable("{{$translationTable}}");
+$this->dropForeignKey("fk_{$this->translationTable}_content_id__{$this->table}_id", "{{{$this->translationTable}}}");
+$this->dropTable("{{{$this->translationTable}}}");
 }
 }

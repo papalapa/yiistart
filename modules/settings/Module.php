@@ -4,6 +4,8 @@
 
     /**
      * Class Module
+     * Before using this module run migration @yii/i18n/migrations
+     * To create multilingual relation table use migration template file @vendor/papalapa/yiistart/modules/i18n/migrations/templateFile.php
      * @package papalapa\yiistart\modules\settings
      */
     class Module extends \yii\base\Module
