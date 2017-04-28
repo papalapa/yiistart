@@ -82,6 +82,7 @@
                 [['key'], WhiteSpaceNormalizerValidator::className()],
                 [['key'], 'required'],
                 [['key'], 'string', 'max' => 64],
+                [['key'], 'match', 'pattern' => '/^[a-z\.]+$/'],
                 [['key'], 'unique'],
 
                 [['value'], WhiteSpaceNormalizerValidator::className()],

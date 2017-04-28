@@ -13,7 +13,7 @@
         /**
          * @var array
          */
-        public $headerOptions = ['width' => '100'];
+        public $headerOptions = ['width' => '50'];
         /**
          * @var array
          */

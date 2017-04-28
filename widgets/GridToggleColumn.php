@@ -1,13 +1,13 @@
 <?php
 
-    namespace papapala\yiistart\widgets;
+    namespace papalapa\yiistart\widgets;
 
     use yii\grid\DataColumn;
     use yii\helpers\Html;
 
     /**
      * Class GridToggleColumn
-     * @package papapala\yiistart\widgets
+     * @package papalapa\yiistart\widgets
      */
     class GridToggleColumn extends DataColumn
     {

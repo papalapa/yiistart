@@ -1,9 +1,10 @@
 <?php
 
-    use papalapa\yiistart\models\User;
-    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
-    use papapala\yiistart\widgets\GridToggleColumn;
+    use papalapa\yiistart\widgets\GridDateColumn;
+    use papalapa\yiistart\widgets\GridIntegerPkColumn;
+    use papalapa\yiistart\widgets\GridToggleColumn;
+    use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
@@ -40,7 +41,10 @@
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
+                [
+                    'class'     => GridIntegerPkColumn::className(),
+                    'attribute' => 'id',
+                ],
                 'key',
                 'value:ntext',
                 [
@@ -50,36 +54,20 @@
                     'labelIco'   => 'fa fa-eye',
                 ],
                 [
+                    'class'     => GridUserEmailColumn::className(),
                     'attribute' => 'created_by',
-                    'content'   => function ($model) {
-                        /** @var $model Settings */
-                        return $model->created_by ? User::findOne(['id' => $model->created_by])->email : null;
-                    },
-                    'format'    => 'text',
                 ],
                 [
+                    'class'     => GridUserEmailColumn::className(),
                     'attribute' => 'updated_by',
-                    'content'   => function ($model) {
-                        /** @var $model Settings */
-                        return $model->updated_by ? User::findOne(['id' => $model->updated_by])->email : null;
-                    },
-                    'format'    => 'text',
                 ],
                 [
+                    'class'     => GridDateColumn::className(),
                     'attribute' => 'created_at',
-                    'content'   => function ($model) {
-                        /** @var $model Settings */
-                        return Yii::$app->formatter->asDate($model->created_at, 'd MMMM YYYY, HH:mm');
-                    },
-                    'format'    => 'raw',
                 ],
                 [
+                    'class'     => GridDateColumn::className(),
                     'attribute' => 'updated_at',
-                    'content'   => function ($model) {
-                        /** @var $model Settings */
-                        return Yii::$app->formatter->asDate($model->updated_at, 'd MMMM YYYY, HH:mm');
-                    },
-                    'format'    => 'raw',
                 ],
 
                 ['class' => 'yii\grid\ActionColumn'],
