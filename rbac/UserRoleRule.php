@@ -9,7 +9,7 @@
 
     /**
      * Class UserRoleRule
-     * @package common\rbac
+     * @package papalapa\yiistart\rbac
      */
     class UserRoleRule extends Rule
     {

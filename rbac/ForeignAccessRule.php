@@ -10,7 +10,7 @@
 
     /**
      * Class ForeignAccessRule
-     * @package common\rbac
+     * @package papalapa\yiistart\rbac
      */
     class ForeignAccessRule extends Rule
     {

@@ -5,13 +5,12 @@
     use papalapa\yiistart\rbac\ForeignAccessRule;
     use papalapa\yiistart\rbac\OwnerAccessRule;
     use papalapa\yiistart\rbac\UserRoleRule;
-    use papalapa\yiistart\rbac\Controller;
 
     /**
      * Class RbacController
      * @package papalapa\yiistart\controllers
      */
-    class RbacController extends Controller
+    class RbacController extends \yii\console\Controller
     {
         public function actionInit()
         {
@@ -139,7 +138,7 @@
             $authManager->addChild($admin, $deleteUser);
 
             echo 'All child permissions has been added.' . PHP_EOL;
-            
+
             echo 'RBAC Complete.' . PHP_EOL;
         }
     }

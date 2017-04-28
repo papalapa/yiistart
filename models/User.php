@@ -16,13 +16,6 @@
      * @property integer $role
      * @property integer $created_at
      * @property integer $updated_at
-     * @property integer $activity_at
-     * @property integer $last_ip
-     * @property string  $name
-     * @property string  $phone
-     * @property string  $mobile
-     * @property string  $bdate
-     * @property integer $gender
      * @property string  $password write-only password
      * @package papalapa\yiistart\models
      */
@@ -51,8 +44,6 @@
                 'role'          => 'Роль',
                 'created_at'    => 'Дата создания',
                 'updated_at'    => 'Дата изменения',
-                'activity_at'   => 'Активность',
-                'last_ip'       => 'Последний IP',
             ];
         }
 

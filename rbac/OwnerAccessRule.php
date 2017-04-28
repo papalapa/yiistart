@@ -9,8 +9,8 @@
     use yii\rbac\Rule;
 
     /**
-     * Class OwnerRightsRule
-     * @package common\rbac
+     * Class OwnerAccessRule
+     * @package papalapa\yiistart\rbac
      */
     class OwnerAccessRule extends Rule
     {
