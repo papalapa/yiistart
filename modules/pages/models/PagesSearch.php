@@ -65,11 +65,11 @@
                 'is_active' => $this->is_active,
             ]);
 
-            if (!is_null($this->img) && $this->img !== '') {
-                if ($this->img) {
-                    $query->andWhere(['or', ['!=', 'img', ''], ['is not', 'img', null]]);
+            if (!is_null($this->image) && $this->image !== '') {
+                if ($this->image) {
+                    $query->andWhere(['or', ['!=', 'image', ''], ['is not', 'image', null]]);
                 } else {
-                    $query->andWhere(['or', ['=', 'img', ''], ['is', 'img', null]]);
+                    $query->andWhere(['or', ['=', 'image', ''], ['is', 'image', null]]);
                 }
             }
 
