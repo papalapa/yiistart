@@ -47,9 +47,11 @@
             CDN_Carhartl_JqueryCookie_Asset::register($this->view);
 
             return implode(null, [
-                Html::beginTag('div', ['class' => 'well']),
+                Html::tag('hr'),
+                Html::beginTag('div', ['class' => 'btn-group']),
                 $this->renderItems(),
                 Html::endTag('div'),
+                Html::tag('hr'),
             ]);
         }
 
@@ -75,6 +77,7 @@
         private function renderItems()
         {
             $html = [];
+
             foreach ($this->items as $item) {
                 $url    = ArrayHelper::remove($item, 'url');
                 $title  = ArrayHelper::remove($item, 'title');
@@ -82,10 +85,6 @@
                 $html[] = Html::a(($ico ? Html::tag('i', null, ['class' => $ico]) . ' ' : null) . $title, Url::to($url), $item);
             }
 
-            return implode(PHP_EOL, [
-                Html::beginTag('div', $this->options),
-                implode(PHP_EOL, $html),
-                Html::endTag('div'),
-            ]);
+            return implode(PHP_EOL, $html);
         }
     }

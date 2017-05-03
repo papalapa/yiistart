@@ -2,7 +2,7 @@
 
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridDateColumn;
-    use papalapa\yiistart\widgets\GridIntegerPkColumn;
+    use papalapa\yiistart\widgets\GridIntegerColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
@@ -42,7 +42,7 @@
                 // ['class' => 'yii\grid\SerialColumn'],
 
                 [
-                    'class'     => GridIntegerPkColumn::className(),
+                    'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
                 ],
                 'key',

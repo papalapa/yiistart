@@ -1,0 +1,192 @@
+.bootstrap-active-form .checkbox label,
+.bootstrap-active-form .checkbox-inline label,
+.bootstrap-active-form .radio label,
+.bootstrap-active-form .radio-inline label {
+    font-weight : normal;
+    line-height : 18px;
+}
+
+.bootstrap-active-form .checkbox input[type='checkbox'],
+.bootstrap-active-form .checkbox-inline input[type='checkbox'],
+.bootstrap-active-form .radio input[type='checkbox'],
+.bootstrap-active-form .radio-inline input[type='checkbox'],
+.bootstrap-active-form .checkbox input[type='radio'],
+.bootstrap-active-form .checkbox-inline input[type='radio'],
+.bootstrap-active-form .radio input[type='radio'],
+.bootstrap-active-form .radio-inline input[type='radio'] {
+    display : none;
+}
+
+.bootstrap-active-form .checkbox input ~ label,
+.bootstrap-active-form .checkbox-inline input ~ label {
+    position     : relative;
+    padding-left : 27px;
+}
+
+.bootstrap-active-form .checkbox input ~ label:before,
+.bootstrap-active-form .checkbox-inline input ~ label:before,
+.bootstrap-active-form .checkbox input ~ label:after,
+.bootstrap-active-form .checkbox-inline input ~ label:after {
+    content  : '';
+    position : absolute;
+    display  : inline-block;
+    top      : 0;
+}
+
+.bootstrap-active-form .checkbox input ~ label:before,
+.bootstrap-active-form .checkbox-inline input ~ label:before {
+    left                  : 0;
+    width                 : 18px;
+    height                : 18px;
+    border                : 2px solid #aeaeae;
+    -webkit-border-radius : 2px;
+    -moz-border-radius    : 2px;
+    border-radius         : 2px;
+    -webkit-transition    : 250ms;
+    -moz-transition       : 250ms;
+    -ms-transition        : 250ms;
+    -o-transition         : 250ms;
+    transition            : 250ms;
+}
+
+.bootstrap-active-form .checkbox input ~ label:after,
+.bootstrap-active-form .checkbox-inline input ~ label:after {
+    left      : 6px;
+    width     : 6px;
+    height    : 14.4px;
+    transform : rotate(45deg) skew(10deg);
+}
+
+.bootstrap-active-form .checkbox input:checked ~ label:before,
+.bootstrap-active-form .checkbox-inline input:checked ~ label:before {
+    border-color     : #1166cc;
+    background-color : #1166cc;
+}
+
+.bootstrap-active-form .checkbox input:checked ~ label:after,
+.bootstrap-active-form .checkbox-inline input:checked ~ label:after {
+    border            : 2px solid white;
+    border-top-width  : 0;
+    border-left-width : 0;
+}
+
+.bootstrap-active-form .checkbox input:active ~ label:before,
+.bootstrap-active-form .checkbox-inline input:active ~ label:before {
+    border-color     : #e1e1e1;
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .checkbox input:checked:active ~ label:before,
+.bootstrap-active-form .checkbox-inline input:checked:active ~ label:before {
+    border-color     : #e1e1e1;
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .checkbox input:checked:active ~ label:after,
+.bootstrap-active-form .checkbox-inline input:checked:active ~ label:after {
+    border-color : #e1e1e1;
+}
+
+.bootstrap-active-form .checkbox input:disabled ~ label:before,
+.bootstrap-active-form .checkbox-inline input:disabled ~ label:before {
+    border-color     : #eeeeee;
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .checkbox input:checked:disabled ~ label:before,
+.bootstrap-active-form .checkbox-inline input:checked:disabled ~ label:before {
+    border-color     : #eeeeee;
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .checkbox input:checked:disabled ~ label:after,
+.bootstrap-active-form .checkbox-inline input:checked:disabled ~ label:after {
+    background-color : transparent;
+    border-color     : white;
+}
+
+.bootstrap-active-form .radio,
+.bootstrap-active-form .radio-inline {
+    padding-left : 0;
+}
+
+.bootstrap-active-form .radio input ~ label,
+.bootstrap-active-form .radio-inline input ~ label {
+    position     : relative;
+    padding-left : 27px;
+    padding-top  : 0;
+    margin-right : 9px;
+}
+
+.bootstrap-active-form .radio input ~ label:before,
+.bootstrap-active-form .radio-inline input ~ label:before,
+.bootstrap-active-form .radio input ~ label:after,
+.bootstrap-active-form .radio-inline input ~ label:after {
+    content       : '';
+    position      : absolute;
+    display       : inline-block;
+    left          : 0;
+    top           : 0;
+    width         : 18px;
+    height        : 18px;
+    border-radius : 50%;
+}
+
+.bootstrap-active-form .radio input ~ label:before,
+.bootstrap-active-form .radio-inline input ~ label:before {
+    border           : 2px solid #aeaeae;
+    background-color : white;
+}
+
+.bootstrap-active-form .radio input ~ label:after,
+.bootstrap-active-form .radio-inline input ~ label:after {
+    border             : 2px solid transparent;
+    background-color   : #bbbbbb;
+    -webkit-transform  : scale(0);
+    -moz-transform     : scale(0);
+    -ms-transform      : scale(0);
+    -o-transform       : scale(0);
+    transform          : scale(0);
+    -webkit-transition : 250ms;
+    -moz-transition    : 250ms;
+    -ms-transition     : 250ms;
+    -o-transition      : 250ms;
+    transition         : 250ms;
+}
+
+.bootstrap-active-form .radio input:checked ~ label:before,
+.bootstrap-active-form .radio-inline input:checked ~ label:before {
+    border-color : #1166cc;
+}
+
+.bootstrap-active-form .radio input:checked ~ label:after,
+.bootstrap-active-form .radio-inline input:checked ~ label:after {
+    -webkit-transform : scale(0.5);
+    -moz-transform    : scale(0.5);
+    -ms-transform     : scale(0.5);
+    -o-transform      : scale(0.5);
+    transform         : scale(0.5);
+    background-color  : #1166cc;
+}
+
+.bootstrap-active-form .radio input:active ~ label:before,
+.bootstrap-active-form .radio-inline input:active ~ label:before {
+    border-color     : #e1e1e1;
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .radio input:disabled ~ label:before,
+.bootstrap-active-form .radio-inline input:disabled ~ label:before {
+    border-color : #eeeeee;
+}
+
+.bootstrap-active-form .radio input:disabled:checked ~ label:before,
+.bootstrap-active-form .radio-inline input:disabled:checked ~ label:before {
+    background-color : #eeeeee;
+}
+
+.bootstrap-active-form .radio input:disabled:checked ~ label:after,
+.bootstrap-active-form .radio-inline input:disabled:checked ~ label:after {
+    border-color     : white;
+    background-color : white;
+}

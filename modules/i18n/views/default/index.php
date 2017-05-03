@@ -2,7 +2,7 @@
 
     use papalapa\yiistart\modules\i18n\models\SourceMessage;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
-    use papalapa\yiistart\widgets\GridIntegerPkColumn;
+    use papalapa\yiistart\widgets\GridIntegerColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -43,7 +43,7 @@
                 // ['class' => 'yii\grid\SerialColumn'],
 
                 [
-                    'class'     => GridIntegerPkColumn::className(),
+                    'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
                 ],
                 [

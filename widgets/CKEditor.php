@@ -26,7 +26,7 @@
         public function init()
         {
             if (ArrayHelper::remove($this->clientOptions, 'upload', true)) {
-                $options = ElFinder::ckeditorOptions('file-upload', [/* Some CKEditor Options */]);
+                $options = ElFinder::ckeditorOptions('upload', [/* Some CKEditor Options */]);
             }
 
             $options['toolbarGroups'] = [

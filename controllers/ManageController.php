@@ -19,6 +19,10 @@
     abstract class ManageController extends Controller
     {
         /**
+         * @var
+         */
+        public $module;
+        /**
          * Default active record model class
          * @var
          */

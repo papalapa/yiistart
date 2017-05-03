@@ -8,12 +8,8 @@
      * Class GridIntegerColumn
      * @package papalapa\yiistart\widgets
      */
-    class GridIntegerPkColumn extends DataColumn
+    class GridIntegerColumn extends DataColumn
     {
-        /**
-         * @var array
-         */
-        public $headerOptions = ['width' => '50'];
         /**
          * @var array
          */
