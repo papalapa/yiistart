@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\controllers;
 
+    use papalapa\yiistart\models\User;
     use papalapa\yiistart\rbac\ForeignAccessRule;
     use papalapa\yiistart\rbac\OwnerAccessRule;
     use papalapa\yiistart\rbac\UserRoleRule;
@@ -14,9 +15,23 @@
     class RbacController extends \yii\console\Controller
     {
         /**
+         * Permission to access to owner content
+         * @var
+         */
+        public $ownerPermission;
+        /**
+         * Permission to access to foreign content
+         * @var
+         */
+        public $foreignPermission;
+        /**
          * @var ManagerInterface
          */
         protected $authManager;
+        /**
+         * @var array
+         */
+        protected $roles = [];
 
         /**
          * @inheritdoc
@@ -27,7 +42,44 @@
             $this->authManager->removeAll();
             echo 'Old rules has been removed.' . PHP_EOL;
 
-            $this->createPermissions();
+            $this->createRoles();
+            $this->createOwnerAccess();
+            $this->createForeignAccess();
+            $this->defaultPermissions();
+        }
+
+        /**
+         * Generating user roles
+         */
+        protected function createRoles()
+        {
+            $userRoleRule = new UserRoleRule();
+            $this->authManager->add($userRoleRule);
+
+            $this->roles[User::ROLE_GUEST]     = $this->authManager->createRole(User::roles()[User::ROLE_GUEST]);
+            $this->roles[User::ROLE_USER]      = $this->authManager->createRole(User::roles()[User::ROLE_USER]);
+            $this->roles[User::ROLE_AUTHOR]    = $this->authManager->createRole(User::roles()[User::ROLE_AUTHOR]);
+            $this->roles[User::ROLE_MANAGER]   = $this->authManager->createRole(User::roles()[User::ROLE_MANAGER]);
+            $this->roles[User::ROLE_ADMIN]     = $this->authManager->createRole(User::roles()[User::ROLE_ADMIN]);
+            $this->roles[User::ROLE_DEVELOPER] = $this->authManager->createRole(User::roles()[User::ROLE_DEVELOPER]);
+
+            echo 'User roles has been created.' . PHP_EOL;
+
+            $this->roles[User::ROLE_GUEST]->ruleName     = $userRoleRule->name;
+            $this->roles[User::ROLE_USER]->ruleName      = $userRoleRule->name;
+            $this->roles[User::ROLE_AUTHOR]->ruleName    = $userRoleRule->name;
+            $this->roles[User::ROLE_MANAGER]->ruleName   = $userRoleRule->name;
+            $this->roles[User::ROLE_ADMIN]->ruleName     = $userRoleRule->name;
+            $this->roles[User::ROLE_DEVELOPER]->ruleName = $userRoleRule->name;
+
+            $this->authManager->add($this->roles[User::ROLE_GUEST]);
+            $this->authManager->add($this->roles[User::ROLE_USER]);
+            $this->authManager->add($this->roles[User::ROLE_AUTHOR]);
+            $this->authManager->add($this->roles[User::ROLE_MANAGER]);
+            $this->authManager->add($this->roles[User::ROLE_ADMIN]);
+            $this->authManager->add($this->roles[User::ROLE_DEVELOPER]);
+
+            echo 'User roles has been added.' . PHP_EOL;
         }
 
         /**
@@ -39,44 +91,8 @@
          * - update content
          * - delete content
          */
-        protected function createPermissions()
+        protected function defaultPermissions()
         {
-            $userRoleRule = new UserRoleRule();
-            $this->authManager->add($userRoleRule);
-
-            $guest     = $this->authManager->createRole('guest');
-            $user      = $this->authManager->createRole('user');
-            $author    = $this->authManager->createRole('author');
-            $manager   = $this->authManager->createRole('manager');
-            $admin     = $this->authManager->createRole('admin');
-            $developer = $this->authManager->createRole('developer');
-
-            echo 'User roles has been created.' . PHP_EOL;
-
-            $guest->ruleName     = $userRoleRule->name;
-            $user->ruleName      = $userRoleRule->name;
-            $author->ruleName    = $userRoleRule->name;
-            $manager->ruleName   = $userRoleRule->name;
-            $admin->ruleName     = $userRoleRule->name;
-            $developer->ruleName = $userRoleRule->name;
-
-            $this->authManager->add($guest);
-            $this->authManager->add($user);
-            $this->authManager->add($author);
-            $this->authManager->add($manager);
-            $this->authManager->add($admin);
-            $this->authManager->add($developer);
-
-            echo 'User roles has been added.' . PHP_EOL;
-
-            // ------------------------------------------------------------------------------
-
-            /** Управление смоим и чужим контентом */
-            $ownerPermissions   = $this->createOwnerAccess();
-            $foreignPermissions = $this->createForeignAccess();
-
-            // ------------------------------------------------------------------------------
-
             /** Управление пользователями */
             $createUser              = $this->authManager->createPermission('createUser');
             $createUser->description = 'Создание пользователей';
@@ -113,6 +129,18 @@
             $deleteSetting              = $this->authManager->createPermission('deleteSetting');
             $deleteSetting->description = 'Удаление настроек';
 
+            /** Управление страницами */
+            $createPage              = $this->authManager->createPermission('createPage');
+            $createPage->description = 'Создание страниц';
+            $viewPage                = $this->authManager->createPermission('viewPage');
+            $viewPage->description   = 'Просмотр страниц';
+            $indexPage               = $this->authManager->createPermission('indexPage');
+            $indexPage->description  = 'Листинг страниц';
+            $updatePage              = $this->authManager->createPermission('updatePage');
+            $updatePage->description = 'Изменение страниц';
+            $deletePage              = $this->authManager->createPermission('deletePage');
+            $deletePage->description = 'Удаление страниц';
+
             echo 'New permissions has been created.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -136,34 +164,45 @@
             $this->authManager->add($updateSetting);
             $this->authManager->add($deleteSetting);
 
+            $this->authManager->add($createPage);
+            $this->authManager->add($viewPage);
+            $this->authManager->add($indexPage);
+            $this->authManager->add($updatePage);
+            $this->authManager->add($deletePage);
+
             echo 'New permissions has been added.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
 
             /** Добавление правил */
-            $this->authManager->addChild($admin, $ownerPermissions);
-            $this->authManager->addChild($admin, $foreignPermissions);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $this->ownerPermission);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $this->foreignPermission);
 
-            $this->authManager->addChild($admin, $createUser);
-            $this->authManager->addChild($admin, $viewUser);
-            $this->authManager->addChild($admin, $indexUser);
-            $this->authManager->addChild($admin, $updateUser);
-            $this->authManager->addChild($admin, $deleteUser);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createUser);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewUser);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexUser);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateUser);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteUser);
 
-            // $this->authManager->addChild($admin, $createTranslation); // translations create automatic
-            $this->authManager->addChild($admin, $viewTranslation);
-            $this->authManager->addChild($admin, $indexTranslation);
-            $this->authManager->addChild($admin, $updateTranslation);
-            $this->authManager->addChild($admin, $deleteTranslation);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createTranslation); // translations create automatic
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewTranslation);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexTranslation);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateTranslation);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteTranslation);
 
-            // $this->authManager->addChild($admin, $createSetting);
-            $this->authManager->addChild($admin, $viewSetting);
-            $this->authManager->addChild($admin, $indexSetting);
-            $this->authManager->addChild($admin, $updateSetting);
-            $this->authManager->addChild($admin, $deleteSetting);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting);
 
-            $this->authManager->addChild($developer, $admin);
-            $this->authManager->addChild($developer, $createSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPage);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPage);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexPage);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updatePage);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deletePage);
+
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSetting);
 
             echo 'All child permissions has been added.' . PHP_EOL;
 
@@ -172,7 +211,6 @@
 
         /**
          * Add rule which checks user foreign rights
-         * @return \yii\rbac\Permission
          */
         protected function createForeignAccess()
         {
@@ -190,12 +228,11 @@
             $this->authManager->add($foreignAccess);
             echo 'Foreign permission has been added.' . PHP_EOL;
 
-            return $foreignAccess;
+            $this->foreignPermission = $foreignAccess;
         }
 
         /**
          * Add rule which checks user owner rights
-         * @return \yii\rbac\Permission
          */
         protected function createOwnerAccess()
         {
@@ -213,6 +250,6 @@
             $this->authManager->add($ownerAccess);
             echo 'Owner permission has been added.' . PHP_EOL;
 
-            return $ownerAccess;
+            $this->ownerPermission = $ownerAccess;
         }
     }

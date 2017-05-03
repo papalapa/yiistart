@@ -123,6 +123,35 @@
         }
 
         /**
+         * @param $details
+         * @return mixed
+         */
+        public function localizedDetails($details)
+        {
+            if ($behavior = ArrayHelper::getValue(static::behaviors(), 'MultilingualBehavior')) {
+                $behaviorAttributes = $behavior['attributes'];
+
+                foreach ($details as $key => $detail) {
+                    $attribute = ArrayHelper::remove($detail, 'attribute');
+
+                    if ($attribute && in_array($attribute, $behaviorAttributes)) {
+                        foreach ($this->availableLocales($behavior) as $index => $locale) {
+                            if ($locale <> \Yii::$app->language) {
+                                array_splice($details, $key + $index, 0,
+                                    array_replace($detail, [
+                                        'attribute' => sprintf('%s_%s', $attribute, $locale),
+                                    ])
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            return $details;
+        }
+
+        /**
          * Get available locales, existing in application params[availableLocales]
          * Compare available locales with behavior languages
          * @param $multilingualBehavior

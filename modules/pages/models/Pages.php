@@ -14,7 +14,6 @@
     /**
      * This is the model class for table "pages".
      * @property integer            $id
-     * @property string             $url
      * @property string             $title
      * @property string             $description
      * @property string             $keywords

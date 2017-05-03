@@ -27,7 +27,7 @@
         {
             return [
                 [['id', 'is_active'], 'integer'],
-                [['img'], 'boolean'],
+                [['image'], 'boolean'],
                 [['title', 'header'], 'safe'],
             ];
         }
@@ -73,8 +73,7 @@
                 }
             }
 
-            $query->andFilterWhere(['like', 'url', $this->url])
-                  ->andFilterWhere(['like', 'header', $this->header]);
+            $query->andFilterWhere(['like', 'header', $this->header]);
 
             return $dataProvider;
         }

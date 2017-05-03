@@ -1,16 +1,16 @@
 <?php
 
-    use backend\widgets\Permissions;
-    use common\models\i18n;
-    use common\models\Pages;
-    use common\widgets\ToggleColumn;
+    use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\modules\pages\models\Pages;
+    use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
     /* @var $this yii\web\View */
-    /* @var $searchModel backend\modules\pages\models\PagesSearch */
+    /* @var $searchModel papalapa\yiistart\modules\pages\models\PagesSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
     $this->title                   = 'Страницы';
@@ -23,7 +23,7 @@
     <h4>Изменения вступают в силу в течение <?= ArrayHelper::getValue(Yii::$app->params, 'cache.page.duration', 60) ?> сек.</h4>
 
     <?
-        echo Permissions::widget([
+        echo ControlButtonsPanel::widget([
             'items' => [
                 'createPage' => [
                     'title' => 'Создать',
@@ -46,21 +46,7 @@
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
 
-                //'id',
-                [
-                    'attribute' => 'url',
-                    'format'    => 'html',
-                    'content'   => function ($model) use ($siteUrlManager) {
-                        /**
-                         * @var Pages $model
-                         */
-                        return Html::a(
-                            Html::tag('span', $model->url, ['class' => 'label label-info']),
-                            $siteUrlManager->createUrl(['site/' . $model->url]),
-                            ['target' => '_blank']
-                        );
-                    },
-                ],
+                'id',
                 [
                     'attribute' => 'header_ru',
                     'filter'    => false,
@@ -84,7 +70,7 @@
                     },
                 ],
                 [
-                    'class'      => ToggleColumn::className(),
+                    'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
                     'labelTitle' => 'Активность',
                     'labelIco'   => 'fa fa-eye',

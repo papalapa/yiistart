@@ -3,11 +3,11 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model common\models\Pages */
+    /* @var $model \papalapa\yiistart\modules\pages\models\Pages */
 
-    $this->title                   = 'Изменение страницы: ' . $model->url;
+    $this->title                   = 'Изменение страницы: ' . $model->title;
     $this->params['breadcrumbs'][] = ['label' => 'Страницы', 'url' => ['index']];
-    $this->params['breadcrumbs'][] = ['label' => $model->url, 'url' => ['view', 'id' => $model->id]];
+    $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = 'Изменение';
 ?>
 <div class="pages-update">

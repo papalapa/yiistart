@@ -1,17 +1,15 @@
 <?php
 
-    use backend\widgets\Permissions;
-    use common\helpers\Filer;
-    use common\models\Pages;
-    use common\models\User;
+    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\modules\pages\models\Pages;
+    use papalapa\yiistart\widgets\ControlButtonsPanel;
     use yii\helpers\Html;
-    use yii\helpers\Url;
     use yii\widgets\DetailView;
 
     /* @var $this yii\web\View */
-    /* @var $model common\models\Pages */
+    /* @var $model \papalapa\yiistart\modules\pages\models\Pages */
 
-    $this->title                   = $model->url;
+    $this->title                   = $model->title;
     $this->params['breadcrumbs'][] = ['label' => 'Страницы', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,7 +18,7 @@
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
-        echo Permissions::widget([
+        echo ControlButtonsPanel::widget([
             'items' => [
                 'updatePage' => [
                     'title' => 'Изменить',
@@ -45,9 +43,9 @@
         echo DetailView::widget([
             'model'      => $model,
             'attributes' => [
-                'id',
+                //'id',
                 [
-                    'attribute' => 'url',
+                    'attribute' => 'id',
                     'format'    => 'html',
                     'value'     => function ($model) use ($siteUrlManager) {
                         /**
@@ -55,65 +53,37 @@
                          */
                         return Html::tag('h4',
                             Html::a(
-                                $siteUrlManager->createAbsoluteUrl(['/site/' . $model->url]),
-                                $siteUrlManager->createUrl(['site/' . $model->url]),
+                                $siteUrlManager->createAbsoluteUrl(['/site/page', 'id' => $model->id]),
+                                $siteUrlManager->createUrl(['/site/page', 'id' => $model->id]),
                                 ['target' => '_blank']
                             )
                         );
                     },
                 ],
                 [
-                    'attribute' => 'header_ru',
+                    'attribute' => 'header',
                     'format'    => 'html',
                     'value'     => function ($model) {
                         /**
                          * @var Pages $model
                          */
-                        return Html::tag('h4', $model->header_ru);
+                        return Html::tag('h4', $model->header);
                     },
                 ],
                 [
-                    'attribute' => 'header_en',
+                    'attribute' => 'image',
                     'format'    => 'html',
                     'value'     => function ($model) {
                         /**
                          * @var Pages $model
                          */
-                        return Html::tag('h4', $model->header_en);
+                        return $model->image ? Html::img($model->image, ['width' => 200]) : null;
                     },
                 ],
-                [
-                    'attribute' => 'img',
-                    'format'    => 'html',
-                    'value'     => function ($model) {
-                        /**
-                         * @var Pages $model
-                         */
-                        $img = $model->img ? Html::img($model->img, ['class' => 'img-responsive']) : null;
-
-                        return $img ? Html::tag('div', $img, ['style' => 'width:auto;max-width:300px']) : null;
-                    },
-                ],
-                'text_ru:html',
-                'text_en:html',
-                'title_en',
-                'title_en',
-                'description_ru',
-                'description_en',
-                'keywords_ru',
-                'keywords_en',
-                [
-                    'attribute' => 'contextable',
-                    'value'     => Html::tag('i', null,
-                        ['class' => $model->contextable ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger']),
-                    'format'    => 'html',
-                ],
-                [
-                    'attribute' => 'imagable',
-                    'value'     => Html::tag('i', null,
-                        ['class' => $model->imagable ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger']),
-                    'format'    => 'html',
-                ],
+                'text:html',
+                'title',
+                'description',
+                'keywords',
                 [
                     'attribute' => 'is_active',
                     'value'     => Html::tag('i', null,
