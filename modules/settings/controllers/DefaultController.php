@@ -12,6 +12,9 @@
      */
     class DefaultController extends ManageController
     {
+        /**
+         * @var array
+         */
         protected $permissions = [
             'create' => 'createSetting',
             'view'   => 'viewSetting',
@@ -20,10 +23,14 @@
             'delete' => 'deleteSetting',
         ];
 
+        /**
+         * @inheritdoc
+         */
         public function init()
         {
-            $this->model       = Settings::className();
-            $this->searchModel = SettingsSearch::className();
+            $this->model        = Settings::className();
+            $this->searchModel  = SettingsSearch::className();
+            $this->multilingual = $this->module->multilingual;
             parent::init();
         }
     }

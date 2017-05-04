@@ -8,10 +8,13 @@
 
     /**
      * Class DefaultController
-     * @package backend\modules\pages\controllers
+     * @package papalapa\yiistart\modules\pages\controllers
      */
     class DefaultController extends ManageController
     {
+        /**
+         * @var array
+         */
         protected $permissions = [
             'create' => 'createPage',
             'view'   => 'viewPage',
@@ -20,10 +23,13 @@
             'delete' => 'deletePage',
         ];
 
+        /**
+         * @inheritdoc
+         */
         public function init()
         {
-            $this->model       = Pages::className();
-            $this->searchModel = PagesSearch::className();
+            $this->model        = Pages::className();
+            $this->searchModel  = PagesSearch::className();
             $this->multilingual = $this->module->multilingual;
             parent::init();
         }

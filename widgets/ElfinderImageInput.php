@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\widgets;
 
     use yii\helpers\Html;
+    use yii\helpers\Inflector;
 
     /**
      * Class ElfinderImageInput
@@ -40,7 +41,7 @@
          * @file /app/backend/config/elfinder.php
          * @var string
          */
-        public $controller = 'file-upload';
+        public $controller = 'upload';
         public $path;
         /**
          * Allow or disallow multiple file inputs
@@ -57,9 +58,14 @@
             'readonly' => 'readonly',
         ];
 
+        /**
+         * @inheritdoc
+         */
         public function init()
         {
-            parent::init();
+            if ($this->model) {
+                $this->path = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName());
+            }
 
             $this->template = implode(null, [
                 Html::beginTag('div', ['class' => 'input-group elfinder-image-widget']),
@@ -78,6 +84,8 @@
                 Html::endTag('span'),
                 Html::endTag('div'),
             ]);
+
+            parent::init();
         }
 
         /**

@@ -14,6 +14,12 @@
     abstract class MultilingualActiveRecord extends ActiveRecord
     {
         /**
+         * Multilingual flag
+         * @var boolean
+         */
+        public $multilingual;
+
+        /**
          * @return array
          */
         public function behaviors()

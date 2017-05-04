@@ -3,31 +3,10 @@
     namespace papalapa\yiistart\modules\pages;
 
     /**
-     * pages module definition class
+     * Class Module
+     * @package papalapa\yiistart\modules\pages
      */
-    class Module extends \yii\base\Module
+    class Module extends \papalapa\yiistart\modules\Module
     {
-        /**
-         * @inheritdoc
-         */
         public $controllerNamespace = 'papalapa\yiistart\modules\pages\controllers';
-        /**
-         * Use multilingual AR
-         * @var
-         */
-        public $multilingual = false;
-        /**
-         * Function to validate images
-         * @var callable
-         */
-        public $validateImage;
-
-        /**
-         * @inheritdoc
-         */
-        public function init()
-        {
-            parent::init();
-            // custom initialization code goes here
-        }
     }

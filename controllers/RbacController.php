@@ -49,6 +49,50 @@
         }
 
         /**
+         * Add rule which checks user foreign rights
+         */
+        protected function createForeignAccess()
+        {
+            $foreignAccessRule = new ForeignAccessRule();
+            $this->authManager->add($foreignAccessRule);
+            echo 'foreignAccess rule has been created.' . PHP_EOL;
+
+            $foreignAccess = $this->authManager->createPermission('foreignAccess');
+            echo 'Foreign permission has been created.' . PHP_EOL;
+
+            $foreignAccess->description = 'Доступ к чужому контенту';
+            $foreignAccess->ruleName    = $foreignAccessRule->name;
+            echo 'Foreign permission attributes has been saved.' . PHP_EOL;
+
+            $this->authManager->add($foreignAccess);
+            echo 'Foreign permission has been added.' . PHP_EOL;
+
+            $this->foreignPermission = $foreignAccess;
+        }
+
+        /**
+         * Add rule which checks user owner rights
+         */
+        protected function createOwnerAccess()
+        {
+            $ownerAccessRule = new OwnerAccessRule();
+            $this->authManager->add($ownerAccessRule);
+            echo 'ownerAccess rule has been created.' . PHP_EOL;
+
+            $ownerAccess = $this->authManager->createPermission('ownerAccess');
+            echo 'Owner permission has been created.' . PHP_EOL;
+
+            $ownerAccess->description = 'Доступ к своему контенту';
+            $ownerAccess->ruleName    = $ownerAccessRule->name;
+            echo 'Owner permission attributes has been saved.' . PHP_EOL;
+
+            $this->authManager->add($ownerAccess);
+            echo 'Owner permission has been added.' . PHP_EOL;
+
+            $this->ownerPermission = $ownerAccess;
+        }
+
+        /**
          * Generating user roles
          */
         protected function createRoles()
@@ -207,49 +251,5 @@
             echo 'All child permissions has been added.' . PHP_EOL;
 
             echo 'RBAC generate Complete.' . PHP_EOL;
-        }
-
-        /**
-         * Add rule which checks user foreign rights
-         */
-        protected function createForeignAccess()
-        {
-            $foreignAccessRule = new ForeignAccessRule();
-            $this->authManager->add($foreignAccessRule);
-            echo 'foreignAccess rule has been created.' . PHP_EOL;
-
-            $foreignAccess = $this->authManager->createPermission('foreignAccess');
-            echo 'Foreign permission has been created.' . PHP_EOL;
-
-            $foreignAccess->description = 'Доступ к чужому контенту';
-            $foreignAccess->ruleName    = $foreignAccessRule->name;
-            echo 'Foreign permission attributes has been saved.' . PHP_EOL;
-
-            $this->authManager->add($foreignAccess);
-            echo 'Foreign permission has been added.' . PHP_EOL;
-
-            $this->foreignPermission = $foreignAccess;
-        }
-
-        /**
-         * Add rule which checks user owner rights
-         */
-        protected function createOwnerAccess()
-        {
-            $ownerAccessRule = new OwnerAccessRule();
-            $this->authManager->add($ownerAccessRule);
-            echo 'ownerAccess rule has been created.' . PHP_EOL;
-
-            $ownerAccess = $this->authManager->createPermission('ownerAccess');
-            echo 'Owner permission has been created.' . PHP_EOL;
-
-            $ownerAccess->description = 'Доступ к своему контенту';
-            $ownerAccess->ruleName    = $ownerAccessRule->name;
-            echo 'Owner permission attributes has been saved.' . PHP_EOL;
-
-            $this->authManager->add($ownerAccess);
-            echo 'Owner permission has been added.' . PHP_EOL;
-
-            $this->ownerPermission = $ownerAccess;
         }
     }

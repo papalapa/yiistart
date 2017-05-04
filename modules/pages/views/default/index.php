@@ -3,6 +3,7 @@
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -48,23 +49,19 @@
 
                 'id',
                 [
-                    'attribute' => 'header_ru',
-                    'filter'    => false,
-                ],
-                [
-                    'attribute' => 'header_en',
+                    'attribute' => 'header',
                     'filter'    => false,
                 ],
                 // 'text:ntext',
                 [
-                    'attribute' => 'img',
+                    'attribute' => 'image',
                     'format'    => 'html',
                     'filter'    => [0 => 'нет', 1 => 'есть'],
                     'content'   => function ($model) {
                         /**
                          * @var Pages $model
                          */
-                        return $model->img
+                        return $model->image
                             ? Html::tag('i', null, ['class' => 'text-success fa fa-check'])
                             : Html::tag('i', null, ['class' => 'fa fa-times-circle']);
                     },
@@ -79,22 +76,39 @@
                     'label'       => Html::tag('span', Html::tag('i', null, ['class' => 'fa fa-globe']),
                         ['data-toggle' => 'tooltip', 'title' => 'Мета-теги']),
                     'encodeLabel' => false,
-                    'content'     => function ($model) {
-                        /**
-                         * @var Pages $model
-                         */
+                    'content'     => function ($model) /* @var Pages $model */ {
+
                         $meta = [];
 
                         foreach (['title' => 'header', 'description' => 'info', 'keywords' => 'key'] as $tag => $ico) {
-                            foreach (i18n::locales() as $locale) {
-                                if ($model->{$tag . '_' . $locale}) {
-                                    $meta[] = Html::tag('span',
-                                        Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
-                                        ['class' => 'label label-success', 'data-toggle' => 'tooltip', 'title' => sprintf('%s (%s)', $tag, $locale)]);
-                                } else {
-                                    $meta[] = Html::tag('span',
-                                        Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
-                                        ['class' => 'label label-danger', 'data-toggle' => 'tooltip', 'title' => sprintf('%s (%s)', $tag, $locale)]);
+                            $meta[] = Html::tag('span',
+                                Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . Yii::$app->language,
+                                [
+                                    'class'       => 'label label-danger',
+                                    'data-toggle' => 'tooltip',
+                                    'title'       => sprintf('%s (%s)', $tag, Yii::$app->language),
+                                ]);
+                            if ($model->multilingual) {
+                                foreach (i18n::locales() as $locale) {
+                                    if (Yii::$app->language <> $locale) {
+                                    }
+                                    if ($model->{$tag . '_' . $locale}) {
+                                        $meta[] = Html::tag('span',
+                                            Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
+                                            [
+                                                'class'       => 'label label-success',
+                                                'data-toggle' => 'tooltip',
+                                                'title'       => sprintf('%s (%s)', $tag, $locale),
+                                            ]);
+                                    } else {
+                                        $meta[] = Html::tag('span',
+                                            Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
+                                            [
+                                                'class'       => 'label label-danger',
+                                                'data-toggle' => 'tooltip',
+                                                'title'       => sprintf('%s (%s)', $tag, $locale),
+                                            ]);
+                                    }
                                 }
                             }
                         }
@@ -106,8 +120,14 @@
                 // 'updated_by',
                 // 'created_at',
                 // 'updated_at',
-
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class'       => GridActionColumn::className(),
+                    'permissions' => [
+                        'view'   => 'viewPage',
+                        'update' => 'updatePage',
+                        'delete' => 'deletePage',
+                    ],
+                ],
             ],
         ]);
     ?>

@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\modules\pages\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\base\UnknownMethodException;
     use yii\behaviors\BlameableBehavior;
@@ -129,8 +130,21 @@
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0],
 
-                [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
-                [['image'], 'validateImage'],
+                [['image'], 'string', 'max' => 128],
+                [
+                    ['image'],
+                    FilePathValidator::className(),
+                    'webroot'                => $this->module->webroot,
+                    'path'                   => $this->module->savePath . DIRECTORY_SEPARATOR . $this->module->saveDir,
+                    'pattern'                => $this->module->filenamePattern,
+                    'fileRules'              => [
+                        'extensions'             => $this->module->fileExtensions,
+                        'minSize'                => 500 * 1024,
+                        'maxSize'                => 200 * 1024,
+                        'enableClientValidation' => false,
+                    ],
+                    'enableClientValidation' => false,
+                ],
             ];
 
             if ($this->multilingual) {
@@ -150,15 +164,6 @@
             }
 
             return new ActiveQuery(get_called_class());
-        }
-
-        /**
-         * Validate image path, that must be a local
-         * @return bool
-         */
-        public function validateImage()
-        {
-            return call_user_func($this->module->validateImage, $this->image);
         }
 
         /**

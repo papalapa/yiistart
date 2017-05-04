@@ -51,7 +51,8 @@
                         }
 
                         echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), [
-                            'controller' => 'upload',
+                            'controller' => $model->module->uploadController,
+                            'model'      => $model,
                             'filter'     => 'image',
                         ]);
                     ?>

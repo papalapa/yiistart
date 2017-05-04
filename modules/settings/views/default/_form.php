@@ -1,9 +1,8 @@
 <?php
 
-
     use papalapa\yiistart\models\User;
+    use papalapa\yiistart\widgets\BootstrapActiveForm;
     use yii\helpers\Html;
-    use yii\widgets\ActiveForm;
 
     /* @var $this yii\web\View */
     /* @var $model papalapa\yiistart\modules\settings\models\Settings */
@@ -12,7 +11,7 @@
 
 <div class="settings-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = BootstrapActiveForm::begin(); ?>
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => User::identity()->role <> User::ROLE_DEVELOPER]); ?>
 
@@ -25,6 +24,6 @@
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php BootstrapActiveForm::end(); ?>
 
 </div>

@@ -1,6 +1,7 @@
 <?php
 
     use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridDateColumn;
     use papalapa\yiistart\widgets\GridIntegerColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
@@ -40,7 +41,6 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
-
                 [
                     'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
@@ -69,8 +69,14 @@
                     'class'     => GridDateColumn::className(),
                     'attribute' => 'updated_at',
                 ],
-
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class'       => GridActionColumn::className(),
+                    'permissions' => [
+                        'view'   => 'viewSetting',
+                        'update' => 'updateSetting',
+                        'delete' => 'deleteSetting',
+                    ],
+                ],
             ],
         ]);
     ?>
