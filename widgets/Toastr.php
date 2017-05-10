@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\widgets;
 
-    use papalapa\yiistart\assets\ToastrAsset;
+    use papalapa\yiistart\assets\CDN_CodeSeven_Toastr_Asset;
     use yii\base\Widget;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -92,7 +92,7 @@
                 ]);
             }
 
-            ToastrAsset::register($this->view);
+            CDN_CodeSeven_Toastr_Asset::register($this->view);
 
             $this->view->registerJs($js);
 

@@ -27,14 +27,14 @@
                 'createSetting' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
-                    'ico' => 'fa fa-plus-circle',
+                    'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
                 ],
             ],
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-settings-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         echo GridView::widget([

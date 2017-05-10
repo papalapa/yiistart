@@ -3,7 +3,6 @@
     namespace papalapa\yiistart\validators;
 
     use papalapa\yiistart\helpers\FileHelper;
-    use papalapa\yiistart\models\MultilingualActiveRecord;
     use yii\base\InvalidConfigException;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Inflector;
@@ -31,14 +30,14 @@
          */
         public function validateAttribute($model, $attribute)
         {
-            $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'],false);
+            $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'], false);
             $path     = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);
 
-            if (!$basePath || !$path){
+            if (!$basePath || !$path) {
                 throw new InvalidConfigException('File uploader is not defined on "controllerMap" in config.php');
             }
 
-            $dirname  = Inflector::camel2id((new \ReflectionClass($model))->getShortName());
+            $dirname = Inflector::camel2id((new \ReflectionClass($model))->getShortName());
 
             if (FileHelper::normalizePath($path . DIRECTORY_SEPARATOR . $dirname) <> pathinfo($model->$attribute, PATHINFO_DIRNAME)) {
                 return $this->addError($model, $attribute, 'Путь к файлу не соответствует указанной модели', $params = []);

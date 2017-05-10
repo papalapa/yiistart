@@ -25,7 +25,8 @@
         public function rules()
         {
             return [
-                [['is_active', 'sort'], 'integer'],
+                [['sort'], 'integer'],
+                [['is_active'], 'boolean'],
                 [['position'], 'in', 'range' => Menu::positions()],
                 [['title', 'url'], 'safe'],
             ];

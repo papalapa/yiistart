@@ -4,13 +4,13 @@
 
     use yii\base\Behavior;
     use yii\base\InvalidConfigException;
-    use yii\base\InvalidParamException;
     use yii\db\ActiveRecord;
     use yii\db\Expression;
+    use yii\helpers\Inflector;
 
     /**
      * Class TrackingBehavior
-     * TODO: refactor
+     * TODO: need to refactor
      * @property ActiveRecord $owner
      * @package papalapa\yiistart\behaviors
      */
@@ -94,26 +94,13 @@
         public function trackEvent()
         {
             $this->touchEvent();
+
+            $modelName = Inflector::camel2id((new \ReflectionClass($this->owner->className()))->getShortName());
+            $modelId   = $this->owner->getAttribute('id');
+
             \Yii::$app->db->createCommand()->insert(self::tableName(), [
-                'content_type' => $this->ensureContentType(),
-                'content_id'   => $this->owner->getAttribute('id'),
+                'model_name' => $modelName,
+                'model_id'   => $modelId,
             ])->execute();
-        }
-
-        /**
-         * Ensure that contentType is set
-         * @return string
-         */
-        protected function ensureContentType()
-        {
-            if (!is_string($this->contentType) || $this->contentType === '') {
-                if (!$this->owner->hasMethod('contentType')) {
-                    throw new InvalidParamException('Attribute "contentType" must have a string value or owner has method contentType().');
-                } else {
-                    $this->contentType = $this->owner->contentType();
-                }
-            }
-
-            return $this->contentType;
         }
     }

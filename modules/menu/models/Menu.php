@@ -33,11 +33,6 @@
         const POSITION_TOP    = 'Верхнее меню';
         const POSITION_MAIN   = 'Основное меню';
         const POSITION_BOTTOM = 'Нижнее меню';
-        /**
-         * Available menu positions
-         * @var array
-         */
-        public $availablePositions = [self::POSITION_TOP, self::POSITION_MAIN, self::POSITION_BOTTOM];
 
         /**
          * @inheritdoc
@@ -145,13 +140,16 @@
          */
         public static function positions()
         {
-            $positions = [
-                self::POSITION_TOP    => self::POSITION_TOP,
-                self::POSITION_MAIN   => self::POSITION_MAIN,
-                self::POSITION_BOTTOM => self::POSITION_BOTTOM,
-            ];
+            $positions = [self::POSITION_TOP, self::POSITION_MAIN, self::POSITION_BOTTOM];
 
-            return array_intersect_assoc(ArrayHelper::getValue(\Yii::$app->params, 'menuPositions', $positions), $positions);
+            $availablePositions = ArrayHelper::getValue(\Yii::$app->params, 'menuPositions', $positions);
+            if ($availablePositions <> array_values($availablePositions)) {
+                $availablePositions = array_keys($availablePositions);
+            }
+
+            $combinedPositions = array_intersect($positions, $availablePositions);
+
+            return array_combine($combinedPositions, $combinedPositions);
         }
 
         /**

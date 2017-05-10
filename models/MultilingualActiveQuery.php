@@ -32,7 +32,9 @@
             if (!isset($this->with['translations'])) {
                 $this->with([
                     'translation' => function ($query) use ($language, $abridge) /* @var $query ActiveQuery */ {
-                        $query->where([$this->languageField => $abridge ? substr($language, 0, 2) : $language]);
+                        $query->where([
+                            $this->languageField => $abridge ? substr($language, 0, 2) : $language
+                        ]);
                     },
                 ]);
             }

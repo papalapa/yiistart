@@ -2,6 +2,7 @@
 
     use papalapa\yiistart\modules\i18n\models\SourceMessage;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridIntegerColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -25,13 +26,14 @@
                 'createTranslation' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
+                    'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
                 ],
             ],
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-i18n-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         $categories = SourceMessage::find()->select(['category'])->distinct('category')->all();
@@ -41,7 +43,6 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
-
                 [
                     'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
@@ -50,8 +51,7 @@
                     'attribute' => 'category',
                     'label'     => 'Категория',
                     'filter'    => ArrayHelper::map($categories, 'category', 'category'),
-                    'value'     => function ($model) {
-                        /** @var $model SourceMessage */
+                    'value'     => function ($model) /* @var $model SourceMessage */ {
                         return $model->category;
                     },
                 ],
@@ -59,15 +59,20 @@
                 [
                     'label'   => 'Переведено',
                     'format'  => 'html',
-                    'content' => function ($model) {
-                        /** @var $model SourceMessage */
+                    'content' => function ($model) /* @var $model SourceMessage */ {
                         return $model->isTranslated()
                             ? Html::tag('i', null, ['class' => 'text-success fa fa-check'])
                             : Html::tag('i', null, ['class' => 'text-danger fa fa-times-circle']);
                     },
                 ],
-
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class'       => GridActionColumn::className(),
+                    'permissions' => [
+                        'view'   => 'viewTranslation',
+                        'update' => 'updateTranslation',
+                        'delete' => 'deleteTranslation',
+                    ],
+                ],
             ],
         ]);
     ?>

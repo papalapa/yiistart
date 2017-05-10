@@ -124,6 +124,8 @@
             $model = new $this->model;
 
             if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                \Yii::$app->session->setFlash('success', 'Объект успешно создан и сохранен!');
+
                 return $this->redirect(['view', 'id' => $model->primaryKey]);
             } else {
                 return $this->render('create', ['model' => $model]);
@@ -151,6 +153,8 @@
             }
 
             if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+                \Yii::$app->session->setFlash('info', 'Изменения приняты!');
+
                 return $this->redirect(['view', 'id' => $model->primaryKey]);
             } else {
                 return $this->render('update', ['model' => $model]);
@@ -178,7 +182,9 @@
                 throw new ForbiddenHttpException('У вас недостаточно прав на удаление чужих записей');
             }
 
-            $model->delete();
+            if ($model->delete()) {
+                \Yii::$app->session->setFlash('success', 'Объект удален!');
+            }
 
             return $this->redirect(['index']);
         }
@@ -232,6 +238,8 @@
                 /* TODO: or show the real error $model->errors */
                 return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут имеет неверное значение!']);
             }
+
+            \Yii::$app->session->setFlash('info', 'Изменения приняты!');
 
             return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-toggle-column.php',
                 ['model' => $model, 'attribute' => $attribute]);

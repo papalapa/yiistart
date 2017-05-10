@@ -10,7 +10,7 @@
      */
     class BootstrapActiveForm_Asset extends AssetBundle
     {
-        public $sourcePath     = '@vendor/papalapa/yiistart/assets/css/active-form';
+        public $sourcePath     = '@vendor/papalapa/yiistart/assets/app/css/active-form';
         public $css            = [
             'styles.css',
         ];

@@ -3,6 +3,7 @@
     use papalapa\yiistart\modules\elements\models\ElementCategory;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridIntegerColumn;
     use yii\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
@@ -31,7 +32,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-elements-category-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         echo GridView::widget([
@@ -39,7 +40,10 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
-                'id',
+                [
+                    'class'     => GridIntegerColumn::className(),
+                    'attribute' => 'id',
+                ],
                 'name',
                 [
                     'label'   => 'Кол-во элементов',

@@ -1,6 +1,6 @@
 <?php
 
-    use papalapa\yiistart\modules\menu\Module;
+    use papalapa\yiistart\modules\menu\models\Menu;
     use yii\db\Migration;
 
     /**
@@ -16,7 +16,7 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{menu}}', [
                 'id'         => $this->primaryKey(),
-                'position'   => $this->string(32)->defaultValue(Module::POSITION_MAIN),
+                'position'   => $this->string(32)->defaultValue(Menu::POSITION_MAIN),
                 'url'        => $this->string(64)->notNull(),
                 'title'      => $this->string(64)->notNull(),
                 'sort'       => $this->smallInteger()->unsigned()->notNull(),

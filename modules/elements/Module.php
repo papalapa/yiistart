@@ -4,6 +4,7 @@
 
     /**
      * Class Module
+     * Before using this module run migration papalapa/yiistart/modules/elements/migrations
      * @package papalapa\yiistart\modules\elements
      */
     class Module extends \papalapa\yiistart\modules\Module

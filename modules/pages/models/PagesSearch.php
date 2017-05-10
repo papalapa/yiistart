@@ -25,7 +25,8 @@
         public function rules()
         {
             return [
-                [['id', 'is_active'], 'integer'],
+                [['id'], 'integer'],
+                [['is_active'], 'boolean'],
                 [['image'], 'boolean'],
                 [['title', 'header'], 'safe'],
             ];

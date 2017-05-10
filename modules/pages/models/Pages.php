@@ -30,7 +30,6 @@
      * @property integer            $updated_by
      * @property string             $created_at
      * @property string             $updated_at
-     * @property boolean            $multilingual
      * @property PagesTranslation[] $translations
      */
     class Pages extends MultilingualActiveRecord
@@ -110,17 +109,7 @@
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active'],
                 self::SCENARIO_DEVELOPER => [
-                    'title',
-                    'description',
-                    'keywords',
-                    'header',
-                    'context',
-                    'text',
-                    'image',
-                    'is_active',
-                    'url',
-                    'contextable',
-                    'imagable',
+                    'title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', 'url', 'contextable', 'imagable',
                 ],
             ]);
         }

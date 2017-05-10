@@ -3,9 +3,11 @@
     /* @var $attribute string */
     /* @var $value boolean */
 
+    use papalapa\yiistart\widgets\ToastrAlert;
     use yii\db\ActiveRecord;
     use yii\helpers\Url;
 
+    echo ToastrAlert::widget();
 ?>
 <div class="pjax-toggle-attribute-<?= $attribute ?>-handler" id="pjax-toggle-attribute-<?= $attribute ?>-<?= $model->primaryKey ?>" data-pjax-container="">
     <? if (is_null($model->getAttribute($attribute))) : ?>

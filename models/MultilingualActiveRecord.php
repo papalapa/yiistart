@@ -131,7 +131,7 @@
                     foreach ((array)$attributes as $attribute) {
                         if (in_array($attribute, $behaviorAttributes)) {
                             foreach ($this->availableLocales($behavior) as $locale) {
-                                if ($locale <> \Yii::$app->language) {
+                                if (\Yii::$app->language <> $locale) {
                                     $validator = $rule;
                                     array_unshift($validator, sprintf('%s_%s', $attribute, $locale));
                                     $rules[] = $validator;

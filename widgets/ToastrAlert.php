@@ -31,7 +31,7 @@
         /**
          * @var bool
          */
-        public $isAjax      = false;
+        public $isAjax = false;
         /**
          * @var array
          */

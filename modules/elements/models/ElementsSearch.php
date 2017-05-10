@@ -2,7 +2,6 @@
 
     namespace papalapa\yiistart\modules\elements\models;
 
-    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
@@ -17,7 +16,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Model::scenarios();
+            return Elements::scenarios();
         }
 
         /**

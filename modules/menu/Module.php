@@ -2,21 +2,15 @@
 
     namespace papalapa\yiistart\modules\menu;
 
-    use papalapa\yiistart\modules\menu\models\Menu;
-
     /**
      * Class Module
+     * Before using this module run migration papalapa/yiistart/modules/menu/migrations
      * @package papalapa\yiistart\modules\menu
      */
-    class Module extends \papalapa\yiistart\modules\Module
+    class Module extends \yii\base\Module
     {
         /**
          * @var string
          */
         public $controllerNamespace = 'papalapa\yiistart\modules\menu\controllers';
-        /**
-         * Available menu positions
-         * @var array
-         */
-        public $availablePositions = [Menu::POSITION_TOP, Menu::POSITION_MAIN, Menu::POSITION_BOTTOM];
     }

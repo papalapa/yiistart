@@ -9,7 +9,7 @@
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\pages\models\Pages */
 
-    $this->title                   = $model->title;
+    $this->title                   = $model->header;
     $this->params['breadcrumbs'][] = ['label' => 'Страницы', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -70,10 +70,14 @@
         echo $form->field($model, 'sort')->textInput(['type' => 'number']);
     ?>
 
+    <br />
+
     <?= $form->field($model, 'is_active')->checkbox() ?>
 
+    <hr />
+
     <div class="form-group">
-        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-save']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
+        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

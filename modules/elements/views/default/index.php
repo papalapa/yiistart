@@ -4,6 +4,7 @@
     use papalapa\yiistart\modules\elements\models\Elements;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridIntegerColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -36,7 +37,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-elements-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         $categories = ElementCategory::find()->select(['id', 'name'])->orderBy(['name' => SORT_ASC])->asArray()->indexBy('id')->all();
@@ -46,7 +47,10 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
-                'id',
+                [
+                    'class'     => GridIntegerColumn::className(),
+                    'attribute' => 'id',
+                ],
                 [
                     'attribute' => 'category_id',
                     'filter'    => ArrayHelper::map($categories, 'id', 'name'),

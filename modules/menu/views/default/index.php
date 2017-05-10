@@ -32,7 +32,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-menu-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         $siteUrlManager          = clone (Yii::$app->urlManager);
