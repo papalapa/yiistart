@@ -3,8 +3,8 @@
     use papalapa\yiistart\models\User;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\MultilingualDetailView;
     use yii\helpers\Html;
-    use yii\widgets\DetailView;
 
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\pages\models\Pages */
@@ -23,12 +23,14 @@
                 'updatePage' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
+                    'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
                 'deletePage' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',
+                    'ico'   => 'fa fa-trash',
                     'data'  => [
                         'confirm' => 'Вы уверены, что хотите удалить?',
                         'method'  => 'post',
@@ -40,10 +42,9 @@
         $siteUrlManager          = clone (Yii::$app->urlManager);
         $siteUrlManager->baseUrl = '/';
 
-        echo DetailView::widget([
+        echo MultilingualDetailView::widget([
             'model'      => $model,
             'attributes' => [
-                //'id',
                 [
                     'attribute' => 'id',
                     'format'    => 'html',
@@ -51,35 +52,28 @@
                         /**
                          * @var Pages $model
                          */
-                        return Html::tag('h4',
-                            Html::a(
-                                $siteUrlManager->createAbsoluteUrl(['/site/page', 'id' => $model->id]),
-                                $siteUrlManager->createUrl(['/site/page', 'id' => $model->id]),
-                                ['target' => '_blank']
-                            )
+                        return Html::a(
+                            $siteUrlManager->createAbsoluteUrl(['/site/page', 'id' => $model->id]),
+                            $siteUrlManager->createUrl(['/site/page', 'id' => $model->id]),
+                            ['target' => '_blank']
                         );
                     },
                 ],
                 [
                     'attribute' => 'header',
                     'format'    => 'html',
-                    'value'     => function ($model) {
-                        /**
-                         * @var Pages $model
-                         */
+                    'value'     => function ($model) /* @var Pages $model */ {
                         return Html::tag('h4', $model->header);
                     },
                 ],
                 [
                     'attribute' => 'image',
                     'format'    => 'html',
-                    'value'     => function ($model) {
-                        /**
-                         * @var Pages $model
-                         */
+                    'value'     => function ($model) /* @var Pages $model */ {
                         return $model->image ? Html::img($model->image, ['width' => 200]) : null;
                     },
                 ],
+                'context:html',
                 'text:html',
                 'title',
                 'description',

@@ -4,6 +4,7 @@
 
     use mihaildev\elfinder\ElFinder;
     use yii\helpers\ArrayHelper;
+    use yii\helpers\Inflector;
 
     /**
      * Class CKEditor
@@ -13,11 +14,25 @@
      */
     class CKEditor extends \mihaildev\ckeditor\CKEditor
     {
+        /**
+         * Upload image controller
+         * @var string
+         */
+        public $uploadController = 'upload';
+        /**
+         * Upload image to subdirectory
+         * @var
+         */
+        public $uploadPath;
+        /**
+         * @var array
+         */
         public $clientOptions = [
-            'inline'   => false, // inline editor or boxed
-            'upload'   => true, // allow upload images dialog
-            'height'   => 250, // editor height
-            'visually' => true, // show visual blocks or hide
+            'inline'        => false, // inline editor or boxed
+            'upload'        => true, // allow upload images dialog
+            'uploadOptions' => [],
+            'height'        => 250, // editor height
+            'visually'      => false, // show visual blocks or hide
         ];
 
         /**
@@ -26,7 +41,10 @@
         public function init()
         {
             if (ArrayHelper::remove($this->clientOptions, 'upload', true)) {
-                $options = ElFinder::ckeditorOptions('upload', [/* Some CKEditor Options */]);
+                if (!$this->uploadPath) {
+                    $this->uploadPath = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName());
+                }
+                $options = ElFinder::ckeditorOptions([$this->uploadController, 'path' => $this->uploadPath], [/* Some CKEditor options */]);
             }
 
             $options['toolbarGroups'] = [
@@ -52,7 +70,9 @@
             /**
              * Set visual blocks is visible when start
              */
-            //$this->view->registerJs('CKEDITOR.config.startupOutlineBlocks = true;');
+            if (ArrayHelper::remove($this->clientOptions, 'visually', false)) {
+                $this->view->registerJs('CKEDITOR.config.startupOutlineBlocks = true;');
+            }
 
             parent::init();
         }

@@ -33,6 +33,7 @@
         {
             $this->model       = SourceMessage::className();
             $this->searchModel = SourceMessageSearch::className();
+
             parent::init();
         }
 

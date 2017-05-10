@@ -1,9 +1,8 @@
 <?php
 
-    use papalapa\yiistart\modules\i18n\models\i18n;
-    use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridMetatagsColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -16,6 +15,7 @@
 
     $this->title                   = 'Страницы';
     $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="pages-index">
 
@@ -29,6 +29,7 @@
                 'createPage' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
+                    'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
                 ],
             ],
@@ -46,26 +47,11 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
-
                 'id',
-                [
-                    'attribute' => 'header',
-                    'filter'    => false,
-                ],
+                'header',
                 // 'text:ntext',
-                [
-                    'attribute' => 'image',
-                    'format'    => 'html',
-                    'filter'    => [0 => 'нет', 1 => 'есть'],
-                    'content'   => function ($model) {
-                        /**
-                         * @var Pages $model
-                         */
-                        return $model->image
-                            ? Html::tag('i', null, ['class' => 'text-success fa fa-check'])
-                            : Html::tag('i', null, ['class' => 'fa fa-times-circle']);
-                    },
-                ],
+                // 'context:ntext',
+                // 'image',
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
@@ -73,48 +59,12 @@
                     'labelIco'   => 'fa fa-eye',
                 ],
                 [
-                    'label'       => Html::tag('span', Html::tag('i', null, ['class' => 'fa fa-globe']),
-                        ['data-toggle' => 'tooltip', 'title' => 'Мета-теги']),
-                    'encodeLabel' => false,
-                    'content'     => function ($model) /* @var Pages $model */ {
-
-                        $meta = [];
-
-                        foreach (['title' => 'header', 'description' => 'info', 'keywords' => 'key'] as $tag => $ico) {
-                            $meta[] = Html::tag('span',
-                                Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . Yii::$app->language,
-                                [
-                                    'class'       => 'label label-danger',
-                                    'data-toggle' => 'tooltip',
-                                    'title'       => sprintf('%s (%s)', $tag, Yii::$app->language),
-                                ]);
-                            if ($model->multilingual) {
-                                foreach (i18n::locales() as $locale) {
-                                    if (Yii::$app->language <> $locale) {
-                                    }
-                                    if ($model->{$tag . '_' . $locale}) {
-                                        $meta[] = Html::tag('span',
-                                            Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
-                                            [
-                                                'class'       => 'label label-success',
-                                                'data-toggle' => 'tooltip',
-                                                'title'       => sprintf('%s (%s)', $tag, $locale),
-                                            ]);
-                                    } else {
-                                        $meta[] = Html::tag('span',
-                                            Html::tag('i', null, ['class' => 'fa fa-' . $ico]) . ' | ' . $locale,
-                                            [
-                                                'class'       => 'label label-danger',
-                                                'data-toggle' => 'tooltip',
-                                                'title'       => sprintf('%s (%s)', $tag, $locale),
-                                            ]);
-                                    }
-                                }
-                            }
-                        }
-
-                        return implode(' ', $meta);
-                    },
+                    'class'      => GridMetatagsColumn::className(),
+                    'attributes' => [
+                        'title'       => 'header',
+                        'description' => 'info',
+                        'keywords'    => 'key',
+                    ],
                 ],
                 // 'created_by',
                 // 'updated_by',

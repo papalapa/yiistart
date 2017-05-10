@@ -185,6 +185,42 @@
             $deletePage              = $this->authManager->createPermission('deletePage');
             $deletePage->description = 'Удаление страниц';
 
+            /** Управление меню */
+            $createMenu              = $this->authManager->createPermission('createMenu');
+            $createMenu->description = 'Создание пунктов меню';
+            $viewMenu                = $this->authManager->createPermission('viewMenu');
+            $viewMenu->description   = 'Просмотр пунктов меню';
+            $indexMenu               = $this->authManager->createPermission('indexMenu');
+            $indexMenu->description  = 'Листинг пунктов меню';
+            $updateMenu              = $this->authManager->createPermission('updateMenu');
+            $updateMenu->description = 'Изменение пунктов меню';
+            $deleteMenu              = $this->authManager->createPermission('deleteMenu');
+            $deleteMenu->description = 'Удаление пунктов меню';
+
+            /** Управление категориями элементов страниц */
+            $createElementCategory              = $this->authManager->createPermission('createElementCategory');
+            $createElementCategory->description = 'Создание категорий элементов страниц';
+            $viewElementCategory                = $this->authManager->createPermission('viewElementCategory');
+            $viewElementCategory->description   = 'Просмотр категорий элементов страниц';
+            $indexElementCategory               = $this->authManager->createPermission('indexElementCategory');
+            $indexElementCategory->description  = 'Листинг категорий элементов страниц';
+            $updateElementCategory              = $this->authManager->createPermission('updateElementCategory');
+            $updateElementCategory->description = 'Изменение категорий элементов страниц';
+            $deleteElementCategory              = $this->authManager->createPermission('deleteElementCategory');
+            $deleteElementCategory->description = 'Удаление категорий элементов страниц';
+
+            /** Управление элементами страниц */
+            $createElement              = $this->authManager->createPermission('createElement');
+            $createElement->description = 'Создание элементов страниц';
+            $viewElement                = $this->authManager->createPermission('viewElement');
+            $viewElement->description   = 'Просмотр элементов страниц';
+            $indexElement               = $this->authManager->createPermission('indexElement');
+            $indexElement->description  = 'Листинг элементов страниц';
+            $updateElement              = $this->authManager->createPermission('updateElement');
+            $updateElement->description = 'Изменение элементов страниц';
+            $deleteElement              = $this->authManager->createPermission('deleteElement');
+            $deleteElement->description = 'Удаление элементов страниц';
+
             echo 'New permissions has been created.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -214,6 +250,24 @@
             $this->authManager->add($updatePage);
             $this->authManager->add($deletePage);
 
+            $this->authManager->add($createMenu);
+            $this->authManager->add($viewMenu);
+            $this->authManager->add($indexMenu);
+            $this->authManager->add($updateMenu);
+            $this->authManager->add($deleteMenu);
+
+            $this->authManager->add($createElementCategory);
+            $this->authManager->add($viewElementCategory);
+            $this->authManager->add($indexElementCategory);
+            $this->authManager->add($updateElementCategory);
+            $this->authManager->add($deleteElementCategory);
+
+            $this->authManager->add($createElement);
+            $this->authManager->add($viewElement);
+            $this->authManager->add($indexElement);
+            $this->authManager->add($updateElement);
+            $this->authManager->add($deleteElement);
+
             echo 'New permissions has been added.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -238,7 +292,7 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSetting);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSetting);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSetting);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting);
 
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPage);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPage);
@@ -246,7 +300,33 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updatePage);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deletePage);
 
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createMenu);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewMenu);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexMenu);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateMenu);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteMenu);
+
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexElementCategory);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateElementCategory);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteElementCategory);
+
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createElement);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewElement);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexElement);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateElement);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteElement);
+
+            /** Developer */
+
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteSetting);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $updateElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElement);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElement);
 
             echo 'All child permissions has been added.' . PHP_EOL;
 

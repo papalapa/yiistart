@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\modules\settings\controllers;
 
-    use papalapa\yiistart\controllers\ManageController;
+    use papalapa\yiistart\controllers\MultilingualManageController;
     use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\settings\models\SettingsSearch;
 
@@ -10,7 +10,7 @@
      * Class DefaultController
      * @package papalapa\yiistart\modules\settings\controllers
      */
-    class DefaultController extends ManageController
+    class DefaultController extends MultilingualManageController
     {
         /**
          * @var array
@@ -28,9 +28,9 @@
          */
         public function init()
         {
-            $this->model        = Settings::className();
-            $this->searchModel  = SettingsSearch::className();
-            $this->multilingual = $this->module->multilingual;
+            $this->model       = Settings::className();
+            $this->searchModel = SettingsSearch::className();
+
             parent::init();
         }
     }

@@ -5,7 +5,7 @@
     /**
      * Handles the creation of table `photo_translation`.
      */
-    class m170504_043149_create__tablePagestranslation extends Migration
+    class m170504_043149_create_table_pages_translation extends Migration
     {
         /**
          * @inheritdoc
@@ -17,12 +17,12 @@
                 'id'          => $this->primaryKey(),
                 'language'    => $this->string(16)->notNull(),
                 'content_id'  => $this->integer()->unsigned()->notNull(),
-                'title'       => $this->string(256)->notNull(),
+                'title'       => $this->string(256)->defaultValue(null),
                 'description' => $this->string(1024)->defaultValue(null),
                 'keywords'    => $this->string(1024)->defaultValue(null),
                 'header'      => $this->string(256)->defaultValue(null),
                 'context'     => $this->string(1024)->defaultValue(null),
-                'text'        => $this->text()->notNull(),
+                'text'        => $this->text()->defaultValue(null),
             ], $tableOptions);
 
             $this->alterColumn('{{pages_translation}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');

@@ -22,12 +22,14 @@
                 'updateTranslation' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
+                    'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
                 'deleteTranslation' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',
+                    'ico'   => 'fa fa-trash',
                     'data'  => [
                         'confirm' => 'Вы уверены, что хотите удалить?',
                         'method'  => 'post',

@@ -28,7 +28,7 @@ $this->createTable("{{{$this->translationTable}}}", [
 '' => $this->string(),
 ], $tableOptions);
 
-$this->alterColumn('{{{$this->translationTable}}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+$this->alterColumn("{{{$this->translationTable}}}", '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
 $this->createIndex("idx_{$this->translationTable}_content_id", "{{{$this->translationTable}}}", ['[[content_id]]']);
 $this->createIndex("idx_{$this->translationTable}_language", "{{{$this->translationTable}}}", ['[[language]]']);
 $this->createIndex("idx_{$this->translationTable}_language_content_id", "{{{$this->translationTable}}}", ['[[language]]', '[[content_id]]'], true);

@@ -2,7 +2,6 @@
 
     namespace papalapa\yiistart\modules\pages\models;
 
-    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
@@ -17,7 +16,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Model::scenarios();
+            return Pages::scenarios();
         }
 
         /**
@@ -39,11 +38,7 @@
          */
         public function search($params)
         {
-            $query = Pages::find();
-
-            if ($this->multilingual) {
-                $query->multilingual();
-            }
+            $query = Pages::find()->multilingual();
 
             // add conditions that should always apply here
 
@@ -67,9 +62,9 @@
 
             if (!is_null($this->image) && $this->image !== '') {
                 if ($this->image) {
-                    $query->andWhere(['or', ['!=', 'image', ''], ['is not', 'image', null]]);
+                    $query->andWhere(['AND', ['!=', 'image', ''], ['IS NOT', 'image', null]]);
                 } else {
-                    $query->andWhere(['or', ['=', 'image', ''], ['is', 'image', null]]);
+                    $query->andWhere(['OR', ['=', 'image', ''], ['IS', 'image', null]]);
                 }
             }
 

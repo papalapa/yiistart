@@ -5,9 +5,9 @@
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\pages\models\Pages */
 
-    $this->title                   = 'Изменение страницы: ' . $model->title;
+    $this->title                   = 'Изменение страницы: ' . $model->header;
     $this->params['breadcrumbs'][] = ['label' => 'Страницы', 'url' => ['index']];
-    $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+    $this->params['breadcrumbs'][] = ['label' => $model->header, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = 'Изменение';
 ?>
 <div class="pages-update">

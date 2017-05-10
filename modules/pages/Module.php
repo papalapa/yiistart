@@ -8,5 +8,8 @@
      */
     class Module extends \papalapa\yiistart\modules\Module
     {
+        /**
+         * @var string
+         */
         public $controllerNamespace = 'papalapa\yiistart\modules\pages\controllers';
     }

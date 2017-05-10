@@ -1,19 +1,20 @@
 <?php
 
+    use papalapa\yiistart\models\User;
     use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\widgets\BootstrapActiveForm;
     use papalapa\yiistart\widgets\CKEditor;
     use papalapa\yiistart\widgets\ElfinderImageInput;
     use yii\helpers\Html;
-    use yii\widgets\ActiveForm;
 
     /* @var $this yii\web\View */
     /* @var $model papalapa\yiistart\modules\pages\models\Pages */
-    /* @var $form yii\widgets\ActiveForm */
+    /* @var $form BootstrapActiveForm */
 ?>
 
 <div class="pages-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = BootstrapActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'class' => 'bootstrap-active-form']]); ?>
 
     <div class="row">
         <div class="col-lg-8 col-md-6">
@@ -23,26 +24,26 @@
                 </div>
                 <div class="panel-body">
                     <?
+                        if (User::identity()->role == User::ROLE_DEVELOPER) {
+                            echo $form->field($model, 'url')->textInput(['maxlength' => true]);
+                        }
+
                         echo $form->field($model, 'header')->textInput(['maxlength' => true]);
-                        if ($model->multilingual) {
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'header_' . $locale)->textInput(['maxlength' => true]);
-                                }
+                        foreach (i18n::locales() as $locale) {
+                            if (Yii::$app->language <> $locale) {
+                                echo $form->field($model, 'header_' . $locale)->textInput(['maxlength' => true]);
                             }
                         }
 
-                        echo $form->field($model, 'context')->widget(CKEditor::className());
-                        if ($model->multilingual) {
+                        if ($model->isNewRecord || $model->contextable) {
+                            echo $form->field($model, 'context')->widget(CKEditor::className());
                             foreach (i18n::locales() as $locale) {
                                 if (Yii::$app->language <> $locale) {
                                     echo $form->field($model, 'context_' . $locale)->widget(CKEditor::className());
                                 }
                             }
-                        }
 
-                        echo $form->field($model, 'text')->widget(CKEditor::className());
-                        if ($model->multilingual) {
+                            echo $form->field($model, 'text')->widget(CKEditor::className());
                             foreach (i18n::locales() as $locale) {
                                 if (Yii::$app->language <> $locale) {
                                     echo $form->field($model, 'text_' . $locale)->widget(CKEditor::className());
@@ -50,11 +51,16 @@
                             }
                         }
 
-                        echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), [
-                            'controller' => $model->module->uploadController,
-                            'model'      => $model,
-                            'filter'     => 'image',
-                        ]);
+                        if ($model->isNewRecord || $model->imagable) {
+                            echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), [
+                                'filter' => 'image',
+                            ]);
+                        }
+
+                        if (User::identity()->role == User::ROLE_DEVELOPER) {
+                            echo $form->field($model, 'contextable')->checkbox();
+                            echo $form->field($model, 'imagable')->checkbox();
+                        }
                     ?>
 
                     <?= $form->field($model, 'is_active')->checkbox() ?>
@@ -70,29 +76,23 @@
 
                     <?php
                         echo $form->field($model, 'title')->textInput(['maxlength' => true]);
-                        if ($model->multilingual) {
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'title_' . $locale)->textInput(['maxlength' => true]);
-                                }
+                        foreach (i18n::locales() as $locale) {
+                            if (Yii::$app->language <> $locale) {
+                                echo $form->field($model, 'title_' . $locale)->textInput(['maxlength' => true]);
                             }
                         }
 
                         echo $form->field($model, 'description')->textInput(['maxlength' => true]);
-                        if ($model->multilingual) {
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'description_' . $locale)->textInput(['maxlength' => true]);
-                                }
+                        foreach (i18n::locales() as $locale) {
+                            if (Yii::$app->language <> $locale) {
+                                echo $form->field($model, 'description_' . $locale)->textInput(['maxlength' => true]);
                             }
                         }
 
                         echo $form->field($model, 'keywords')->textInput(['maxlength' => true]);
-                        if ($model->multilingual) {
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'keywords_' . $locale)->textInput(['maxlength' => true]);
-                                }
+                        foreach (i18n::locales() as $locale) {
+                            if (Yii::$app->language <> $locale) {
+                                echo $form->field($model, 'keywords_' . $locale)->textInput(['maxlength' => true]);
                             }
                         }
                     ?>
@@ -103,10 +103,10 @@
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить',
+        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-save']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php BootstrapActiveForm::end(); ?>
 
 </div>

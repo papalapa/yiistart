@@ -5,14 +5,14 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\i18n\models\i18n;
     use yii\db\ActiveRecord;
-    use yii\grid\Column;
+    use yii\grid\DataColumn;
     use yii\helpers\Html;
 
     /**
      * Class GridMetatagsColumn
      * @package papalapa\yiistart\widgets
      */
-    class GridMetatagsColumn extends Column
+    class GridMetatagsColumn extends DataColumn
     {
         /**
          * @var string
@@ -52,7 +52,7 @@
 
             foreach ($this->attributes as $attribute => $ico) {
                 if ($model->hasAttribute($attribute)) {
-                    if ($model->multilingual) {
+                    if ($model->hasAttribute($attribute)) {
                         foreach (i18n::locales() as $locale) {
                             $html[] = $this->renderAttribute($model, $attribute, $ico, $locale);
                         }

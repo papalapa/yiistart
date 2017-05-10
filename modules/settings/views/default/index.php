@@ -27,6 +27,7 @@
                 'createSetting' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
+                    'ico' => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
                 ],
             ],

@@ -2,7 +2,6 @@
 
     namespace papalapa\yiistart\controllers;
 
-    use papalapa\yiistart\models\MultilingualActiveQuery;
     use yii\db\ActiveRecord;
     use yii\filters\AccessControl;
     use yii\filters\VerbFilter;
@@ -19,25 +18,15 @@
     abstract class ManageController extends Controller
     {
         /**
-         * @var
-         */
-        public $module;
-        /**
          * Default active record model class
-         * @var
+         * @var ActiveRecord
          */
         protected $model;
         /**
          * Default active record search model class
-         * @var
+         * @var ActiveRecord
          */
         protected $searchModel;
-        /**
-         * Use multilingual model
-         * This using to list all of multilingual attributes like title_en
-         * @var
-         */
-        protected $multilingual;
         /**
          * Permissions array
          * @var array
@@ -268,16 +257,9 @@
         protected function findModel($id)
         {
             /* @var $activeRecord ActiveRecord */
-            $activeRecord = $this->model;
+            $activeRecord = new $this->model;
 
-            $query = $activeRecord::find()->where(['id' => $id]);
-
-            if ($this->multilingual) {
-                /* @var $query MultilingualActiveQuery */
-                $query->multilingual();
-            }
-
-            if (null === $model = $query->one()) {
+            if (null === $model = $activeRecord::findOne($id)) {
                 throw new NotFoundHttpException('Указанная страница не найдена.');
             }
 

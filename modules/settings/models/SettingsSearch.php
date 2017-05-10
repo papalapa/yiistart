@@ -37,7 +37,7 @@
          */
         public function search($params)
         {
-            $query = Settings::find();
+            $query = Settings::find()->multilingual();
 
             // add conditions that should always apply here
 

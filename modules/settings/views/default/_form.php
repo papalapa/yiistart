@@ -1,6 +1,7 @@
 <?php
 
     use papalapa\yiistart\models\User;
+    use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use yii\helpers\Html;
 
@@ -15,12 +16,19 @@
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => User::identity()->role <> User::ROLE_DEVELOPER]); ?>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
+    <?php
+        echo $form->field($model, 'value')->textInput(['maxlength' => true]);
+        foreach (i18n::locales() as $locale) {
+            if (Yii::$app->language <> $locale) {
+                echo $form->field($model, 'value_' . $locale)->textInput(['maxlength' => true]);
+            }
+        }
+    ?>
 
     <?= $form->field($model, 'is_active')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить',
+        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-save']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

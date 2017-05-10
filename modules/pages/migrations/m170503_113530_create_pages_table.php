@@ -15,13 +15,16 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{pages}}', [
                 'id'          => $this->primaryKey(),
+                'url'         => $this->string(64)->defaultValue(null),
                 'title'       => $this->string(256)->notNull(),
                 'description' => $this->string(1024)->defaultValue(null),
                 'keywords'    => $this->string(1024)->defaultValue(null),
                 'header'      => $this->string(256)->defaultValue(null),
                 'context'     => $this->string(1024)->defaultValue(null),
-                'text'        => $this->text()->notNull(),
+                'text'        => $this->text()->defaultValue(null),
                 'image'       => $this->string(128)->defaultValue(null),
+                'contextable' => $this->boolean()->unsigned()->defaultValue(true),
+                'imagable'    => $this->boolean()->unsigned()->defaultValue(true),
                 'is_active'   => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'created_by'  => $this->integer()->unsigned()->notNull(),
                 'updated_by'  => $this->integer()->unsigned()->notNull(),

@@ -4,21 +4,17 @@
 
     use omgdef\multilingual\MultilingualBehavior;
     use papalapa\yiistart\modules\i18n\models\i18n;
+    use yii\db\ActiveQuery;
     use yii\db\ActiveRecord;
     use yii\helpers\ArrayHelper;
 
     /**
      * Class MultilingualActiveRecord
+     * @property boolean $multilingual
      * @package common\models
      */
     abstract class MultilingualActiveRecord extends ActiveRecord
     {
-        /**
-         * Multilingual flag
-         * @var boolean
-         */
-        public $multilingual;
-
         /**
          * @return array
          */
@@ -36,11 +32,32 @@
         }
 
         /**
-         * @return MultilingualActiveQuery
+         * @return ActiveQuery|MultilingualActiveQuery
          */
         public static function find()
         {
             return new MultilingualActiveQuery(get_called_class());
+        }
+
+        /**
+         * @param $scenarios
+         * @return mixed
+         */
+        public function localizedScenarios($scenarios)
+        {
+            if ($behavior = ArrayHelper::getValue(static::behaviors(), 'MultilingualBehavior')) {
+                $behaviorAttributes = $behavior['attributes'];
+
+                foreach ($scenarios as $scenario => $attributes) {
+                    foreach ($behaviorAttributes as $attribute) {
+                        foreach ($this->availableLocales($behavior) as $locale) {
+                            $scenarios[$scenario][] = sprintf('%s_%s', $attribute, $locale);
+                        }
+                    }
+                }
+            }
+
+            return $scenarios;
         }
 
         /**
@@ -126,35 +143,6 @@
             }
 
             return $rules;
-        }
-
-        /**
-         * @param $details
-         * @return mixed
-         */
-        public function localizedDetails($details)
-        {
-            if ($behavior = ArrayHelper::getValue(static::behaviors(), 'MultilingualBehavior')) {
-                $behaviorAttributes = $behavior['attributes'];
-
-                foreach ($details as $key => $detail) {
-                    $attribute = ArrayHelper::remove($detail, 'attribute');
-
-                    if ($attribute && in_array($attribute, $behaviorAttributes)) {
-                        foreach ($this->availableLocales($behavior) as $index => $locale) {
-                            if ($locale <> \Yii::$app->language) {
-                                array_splice($details, $key + $index, 0,
-                                    array_replace($detail, [
-                                        'attribute' => sprintf('%s_%s', $attribute, $locale),
-                                    ])
-                                );
-                            }
-                        }
-                    }
-                }
-            }
-
-            return $details;
         }
 
         /**
