@@ -50,6 +50,7 @@
                     'attribute' => 'category_id',
                     'value'     => $model->category->name,
                 ],
+                'alias',
                 'name',
                 'text:html',
                 [

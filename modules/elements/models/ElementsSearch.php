@@ -28,7 +28,7 @@
                 [['id', 'category_id'], 'integer'],
                 [['is_active'], 'boolean'],
                 [['format'], 'in', 'range' => array_keys(Elements::formats())],
-                [['name', 'description'], 'safe'],
+                [['alias', 'name', 'description'], 'safe'],
             ];
         }
 
@@ -63,7 +63,8 @@
                 'format'      => $this->format,
             ]);
 
-            $query->andFilterWhere(['like', 'name', $this->name])
+            $query->andFilterWhere(['like', 'alias', $this->alias])
+                  ->andFilterWhere(['like', 'name', $this->name])
                   ->andFilterWhere(['like', 'description', $this->description]);
 
             $query->with('category');

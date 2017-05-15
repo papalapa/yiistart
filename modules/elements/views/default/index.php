@@ -51,6 +51,7 @@
                     'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
                 ],
+                'alias',
                 [
                     'attribute' => 'category_id',
                     'filter'    => ArrayHelper::map($categories, 'id', 'name'),

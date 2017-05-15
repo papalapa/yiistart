@@ -59,6 +59,7 @@
                         );
                     },
                 ],
+                'url',
                 [
                     'attribute' => 'header',
                     'format'    => 'html',

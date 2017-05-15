@@ -14,6 +14,7 @@
     /**
      * This is the model class for table "elements".
      * @property integer             $id
+     * @property string              $alias
      * @property integer             $category_id
      * @property string              $name
      * @property string              $text
@@ -53,6 +54,7 @@
         {
             return $this->localizedAttributes([
                 'id'          => 'ID',
+                'alias'       => 'Альяс',
                 'category_id' => 'Категория',
                 'name'        => 'Название',
                 'text'        => 'Текст',
@@ -93,6 +95,11 @@
         public function rules()
         {
             return $this->localizedRules([
+                [['alias'], WhiteSpaceNormalizerValidator::className()],
+                [['alias'], 'string', 'max' => 64],
+                [['alias'], 'match', 'pattern' => '/^[a-z]+(\.[a-z]+)*$/'],
+                [['alias'], 'unique'],
+
                 [['category_id'], 'required'],
                 [['category_id'], 'integer'],
                 [

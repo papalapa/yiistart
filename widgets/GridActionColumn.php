@@ -28,9 +28,9 @@
             ]);
 
             $this->visibleButtons = [
-                'view'   => array_key_exists('view', $this->permissions) ? \Yii::$app->user->can($this->permissions['view']) : true,
-                'update' => array_key_exists('update', $this->permissions) ? \Yii::$app->user->can($this->permissions['update']) : true,
-                'delete' => array_key_exists('delete', $this->permissions) ? \Yii::$app->user->can($this->permissions['delete']) : true,
+                'view'   => array_key_exists('view', $this->permissions) ? \Yii::$app->user->can($this->permissions['view']) : false,
+                'update' => array_key_exists('update', $this->permissions) ? \Yii::$app->user->can($this->permissions['update']) : false,
+                'delete' => array_key_exists('delete', $this->permissions) ? \Yii::$app->user->can($this->permissions['delete']) : false,
             ];
 
             parent::init();
