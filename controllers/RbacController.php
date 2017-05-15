@@ -221,6 +221,30 @@
             $deleteElement              = $this->authManager->createPermission('deleteElement');
             $deleteElement->description = 'Удаление элементов страниц';
 
+            /** Управление рассылками */
+            $createDispatch              = $this->authManager->createPermission('createDispatch');
+            $createDispatch->description = 'Создание подписок';
+            $viewDispatch                = $this->authManager->createPermission('viewDispatch');
+            $viewDispatch->description   = 'Просмотр подписок';
+            $indexDispatch               = $this->authManager->createPermission('indexDispatch');
+            $indexDispatch->description  = 'Листинг подписок';
+            $updateDispatch              = $this->authManager->createPermission('updateDispatch');
+            $updateDispatch->description = 'Изменение подписок';
+            $deleteDispatch              = $this->authManager->createPermission('deleteDispatch');
+            $deleteDispatch->description = 'Удаление подписок';
+
+            /** Управление подписчиками */
+            $createSubscriber              = $this->authManager->createPermission('createSubscriber');
+            $createSubscriber->description = 'Создание подписчика';
+            $viewSubscriber                = $this->authManager->createPermission('viewSubscriber');
+            $viewSubscriber->description   = 'Просмотр подписчика';
+            $indexSubscriber               = $this->authManager->createPermission('indexSubscriber');
+            $indexSubscriber->description  = 'Листинг подписчика';
+            $updateSubscriber              = $this->authManager->createPermission('updateSubscriber');
+            $updateSubscriber->description = 'Изменение подписчика';
+            $deleteSubscriber              = $this->authManager->createPermission('deleteSubscriber');
+            $deleteSubscriber->description = 'Удаление подписчика';
+
             echo 'New permissions has been created.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -267,6 +291,18 @@
             $this->authManager->add($indexElement);
             $this->authManager->add($updateElement);
             $this->authManager->add($deleteElement);
+
+            $this->authManager->add($createDispatch);
+            $this->authManager->add($viewDispatch);
+            $this->authManager->add($indexDispatch);
+            $this->authManager->add($updateDispatch);
+            $this->authManager->add($deleteDispatch);
+
+            $this->authManager->add($createSubscriber);
+            $this->authManager->add($viewSubscriber);
+            $this->authManager->add($indexSubscriber);
+            $this->authManager->add($updateSubscriber);
+            $this->authManager->add($deleteSubscriber);
 
             echo 'New permissions has been added.' . PHP_EOL;
 
@@ -318,6 +354,18 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateElement);
             // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteElement);
 
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createDispatch);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewDispatch);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexDispatch);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateDispatch);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteDispatch);
+
+            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSubscriber);
+            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSubscriber);
+            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSubscriber);
+
             /** Developer */
 
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSetting);
@@ -327,6 +375,9 @@
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElementCategory);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElement);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElement);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $viewSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $updateSubscriber);
 
             echo 'All child permissions has been added.' . PHP_EOL;
 
