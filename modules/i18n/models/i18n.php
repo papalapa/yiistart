@@ -16,7 +16,7 @@
          */
         public static function locales()
         {
-            if (false === $locales = ArrayHelper::getValue(\Yii::$app->params, 'availableLocales', false)) {
+            if (false === $locales = ArrayHelper::getValue(\Yii::$app->params, 'i18n.locales.available', false)) {
                 throw new InvalidParamException("Need to set available locales in 'params.php' file: ['ru','en'] or ['ru' => 'Ru', 'en' => 'En']");
             }
 

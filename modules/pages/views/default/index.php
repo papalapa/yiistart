@@ -21,7 +21,7 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <h4>Изменения вступают в силу в течение <?= ArrayHelper::getValue(Yii::$app->params, 'cache.page.duration', 60) ?> сек.</h4>
+    <h4>Изменения вступают в силу в течение <?= ArrayHelper::getValue(Yii::$app->params, 'cache.duration.page', 60) ?> сек.</h4>
 
     <?
         echo ControlButtonsPanel::widget([

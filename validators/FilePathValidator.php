@@ -30,6 +30,9 @@
          */
         public function validateAttribute($model, $attribute)
         {
+            $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName());
+            $this->uploadController = ArrayHelper::getValue(\Yii::$app->params, sprintf('%s.upload.controller', $camel), $this->uploadController);
+
             $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'], false);
             $path     = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);
 

@@ -142,7 +142,7 @@
         {
             $positions = [self::POSITION_TOP, self::POSITION_MAIN, self::POSITION_BOTTOM];
 
-            $availablePositions = ArrayHelper::getValue(\Yii::$app->params, 'menuPositions', $positions);
+            $availablePositions = ArrayHelper::getValue(\Yii::$app->params, 'menu.positions', $positions);
             if ($availablePositions <> array_values($availablePositions)) {
                 $availablePositions = array_keys($availablePositions);
             }

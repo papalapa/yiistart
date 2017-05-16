@@ -38,14 +38,6 @@
          * Developer`s scenario
          */
         const SCENARIO_DEVELOPER = 'developer';
-        /**
-         * @var
-         */
-        public $uploadController = 'upload';
-        /**
-         * @var
-         */
-        public $uploadRule;
 
         /**
          * @inheritdoc
@@ -142,11 +134,11 @@
                 [['is_active'], 'default', 'value' => 0],
 
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
-                [['image'], FilePathValidator::className(), 'uploadController' => $this->uploadController],
+                [['image'], FilePathValidator::className()],
             ]);
 
-            if ($this->uploadRule) {
-                $rules[] = $this->uploadRule;
+            if ($rule = ArrayHelper::getValue(\Yii::$app->params, 'page.upload.rule', false)) {
+                $rules[] = $rule;
             }
 
             return $rules;
@@ -167,7 +159,7 @@
             $siteUrlManager->baseUrl = '/';
             $url                     = $siteUrlManager->createUrl(['/site/page', 'id' => $this->id]);
 
-            if (Menu::find()->where(['url' => $url])->count()) {
+            if (Menu::find()->where(['url' => $url])->exists()) {
                 \Yii::$app->session->setFlash('error', 'Перед удалением этой страницы необходимо удалить ссылку на неё из модуля "Меню".');
 
                 return false;

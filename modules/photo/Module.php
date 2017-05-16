@@ -6,7 +6,7 @@
      * Class Module
      * @package papalapa\yiistart\modules\photo
      */
-    class Module extends \papalapa\yiistart\modules\Module
+    class Module extends \yii\base\Module
     {
         /**
          * @inheritdoc

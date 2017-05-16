@@ -31,15 +31,6 @@
     class Photo extends MultilingualActiveRecord
     {
         /**
-         * @var
-         */
-        public $uploadController = 'upload';
-        /**
-         * @var
-         */
-        public $uploadRule;
-
-        /**
          * @inheritdoc
          */
         public static function tableName()
@@ -95,7 +86,7 @@
          */
         public function rules()
         {
-            return $this->localizedRules([
+            $rules = $this->localizedRules([
                 [['title', 'text'], WhiteSpaceNormalizerValidator::className()],
                 [['title'], 'string', 'max' => 128],
                 [['text'], 'string'],
@@ -109,10 +100,20 @@
 
                 [['image'], 'required'],
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
-                [['image'], FilePathValidator::className(), 'uploadController' => $this->uploadController],
+                [['image'], FilePathValidator::className()],
             ]);
+
+            if ($rule = ArrayHelper::getValue(\Yii::$app->params, 'photo.upload.rule', false)) {
+                $rules[] = $rule;
+            }
+
+            return $rules;
         }
 
+        /**
+         * @param bool $insert
+         * @return bool
+         */
         public function beforeSave($insert)
         {
             $path         = \Yii::getAlias("@frontend/web{$this->image}");
