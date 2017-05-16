@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\modules\elements\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\models\User;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
@@ -13,6 +14,7 @@
 
     /**
      * This is the model class for table "elements".
+     *
      * @property integer             $id
      * @property string              $alias
      * @property integer             $category_id
@@ -30,14 +32,15 @@
      */
     class Elements extends MultilingualActiveRecord
     {
-        const FORMAT_HTML      = 'html';
-        const FORMAT_TEXT      = 'text';
-        const FORMAT_EMAIL     = 'email';
-        const FORMAT_TEL       = 'tel';
-        const ICO_FORMAT_HTML  = 'html';
-        const ICO_FORMAT_TEXT  = 'text';
-        const ICO_FORMAT_EMAIL = 'email';
-        const ICO_FORMAT_TEL   = 'tel';
+        const SCENARIO_DEVELOPER = 'developer';
+        const FORMAT_HTML        = 'html';
+        const FORMAT_TEXT        = 'text';
+        const FORMAT_EMAIL       = 'email';
+        const FORMAT_TEL         = 'tel';
+        const ICO_FORMAT_HTML    = 'html';
+        const ICO_FORMAT_TEXT    = 'text';
+        const ICO_FORMAT_EMAIL   = 'email';
+        const ICO_FORMAT_TEL     = 'tel';
 
         /**
          * @inheritdoc
@@ -87,6 +90,17 @@
                     'attributes'    => ['text'],
                 ],
             ]);
+        }
+
+        /**
+         * @return array
+         */
+        public function scenarios()
+        {
+            return [
+                self::SCENARIO_DEFAULT   => ['category_id', 'name', 'text', 'format', 'description', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['category_id', 'name', 'text', 'format', 'description', 'is_active', 'alias'],
+            ];
         }
 
         /**
@@ -217,6 +231,21 @@
                 self::FORMAT_EMAIL => 'Email',
                 self::FORMAT_TEL   => 'Телефон',
             ];
+        }
+
+        /**
+         * @param array $data
+         * @param null  $formName
+         *
+         * @return bool
+         */
+        public function load($data, $formName = null)
+        {
+            if (User::identity()->role == User::ROLE_DEVELOPER) {
+                $this->scenario = self::SCENARIO_DEVELOPER;
+            }
+
+            return parent::load($data, $formName);
         }
 
         /**

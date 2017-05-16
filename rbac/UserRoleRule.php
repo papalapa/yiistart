@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\rbac;
 
-    use papalapa\yiistart\models\BaseUser;
+    use papalapa\yiistart\models\User;
     use yii;
     use yii\rbac\Item;
     use yii\rbac\Rule;
@@ -28,20 +28,20 @@
          */
         public function execute($user, $item, $params)
         {
-            $role = Yii::$app->user->isGuest ? BaseUser::ROLE_GUEST : BaseUser::identity()->role;
+            $role = Yii::$app->user->isGuest ? User::ROLE_GUEST : User::identity()->role;
 
             if ($item->name === 'developer') {
-                return $role == BaseUser::ROLE_DEVELOPER;
+                return $role == User::ROLE_DEVELOPER;
             } elseif ($item->name === 'admin') {
-                return $role >= BaseUser::ROLE_ADMIN;
+                return $role >= User::ROLE_ADMIN;
             } elseif ($item->name === 'manager') {
-                return $role == BaseUser::ROLE_MANAGER || $role >= BaseUser::ROLE_ADMIN;
+                return $role == User::ROLE_MANAGER || $role >= User::ROLE_ADMIN;
             } elseif ($item->name === 'author') {
-                return $role == BaseUser::ROLE_AUTHOR || $role >= BaseUser::ROLE_ADMIN;
+                return $role == User::ROLE_AUTHOR || $role >= User::ROLE_ADMIN;
             } elseif ($item->name === 'user') {
-                return $role == BaseUser::ROLE_USER || $role >= BaseUser::ROLE_ADMIN;
+                return $role == User::ROLE_USER || $role >= User::ROLE_ADMIN;
             } elseif ($item->name === 'guest') {
-                return $role == BaseUser::ROLE_GUEST || $role >= BaseUser::ROLE_ADMIN;
+                return $role == User::ROLE_GUEST || $role >= User::ROLE_ADMIN;
             }
 
             return false;

@@ -4,7 +4,9 @@
 
     use papalapa\yiistart\modules\subscribe\models\Dispatches;
     use papalapa\yiistart\modules\subscribe\models\PivotDispatchesSubscribers;
+    use papalapa\yiistart\modules\subscribe\models\Subscribers;
     use yii\console\Controller;
+    use yii\db\Expression;
 
     /**
      * Class SendController
@@ -19,23 +21,57 @@
          */
         public function actionMail()
         {
-            $emails = $this->batch(10);
-
-
         }
 
         /**
-         * @param int $count
-         * @return array|PivotDispatchesSubscribers[]
+         * Connects pivot with dispatches and subscribers
          */
-        protected function batch($count = 10)
+        public function actionConnect()
         {
-            /* @var $dispatch Dispatches */
-            $dispatch = Dispatches::find()->where(['status' => Dispatches::STATUS_ON])
-                                  ->orderBy(['created_at' => SORT_ASC])->one();
-            $emails   = $dispatch->getPivotDispatchesSubscribers()->select(['subscriber_id'])
-                                 ->where(['status' => PivotDispatchesSubscribers::STATUS_WAIT])->limit($count)->all();
+            if (!$dispatch = $this->activeDispatch()) {
+                echo 'No anyone active dispatches' . PHP_EOL;
+                exit;
+            }
 
-            return $emails;
+            if (!$emails = $this->activeSubscribers()) {
+                echo 'No anyone active subscribers' . PHP_EOL;
+                exit;
+            }
+
+            while ($batch = array_splice($emails, 0, 10)) {
+                $batch = array_map(function ($element) use ($dispatch) {
+                    array_push($element, $dispatch->id, PivotDispatchesSubscribers::STATUS_WAIT);
+                    var_dump($element);die;
+                }, $batch);
+
+                var_dump($batch);die;
+                \Yii::$app->db->createCommand()
+                              ->batchInsert(PivotDispatchesSubscribers::tableName(), ['subscriber_id', 'dispatch_id', 'status'], $batch)
+                              ->execute();
+            }
+
+            $dispatch->updateAttributes(['status' => Dispatches::STATUS_END]);
+
+            echo sprintf('%d subscribers has been connected with dispatch %d', count($emails), $dispatch->id) . PHP_EOL;
+        }
+
+        /**
+         * Returns oldest active dispatch
+         * @return array|null|Dispatches
+         */
+        protected function activeDispatch()
+        {
+            return Dispatches::find()->where(['status' => Dispatches::STATUS_ON])
+                             ->andWhere(['<=', 'start_at', new Expression('CURDATE()')])
+                             ->orderBy(['created_at' => SORT_ASC])->one();
+        }
+
+        /**
+         * Returns all active subscribers
+         * @return array|Subscribers[]
+         */
+        protected function activeSubscribers()
+        {
+            return Subscribers::find()->select(['id'])->where(['status' => Subscribers::STATUS_ON])->asArray()->all();
         }
     }

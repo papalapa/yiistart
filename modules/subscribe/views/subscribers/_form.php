@@ -2,7 +2,6 @@
 
     use papalapa\yiistart\modules\subscribe\models\Subscribers;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
-    use papalapa\yiistart\widgets\DateTimePicker;
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
@@ -17,8 +16,6 @@
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->radioList(Subscribers::statuses()) ?>
-
-    <?= $form->field($model, 'created_at')->widget(DateTimePicker::className()) ?>
 
     <hr />
 

@@ -35,7 +35,11 @@
         ]);
     ?>
 
-    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
+    <?
+        if (User::identity()->role == User::ROLE_DEVELOPER) {
+            echo $form->field($model, 'alias')->textInput(['maxlength' => true]);
+        }
+    ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
