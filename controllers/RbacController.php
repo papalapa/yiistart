@@ -245,6 +245,18 @@
             $deleteSubscriber              = $this->authManager->createPermission('deleteSubscriber');
             $deleteSubscriber->description = 'Удаление подписчика';
 
+            /** Управление фотографиями */
+            $createPhoto              = $this->authManager->createPermission('createPhoto');
+            $createPhoto->description = 'Создание фотографий';
+            $viewPhoto                = $this->authManager->createPermission('viewPhoto');
+            $viewPhoto->description   = 'Просмотр фотографий';
+            $indexPhoto               = $this->authManager->createPermission('indexPhoto');
+            $indexPhoto->description  = 'Листинг фотографий';
+            $updatePhoto              = $this->authManager->createPermission('updatePhoto');
+            $updatePhoto->description = 'Изменение фотографий';
+            $deletePhoto              = $this->authManager->createPermission('deletePhoto');
+            $deletePhoto->description = 'Удаление фотографий';
+
             echo 'New permissions has been created.' . PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -303,6 +315,12 @@
             $this->authManager->add($indexSubscriber);
             $this->authManager->add($updateSubscriber);
             $this->authManager->add($deleteSubscriber);
+
+            $this->authManager->add($createPhoto);
+            $this->authManager->add($viewPhoto);
+            $this->authManager->add($indexPhoto);
+            $this->authManager->add($updatePhoto);
+            $this->authManager->add($deletePhoto);
 
             echo 'New permissions has been added.' . PHP_EOL;
 
@@ -365,6 +383,12 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSubscriber);
             //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSubscriber);
+
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPhoto);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPhoto);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexPhoto);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updatePhoto);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deletePhoto);
 
             /** Developer */
 

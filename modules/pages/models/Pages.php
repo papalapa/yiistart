@@ -41,7 +41,7 @@
         /**
          * @var
          */
-        public $uploadController;
+        public $uploadController = 'upload';
         /**
          * @var
          */
