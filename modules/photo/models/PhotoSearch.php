@@ -26,7 +26,7 @@
         public function rules()
         {
             return [
-                [['id', 'index_number'], 'integer'],
+                [['id', 'order'], 'integer'],
                 [['is_active'], 'boolean'],
             ];
         }
@@ -57,7 +57,7 @@
             // grid filtering conditions
             $query->andFilterWhere([
                 'id'           => $this->id,
-                'index_number' => $this->index_number,
+                'order' => $this->order,
                 'is_active'    => $this->is_active,
             ]);
 

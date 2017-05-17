@@ -38,9 +38,9 @@
         ]);
 
         if ($model->isNewRecord && !$model->hasErrors()) {
-            $model->index_number = $model::find()->select(['index_number'])->max('index_number') + 1;
+            $model->order = $model::find()->select(['order'])->max('order') + 1;
         }
-        echo $form->field($model, 'index_number')->textInput(['type' => 'number']);
+        echo $form->field($model, 'order')->textInput(['type' => 'number']);
     ?>
 
     <br />

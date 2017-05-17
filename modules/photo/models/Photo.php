@@ -20,7 +20,7 @@
      * @property integer            $size
      * @property integer            $width
      * @property integer            $height
-     * @property integer            $index_number
+     * @property integer            $order
      * @property integer            $is_active
      * @property integer            $created_by
      * @property integer            $updated_by
@@ -44,19 +44,19 @@
         public function attributeLabels()
         {
             return $this->localizedAttributes([
-                'id'           => 'ID',
-                'title'        => 'Заголовок',
-                'text'         => 'Описание',
-                'image'        => 'Изображение',
-                'size'         => 'Размер',
-                'width'        => 'Ширина',
-                'height'       => 'Высота',
-                'index_number' => 'Порядковый номер',
-                'is_active'    => 'Активность',
-                'created_by'   => 'Кем создано',
-                'updated_by'   => 'Кем изменено',
-                'created_at'   => 'Дата создания',
-                'updated_at'   => 'Дата изменения',
+                'id'         => 'ID',
+                'title'      => 'Заголовок',
+                'text'       => 'Описание',
+                'image'      => 'Изображение',
+                'size'       => 'Размер',
+                'width'      => 'Ширина',
+                'height'     => 'Высота',
+                'order'      => 'Порядковый номер',
+                'is_active'  => 'Активность',
+                'created_by' => 'Кем создано',
+                'updated_by' => 'Кем изменено',
+                'created_at' => 'Дата создания',
+                'updated_at' => 'Дата изменения',
             ]);
         }
 
@@ -91,9 +91,9 @@
                 [['title'], 'string', 'max' => 128],
                 [['text'], 'string'],
 
-                [['index_number'], 'required'],
-                [['index_number'], 'integer'],
-                [['index_number'], 'unique'],
+                [['order'], 'required'],
+                [['order'], 'integer'],
+                [['order'], 'unique'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],

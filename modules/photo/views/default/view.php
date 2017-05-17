@@ -8,7 +8,7 @@
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\photo\models\Photo */
 
-    $this->title                   = sprintf('№%s', $model->id, $model->index_number);
+    $this->title                   = sprintf('№%s', $model->id, $model->order);
     $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -55,7 +55,7 @@
             'size',
             'width',
             'height',
-            'index_number',
+            'order',
             [
                 'attribute' => 'is_active',
                 'value'     => Html::tag('i', null,

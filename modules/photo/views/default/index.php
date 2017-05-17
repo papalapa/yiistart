@@ -39,7 +39,7 @@
         $siteUrlManager          = clone Yii::$app->urlManager;
         $siteUrlManager->baseUrl = '/';
 
-        $indexNumbers = Photo::find()->select(['index_number'])->orderBy(['index_number' => SORT_ASC])->asArray()->all();
+        $indexNumbers = Photo::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
@@ -48,8 +48,8 @@
                 //['class' => 'yii\grid\SerialColumn'],
                 //'id',
                 [
-                    'attribute' => 'index_number',
-                    'filter'    => ArrayHelper::map($indexNumbers, 'index_number', 'index_number'),
+                    'attribute' => 'order',
+                    'filter'    => ArrayHelper::map($indexNumbers, 'order', 'order'),
                 ],
                 [
                     'attribute' => 'title',
