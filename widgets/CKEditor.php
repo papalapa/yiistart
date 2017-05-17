@@ -25,6 +25,10 @@
          */
         public $uploadPath;
         /**
+         * @var
+         */
+        public $fileFilter = ['application/pdf'];
+        /**
          * @var array
          */
         public $clientOptions = [
@@ -44,7 +48,11 @@
                 if (!$this->uploadPath) {
                     $this->uploadPath = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName());
                 }
-                $options = ElFinder::ckeditorOptions([$this->uploadController, 'path' => $this->uploadPath], [/* Some CKEditor options */]);
+                $options = ElFinder::ckeditorOptions([
+                    $this->uploadController,
+                    'path'   => $this->uploadPath,
+                    'filter' => $this->fileFilter,
+                ], [/* Some CKEditor options */]);
             }
 
             $options['toolbarGroups'] = [

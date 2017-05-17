@@ -62,7 +62,7 @@
                     'content'   => function ($model) use ($siteUrlManager) /* @var Photo $model */ {
                         $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;
 
-                        return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-ajax' => false, 'target' => '_blank']) : null;
+                        return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-pjax' => 0, 'target' => '_blank']) : null;
                     },
                 ],
                 [

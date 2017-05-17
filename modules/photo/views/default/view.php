@@ -44,9 +44,7 @@
         'attributes' => [
             'id',
             'title',
-            'title_en',
             'text:text',
-            'text_en:text',
             [
                 'attribute' => 'image',
                 'format'    => 'html',
