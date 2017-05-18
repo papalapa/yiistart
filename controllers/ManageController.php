@@ -99,10 +99,8 @@
         {
             $model = $this->findModel($id);
 
-            if ($model->hasAttribute('is_active')) {
-                if (!$model->getAttribute('is_active') && !\Yii::$app->user->can($this->permissions['view'])) {
-                    throw new ForbiddenHttpException('У вас недостаточно прав на просмотр');
-                }
+            if (!$model->getAttribute('is_active') && !\Yii::$app->user->can($this->permissions['view'])) {
+                throw new ForbiddenHttpException('У вас недостаточно прав на просмотр');
             }
 
             return $this->render('view', ['model' => $model]);

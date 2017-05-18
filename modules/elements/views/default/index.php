@@ -71,7 +71,7 @@
                     'attribute' => 'text',
                     'format'    => 'html',
                 ],
-                'description',
+                // 'description',
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
