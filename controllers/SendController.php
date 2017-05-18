@@ -2,6 +2,7 @@
 
     namespace vendor\papalapa\yiistart\controllers;
 
+    use frontend\models\SubscribeForm;
     use papalapa\yiistart\modules\subscribe\models\Dispatches;
     use papalapa\yiistart\modules\subscribe\models\PivotDispatchesSubscribers;
     use papalapa\yiistart\modules\subscribe\models\Subscribers;
@@ -41,6 +42,15 @@
                 // correct image links
                 $html = preg_replace('/(src="\/uploads\/)/', sprintf('src="http://%s/uploads/', $domain), $pivot->dispatch->html);
                 $text = $pivot->dispatch->text;
+
+                $unsubscribeUrl = sprintf('http://%s/site/unsubscribe?email=%s&token=%s', $domain, $pivot->subscriber->email,
+                    \Yii::$app->security->hashData($pivot->subscriber->email, SubscribeForm::TOKEN_KEY));
+
+                $html .= sprintf('<br /><p><small>Если вы не хотите больше получать подобные уведомления, перейдите по <a href="%s">этой</a> ссылке.</small></p>',
+                    $unsubscribeUrl);
+
+                $text .= PHP_EOL . PHP_EOL . sprintf('Если вы не хотите больше получать подобные уведомления, перейдите по ссылке %s',
+                        $unsubscribeUrl);
 
                 \Yii::$app->mailer
                     ->compose()
