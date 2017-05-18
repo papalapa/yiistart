@@ -7,6 +7,9 @@
      */
     class m170419_112711_create_table_elements_translation extends Migration
     {
+        /**
+         * @inheritdoc
+         */
         public function up()
         {
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
@@ -26,6 +29,9 @@
                 'CASCADE', 'CASCADE');
         }
 
+        /**
+         * @inheritdoc
+         */
         public function down()
         {
             $this->dropForeignKey('fk_elements_translation__elements__id', '{{elements_translation}}');
