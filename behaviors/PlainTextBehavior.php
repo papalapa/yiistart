@@ -10,7 +10,7 @@
     /**
      * Class PlainTextBehavior
      * @property ActiveRecord|ActiveQuery $owner
-     * @package common\behaviors
+     * @package papalapa\yiistart\behaviors
      */
     class PlainTextBehavior extends Behavior
     {

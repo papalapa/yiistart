@@ -40,32 +40,32 @@
         {
             $this->authManager = \Yii::$app->authManager;
             $this->authManager->removeAll();
-            echo 'Old rules has been removed.' . PHP_EOL;
+            echo 'Old rules has been removed.'.PHP_EOL;
 
             $this->createRoles();
-            $this->createOwnerAccess();
-            $this->createForeignAccess();
-            $this->defaultPermissions();
+            $this->createOwnerAccessRule();
+            $this->createForeignAccessRule();
+            $this->loadPermissions();
         }
 
         /**
          * Add rule which checks user foreign rights
          */
-        protected function createForeignAccess()
+        protected function createForeignAccessRule()
         {
             $foreignAccessRule = new ForeignAccessRule();
             $this->authManager->add($foreignAccessRule);
-            echo 'foreignAccess rule has been created.' . PHP_EOL;
+            echo 'foreignAccess rule has been created.'.PHP_EOL;
 
             $foreignAccess = $this->authManager->createPermission('foreignAccess');
-            echo 'Foreign permission has been created.' . PHP_EOL;
+            echo 'Foreign permission has been created.'.PHP_EOL;
 
             $foreignAccess->description = 'Доступ к чужому контенту';
             $foreignAccess->ruleName    = $foreignAccessRule->name;
-            echo 'Foreign permission attributes has been saved.' . PHP_EOL;
+            echo 'Foreign permission attributes has been saved.'.PHP_EOL;
 
             $this->authManager->add($foreignAccess);
-            echo 'Foreign permission has been added.' . PHP_EOL;
+            echo 'Foreign permission has been added.'.PHP_EOL;
 
             $this->foreignPermission = $foreignAccess;
         }
@@ -73,21 +73,21 @@
         /**
          * Add rule which checks user owner rights
          */
-        protected function createOwnerAccess()
+        protected function createOwnerAccessRule()
         {
             $ownerAccessRule = new OwnerAccessRule();
             $this->authManager->add($ownerAccessRule);
-            echo 'ownerAccess rule has been created.' . PHP_EOL;
+            echo 'ownerAccess rule has been created.'.PHP_EOL;
 
             $ownerAccess = $this->authManager->createPermission('ownerAccess');
-            echo 'Owner permission has been created.' . PHP_EOL;
+            echo 'Owner permission has been created.'.PHP_EOL;
 
             $ownerAccess->description = 'Доступ к своему контенту';
             $ownerAccess->ruleName    = $ownerAccessRule->name;
-            echo 'Owner permission attributes has been saved.' . PHP_EOL;
+            echo 'Owner permission attributes has been saved.'.PHP_EOL;
 
             $this->authManager->add($ownerAccess);
-            echo 'Owner permission has been added.' . PHP_EOL;
+            echo 'Owner permission has been added.'.PHP_EOL;
 
             $this->ownerPermission = $ownerAccess;
         }
@@ -106,8 +106,7 @@
             $this->roles[User::ROLE_MANAGER]   = $this->authManager->createRole(User::roles()[User::ROLE_MANAGER]);
             $this->roles[User::ROLE_ADMIN]     = $this->authManager->createRole(User::roles()[User::ROLE_ADMIN]);
             $this->roles[User::ROLE_DEVELOPER] = $this->authManager->createRole(User::roles()[User::ROLE_DEVELOPER]);
-
-            echo 'User roles has been created.' . PHP_EOL;
+            echo 'User roles has been created.'.PHP_EOL;
 
             $this->roles[User::ROLE_GUEST]->ruleName     = $userRoleRule->name;
             $this->roles[User::ROLE_USER]->ruleName      = $userRoleRule->name;
@@ -122,20 +121,19 @@
             $this->authManager->add($this->roles[User::ROLE_MANAGER]);
             $this->authManager->add($this->roles[User::ROLE_ADMIN]);
             $this->authManager->add($this->roles[User::ROLE_DEVELOPER]);
-
-            echo 'User roles has been added.' . PHP_EOL;
+            echo 'User roles has been added.'.PHP_EOL;
         }
 
         /**
-         * Making rules to editing content
-         * There are five permissions:
+         * Making rules to control content
+         * There are five default permissions:
          * - create content
-         * - view content (attribute is_active)
-         * - listing content (attribute is_active)
+         * - view content (with attribute is_active = false)
+         * - listing content (include models with attribute is_active = false)
          * - update content
          * - delete content
          */
-        protected function defaultPermissions()
+        protected function loadPermissions()
         {
             /** Управление пользователями */
             $createUser              = $this->authManager->createPermission('createUser');
@@ -245,19 +243,19 @@
             $deleteSubscriber              = $this->authManager->createPermission('deleteSubscriber');
             $deleteSubscriber->description = 'Удаление подписчика';
 
-            /** Управление фотографиями */
-            $createPhoto              = $this->authManager->createPermission('createPhoto');
-            $createPhoto->description = 'Создание фотографий';
-            $viewPhoto                = $this->authManager->createPermission('viewPhoto');
-            $viewPhoto->description   = 'Просмотр фотографий';
-            $indexPhoto               = $this->authManager->createPermission('indexPhoto');
-            $indexPhoto->description  = 'Листинг фотографий';
-            $updatePhoto              = $this->authManager->createPermission('updatePhoto');
-            $updatePhoto->description = 'Изменение фотографий';
-            $deletePhoto              = $this->authManager->createPermission('deletePhoto');
-            $deletePhoto->description = 'Удаление фотографий';
+            /** Управление изображениями */
+            $createImages              = $this->authManager->createPermission('createImages');
+            $createImages->description = 'Создание изображений';
+            $viewImages                = $this->authManager->createPermission('viewImages');
+            $viewImages->description   = 'Просмотр изображений';
+            $indexImages               = $this->authManager->createPermission('indexImages');
+            $indexImages->description  = 'Листинг изображений';
+            $updateImages              = $this->authManager->createPermission('updateImages');
+            $updateImages->description = 'Изменение изображений';
+            $deleteImages              = $this->authManager->createPermission('deleteImages');
+            $deleteImages->description = 'Удаление изображений';
 
-            echo 'New permissions has been created.' . PHP_EOL;
+            echo 'New permissions has been created.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
 
@@ -316,13 +314,13 @@
             $this->authManager->add($updateSubscriber);
             $this->authManager->add($deleteSubscriber);
 
-            $this->authManager->add($createPhoto);
-            $this->authManager->add($viewPhoto);
-            $this->authManager->add($indexPhoto);
-            $this->authManager->add($updatePhoto);
-            $this->authManager->add($deletePhoto);
+            $this->authManager->add($createImages);
+            $this->authManager->add($viewImages);
+            $this->authManager->add($indexImages);
+            $this->authManager->add($updateImages);
+            $this->authManager->add($deleteImages);
 
-            echo 'New permissions has been added.' . PHP_EOL;
+            echo 'New permissions has been added.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
 
@@ -336,17 +334,17 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateUser);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteUser);
 
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createTranslation); // translations create automatic
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createTranslation); // translation creates automatic
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewTranslation);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexTranslation);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateTranslation);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteTranslation);
 
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSetting);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSetting); // only for developer
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSetting);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSetting);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSetting);
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting);
+            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting); // only for developer
 
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPage);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPage);
@@ -359,12 +357,6 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexMenu);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateMenu);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteMenu);
-
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexElementCategory);
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateElementCategory);
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteElementCategory);
 
             // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createElement);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewElement);
@@ -384,24 +376,28 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSubscriber);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPhoto);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPhoto);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexPhoto);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updatePhoto);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deletePhoto);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createImages);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewImages);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexImages);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateImages);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteImages);
 
             /** Developer */
 
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSetting);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteSetting);
+
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $viewElementCategory);
+            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $indexElementCategory);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $updateElementCategory);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElementCategory);
+
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElement);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElement);
 
-            echo 'All child permissions has been added.' . PHP_EOL;
+            echo 'All child permissions has been added.'.PHP_EOL;
 
-            echo 'RBAC generate Complete.' . PHP_EOL;
+            echo 'RBAC generate complete.'.PHP_EOL;
         }
     }

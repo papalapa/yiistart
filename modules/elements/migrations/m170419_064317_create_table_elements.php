@@ -1,5 +1,6 @@
 <?php
 
+    use papalapa\yiistart\modules\elements\models\Elements;
     use yii\db\Migration;
 
     /**
@@ -25,9 +26,11 @@
             $this->createTable('{{elements}}', [
                 'id'          => $this->primaryKey(),
                 'category_id' => $this->integer()->unsigned()->notNull(),
+                'alias'       => $this->string(64)->notNull()->unique(),
                 'name'        => $this->string(64)->notNull(),
                 'text'        => $this->text()->notNull(),
-                'format'      => $this->string(16)->notNull()->defaultValue('raw'),
+                'format'      => $this->string(16)->notNull()->defaultValue(Elements::FORMAT_TEXT),
+                'pattern'     => $this->string(128)->defaultValue(null),
                 'description' => $this->string(256)->defaultValue(null),
                 'is_active'   => $this->boolean()->unsigned()->notNull()->defaultValue(0),
                 'created_by'  => $this->integer()->unsigned()->notNull(),

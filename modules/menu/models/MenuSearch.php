@@ -25,7 +25,7 @@
         public function rules()
         {
             return [
-                [['sort'], 'integer'],
+                [['order'], 'integer'],
                 [['is_active'], 'boolean'],
                 [['position'], 'in', 'range' => Menu::positions()],
                 [['title', 'url'], 'safe'],
@@ -58,7 +58,7 @@
             // grid filtering conditions
             $query->andFilterWhere([
                 'is_active' => $this->is_active,
-                'sort'      => $this->sort,
+                'order'     => $this->order,
                 'position'  => $this->position,
             ]);
 

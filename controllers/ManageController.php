@@ -13,7 +13,7 @@
 
     /**
      * Class ManageController
-     * @package common\components
+     * @package papalapa\yiistart\controllers
      */
     abstract class ManageController extends Controller
     {
@@ -140,11 +140,12 @@
          */
         public function actionUpdate($id)
         {
-            $model = $this->findModel($id);
-
             if (!\Yii::$app->user->can($this->permissions['update'])) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на изменение');
             }
+
+            /* @var $model ActiveRecord */
+            $model = $this->findModel($id);
 
             if (!\Yii::$app->user->can('ownerAccess', $model) && !\Yii::$app->user->can('foreignAccess', $model)) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на изменение чужих записей');
@@ -170,11 +171,12 @@
          */
         public function actionDelete($id)
         {
-            $model = $this->findModel($id);
-
             if (!\Yii::$app->user->can($this->permissions['delete'])) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на удаление');
             }
+
+            /* @var $model ActiveRecord */
+            $model = $this->findModel($id);
 
             if (!\Yii::$app->user->can('ownerAccess', $model) && !\Yii::$app->user->can('foreignAccess', $model)) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на удаление чужих записей');
@@ -215,7 +217,7 @@
             }
 
             if (!$model->hasAttribute($attribute)) {
-                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Заданный атрибут не найден!']);
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут не найден!']);
             }
 
             if (!$model->isAttributeSafe($attribute)) {
@@ -233,8 +235,9 @@
             }
 
             if (!$model->save()) {
-                /* TODO: or show the real error $model->errors */
-                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут имеет неверное значение!']);
+                $errors = $model->errors;
+
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => reset($errors)]);
             }
 
             \Yii::$app->session->setFlash('info', 'Изменения приняты!');
@@ -245,12 +248,11 @@
 
         /**
          * Not authorized user see this exception
-         * TODO: or use Forbidden 403
-         * @throws NotFoundHttpException
+         * @throws ForbiddenHttpException
          */
         protected function deniedError()
         {
-            throw new NotFoundHttpException('Страница не найдена.');
+            throw new ForbiddenHttpException('У вас недостаточно прав.');
         }
 
         /**

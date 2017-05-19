@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\rbac;
 
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\User;
     use yii;
     use yii\helpers\ArrayHelper;
@@ -38,7 +39,7 @@
         public function execute($user, $item, $params)
         {
             // простые пользователи ниже менеджера проходят мимо
-            if (User::isGuest() || User::identity()->role < User::ROLE_MANAGER) {
+            if (BaseUser::isGuest() || BaseUser::identity()->role < User::ROLE_MANAGER) {
                 return false;
             }
 
@@ -57,13 +58,14 @@
             }
 
             if (isset($attribute)) {
-                $owner = User::findOne(['id' => $attribute]);
+                $user  = Yii::$app->user;
+                $owner = $user::findOne(['id' => $attribute]);
 
                 // владелец контента должен быть ниже текущего пользователя, либо текущий пользователь должен быть выше менеджера
-                return $owner->role < User::identity()->role || User::identity()->role > User::ROLE_MANAGER;
+                return $owner->role < BaseUser::identity()->role || BaseUser::identity()->role > BaseUser::ROLE_MANAGER;
             }
 
             // если не указан атрибут владельца, то контент могут изменить администратор или девелопер
-            return User::identity()->role > User::ROLE_MANAGER;
+            return BaseUser::identity()->role > BaseUser::ROLE_MANAGER;
         }
     }

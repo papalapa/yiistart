@@ -22,15 +22,15 @@
      */
     abstract class BaseUser extends ActiveRecord implements IdentityInterface
     {
-        const ROLE_ADMIN     = 16;
-        const ROLE_AUTHOR    = 4;
-        const ROLE_DEVELOPER = 32;
         const ROLE_GUEST     = 0;
-        const ROLE_MANAGER   = 8;
         const ROLE_USER      = 1;
+        const ROLE_AUTHOR    = 4;
+        const ROLE_MANAGER   = 8;
+        const ROLE_ADMIN     = 16;
+        const ROLE_DEVELOPER = 32;
+        const STATUS_READY   = 0;
         const STATUS_ACTIVE  = 1;
         const STATUS_DELETED = -1;
-        const STATUS_READY   = 0;
 
         /**
          * @return array
@@ -164,7 +164,7 @@
                 if ($identity->hasAttribute($attribute)) {
                     return $identity->getAttribute($attribute);
                 } else {
-                    throw new InvalidParamException("User identity class " . __CLASS__ . " has not attribute named «{$attribute}»");
+                    throw new InvalidParamException("User identity class ".__CLASS__." has not attribute named «{$attribute}»");
                 }
             }
 
@@ -257,7 +257,7 @@
          */
         public function generateToken()
         {
-            $this->token = \Yii::$app->security->generateRandomString() . '_' . time();
+            $this->token = \Yii::$app->security->generateRandomString().'_'.time();
         }
 
         /**

@@ -7,7 +7,6 @@
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
-    use yii\db\ActiveQuery;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
 
@@ -17,8 +16,8 @@
      * @property string            $position
      * @property string            $url
      * @property string            $title
+     * @property integer           $order
      * @property boolean           $is_active
-     * @property integer           $sort
      * @property integer           $created_by
      * @property integer           $updated_by
      * @property string            $created_at
@@ -30,9 +29,9 @@
         /**
          * Menu links positions
          */
-        const POSITION_TOP    = 'Верхнее меню';
-        const POSITION_MAIN   = 'Основное меню';
-        const POSITION_BOTTOM = 'Нижнее меню';
+        const POSITION_TOP    = 'top';
+        const POSITION_MAIN   = 'main';
+        const POSITION_BOTTOM = 'bottom';
 
         /**
          * @inheritdoc
@@ -52,7 +51,7 @@
                 'position'   => 'Расположение',
                 'url'        => 'Ссылка',
                 'title'      => 'Название',
-                'sort'       => 'Порядковый номер',
+                'order'      => 'Порядковый номер',
                 'is_active'  => 'Активность',
                 'created_by' => 'Кем создано',
                 'updated_by' => 'Кем изменено',
@@ -88,11 +87,8 @@
         public function rules()
         {
             return $this->localizedRules([
-                /**
-                 * Development scenario only
-                 */
-                [['url'], 'required'],
                 [['url'], WhiteSpaceNormalizerValidator::className()],
+                [['url'], 'required'],
                 [['url'], 'string', 'max' => 64],
                 [
                     ['url'],
@@ -100,35 +96,46 @@
                     'range' => function () {
                         $siteUrlManager          = clone (\Yii::$app->urlManager);
                         $siteUrlManager->baseUrl = '/';
-                        $pageUrls                = array_map(function ($element) use ($siteUrlManager) /* @var $element Pages */ {
+                        $urls                    = array_map(function ($element) use ($siteUrlManager) /* @var $element Pages */ {
                             return $siteUrlManager->createUrl($element->url ? [$element->url] : ['/site/page', 'id' => $element->id]);
                         }, Pages::find()->select(['id', 'url'])->all());
 
-                        return $pageUrls;
+                        return $urls;
                     },
-                    'when'  => function ($model) {
+                    'when'  => function () {
                         return Pages::find()->count();
                     },
                 ],
 
                 [['position'], 'string', 'max' => 32],
-                [['position'], 'in', 'range' => self::positions()],
+                [['position'], 'in', 'range' => array_keys(self::positions())],
                 [['position'], 'default', 'value' => self::POSITION_MAIN],
 
-                [['title'], 'required'],
                 [['title'], WhiteSpaceNormalizerValidator::className()],
-                [['title'], 'string', 'max' => 16],
+                [['title'], 'required'],
+                [['title'], 'string', 'max' => 32],
 
-                [['sort'], 'integer'],
+                [['order'], 'integer'],
                 [
-                    ['sort'],
-                    'default',
-                    'value' => function ($model) /* @var $model self */ {
-                        return Menu::find()->max('sort') + 1;
+                    ['order'], 'unique',
+                    'when' => function ($model) /* @var $model $this */ {
+                        if (!empty($model->order)) {
+                            self::updateAllCounters(['order' => 1], ['>=', 'order', $model->order]);
+
+                            return true;
+                        }
+
+                        return false;
                     },
                 ],
-                [['sort'], 'required'],
-                [['sort'], 'unique'],
+                [
+                    ['order'],
+                    'default',
+                    'value' => function ($model) /* @var $model self */ {
+                        return self::find()->max('order') + 1;
+                    },
+                ],
+                [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],
@@ -140,24 +147,15 @@
          */
         public static function positions()
         {
-            $positions = [self::POSITION_TOP, self::POSITION_MAIN, self::POSITION_BOTTOM];
+            $initialPositions = [
+                self::POSITION_TOP    => 'Верхнее меню',
+                self::POSITION_MAIN   => 'Основное меню',
+                self::POSITION_BOTTOM => 'Нижнее меню',
+            ];
 
-            $availablePositions = ArrayHelper::getValue(\Yii::$app->params, 'menu.positions', $positions);
-            if ($availablePositions <> array_values($availablePositions)) {
-                $availablePositions = array_keys($availablePositions);
-            }
+            $positions = ArrayHelper::getValue(\Yii::$app->params, 'menu.positions', $initialPositions);
 
-            $combinedPositions = array_intersect($positions, $availablePositions);
-
-            return array_combine($combinedPositions, $combinedPositions);
-        }
-
-        /**
-         * @return ActiveQuery|MenuQuery
-         */
-        public static function find()
-        {
-            return new MenuQuery(get_called_class());
+            return $positions;
         }
 
         /**

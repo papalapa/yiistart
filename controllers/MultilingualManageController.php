@@ -6,8 +6,8 @@
     use yii\web\NotFoundHttpException;
 
     /**
-     * Class ManageController
-     * @package common\components
+     * Class MultilingualManageController
+     * @package papalapa\yiistart\controllers
      */
     abstract class MultilingualManageController extends ManageController
     {

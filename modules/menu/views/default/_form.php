@@ -37,9 +37,9 @@
         foreach ($pages as $page) {
             /* @var $page Pages */
             if ($page->url) {
-                $urls[$siteUrlManager->createUrl($page->url)] = 'Модульная страница - ' . $page->header;
+                $urls[$siteUrlManager->createUrl($page->url)] = 'Модульная страница - '.$page->header;
             } else {
-                $urls[$siteUrlManager->createUrl(['/site/page', 'id' => $page->id])] = 'Текстовая страница - ' . $page->header;
+                $urls[$siteUrlManager->createUrl(['/site/page', 'id' => $page->id])] = 'Текстовая страница - '.$page->header;
             }
         }
 
@@ -58,16 +58,16 @@
         echo $form->field($model, 'title')->textInput(['maxlength' => true]);
         foreach (i18n::locales() as $locale) {
             if (Yii::$app->language <> $locale) {
-                echo $form->field($model, 'title_' . $locale)->textInput(['maxlength' => true]);
+                echo $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]);
             }
         }
     ?>
 
     <?php
         if ($model->isNewRecord && !$model->hasErrors()) {
-            $model->sort = $model::find()->max('sort') + 1;
+            $model->order = $model::find()->max('order') + 1;
         }
-        echo $form->field($model, 'sort')->textInput(['type' => 'number']);
+        echo $form->field($model, 'order')->textInput(['type' => 'number']);
     ?>
 
     <br />
@@ -77,7 +77,7 @@
     <hr />
 
     <div class="form-group">
-        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
+        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']).' '.($model->isNewRecord ? 'Создать' : 'Изменить'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

@@ -51,7 +51,7 @@
                 'attribute' => 'position',
                 'value'     => $model->position,
             ],
-            'sort',
+            'order',
             'title',
             [
                 'attribute' => 'url',

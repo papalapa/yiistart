@@ -38,7 +38,7 @@
         $siteUrlManager          = clone (Yii::$app->urlManager);
         $siteUrlManager->baseUrl = '/';
 
-        $sortNumbers = Menu::find()->select(['sort'])->orderBy(['sort' => SORT_ASC])->column();
+        $orders = Menu::find()->select(['sort'])->orderBy(['sort' => SORT_ASC])->column();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
@@ -46,8 +46,8 @@
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
                 [
-                    'attribute' => 'sort',
-                    'filter'    => array_combine($sortNumbers, $sortNumbers),
+                    'attribute' => 'order',
+                    'filter'    => array_combine($orders, $orders),
                 ],
                 [
                     'attribute' => 'position',

@@ -1,5 +1,7 @@
 <?php
 
+    namespace papalapa\yiistart\modules\menu\migrations;
+
     use papalapa\yiistart\modules\menu\models\Menu;
     use yii\db\Migration;
 
@@ -19,13 +21,14 @@
                 'position'   => $this->string(32)->defaultValue(Menu::POSITION_MAIN),
                 'url'        => $this->string(64)->notNull(),
                 'title'      => $this->string(64)->notNull(),
-                'sort'       => $this->smallInteger()->unsigned()->notNull(),
+                'order'      => $this->smallInteger()->unsigned()->notNull()->unique(),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(0),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
                 'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
                 'updated_at' => $this->timestamp()->defaultValue(null),
             ], $tableOptions);
+
             $this->alterColumn('{{menu}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
         }
 
@@ -34,6 +37,6 @@
          */
         public function down()
         {
-            $this->dropTable('menu');
+            $this->dropTable('{{menu}}');
         }
     }

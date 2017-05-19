@@ -14,13 +14,13 @@
 
     /**
      * This is the model class for table "elements".
-     *
      * @property integer             $id
      * @property string              $alias
      * @property integer             $category_id
      * @property string              $name
      * @property string              $text
      * @property string              $format
+     * @property string              $pattern
      * @property string              $description
      * @property integer             $is_active
      * @property integer             $created_by
@@ -62,6 +62,7 @@
                 'name'        => 'Название',
                 'text'        => 'Текст',
                 'format'      => 'Формат',
+                'pattern'     => 'Шаблон',
                 'description' => 'Описание',
                 'is_active'   => 'Активность',
                 'created_by'  => 'Кем создано',
@@ -98,8 +99,8 @@
         public function scenarios()
         {
             return [
-                self::SCENARIO_DEFAULT   => ['category_id', 'name', 'text', 'format', 'description', 'is_active'],
-                self::SCENARIO_DEVELOPER => ['category_id', 'name', 'text', 'format', 'description', 'is_active', 'alias'],
+                self::SCENARIO_DEFAULT   => ['text', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['alias', 'category_id', 'name', 'text', 'format', 'pattern', 'description', 'is_active'],
             ];
         }
 
@@ -124,8 +125,9 @@
                     'targetAttribute' => ['category_id' => 'id'],
                 ],
 
-                [['text'], 'required'],
+                [['text'], WhiteSpaceNormalizerValidator::className()],
                 [['text'], 'string'],
+                [['text'], 'required'],
                 [
                     ['text'],
                     TagsStripperValidator::className(),
@@ -153,58 +155,13 @@
                     'enableClientValidation' => false,
                 ],
                 [
-                    ['text'],
-                    HtmlPurifierValidator::className(),
-                    'options' => [
-                        'AutoFormat.AutoParagraph'                     => true,
-                        'AutoFormat.RemoveEmpty'                       => true,
-                        'AutoFormat.RemoveEmpty.RemoveNbsp'            => true,
-                        'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => ['th' => true, 'td' => true],
-                        'HTML.AllowedElements'                         => implode(',', [
-                            'div',
-                            'p',
-                            'pre',
-                            'a',
-                            'b',
-                            'strong',
-                            'i',
-                            'em',
-                            'u',
-                            's',
-                            'strike',
-                            'big',
-                            'small',
-                            'sup',
-                            'sub',
-                            'ul',
-                            'ol',
-                            'li',
-                            'table',
-                            'tbody',
-                            'thead',
-                            'tfoot',
-                            'tr',
-                            'th',
-                            'td',
-                            'h2',
-                            'h3',
-                            'h4',
-                            'h5',
-                            'h6',
-                            'blockquote',
-                            'img',
-                        ]),
-                        'HTML.AllowedAttributes'                       => ['style', 'align', 'a.href', 'a.target', 'img.src', 'img.class'],
-                        'HTML.BlockWrapper'                            => 'p',
-                        'CSS.AllowedFonts'                             => [],
-                        'CSS.AllowedProperties'                        => ['ul[list-style-type]', 'ol[list-style-type]', 'text-align'],
-                        'Output.Newline'                               => "\n",
-                    ],
-                    'when'    => function ($model) /* @var $model Elements */ {
+                    ['text'], HtmlPurifierValidator::className(),
+                    'when' => function ($model) /* @var $model Elements */ {
                         return $model->format == self::FORMAT_HTML;
                     },
                 ],
 
+                [['name'], WhiteSpaceNormalizerValidator::className()],
                 [['name'], 'required'],
                 [['name'], 'string', 'max' => 64],
 
@@ -212,11 +169,14 @@
                 [['format'], 'string', 'max' => 16],
                 [['format'], 'in', 'range' => array_keys(self::formats())],
 
-                [['is_active'], 'boolean'],
-                [['is_active'], 'default', 'value' => 0],
+                [['pattern'], WhiteSpaceNormalizerValidator::className()],
+                [['pattern'], 'string', 'max' => 128],
 
                 [['description'], WhiteSpaceNormalizerValidator::className()],
                 [['description'], 'string', 'max' => 256],
+
+                [['is_active'], 'boolean'],
+                [['is_active'], 'default', 'value' => 0],
             ]);
         }
 
@@ -236,7 +196,6 @@
         /**
          * @param array $data
          * @param null  $formName
-         *
          * @return bool
          */
         public function load($data, $formName = null)

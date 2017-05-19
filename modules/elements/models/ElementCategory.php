@@ -77,6 +77,7 @@
         {
             if ($this->elements) {
                 \Yii::$app->session->setFlash('error', 'У этой категории есть связанные элементы. Удаление невозможно.');
+
                 return false;
             }
 
