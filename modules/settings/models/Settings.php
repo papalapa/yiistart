@@ -102,6 +102,44 @@
         }
 
         /**
+         * Returns a value of a key
+         * @param $key
+         * @return null|boolean|string
+         */
+        public static function valueOf($key)
+        {
+            /* @var $model self */
+            $model = \Yii::$app->db->cache(function () use ($key) {
+                return self::find()->multilingual()->where(['key' => $key])->one();
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting', null));
+
+            if (is_null($model)) {
+                \Yii::warning(sprintf('Используется несуществующая настройка "%s".', $key));
+
+                return null;
+            }
+
+            if (!$model->is_active) {
+                \Yii::warning(sprintf('Используется отключенная настройка "%s".', $key));
+
+                return null;
+            }
+
+            return $model->value;
+        }
+
+        /**
+         * Returns a value of a key
+         * When value is not exists, search it in params.php
+         * @param $param
+         * @return null|boolean|string
+         */
+        public static function valueOfParam($param)
+        {
+            return ($setting = self::valueOf($param)) ? $setting : ArrayHelper::getValue(\Yii::$app->params, $param, null);
+        }
+
+        /**
          * @param array $data
          * @param null  $formName
          * @return bool

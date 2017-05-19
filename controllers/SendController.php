@@ -54,7 +54,7 @@
 
                 \Yii::$app->mailer
                     ->compose()
-                    ->setFrom([\Yii::$app->params['noreplyEmail'] => \Yii::$app->name . ' robot'])
+                    ->setFrom([\Yii::$app->params['noreply.email'] => \Yii::$app->name . ' robot'])
                     ->setTo($pivot->subscriber->email)
                     ->setSubject($pivot->dispatch->subject)
                     ->setHtmlBody($html)
