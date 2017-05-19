@@ -378,10 +378,10 @@
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateDispatch);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteDispatch);
 
-            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSubscriber);
-            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSubscriber);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSubscriber);
-            //$this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
+            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSubscriber);
 
             $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPhoto);
@@ -399,9 +399,6 @@
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElementCategory);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElement);
             $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElement);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $viewSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $updateSubscriber);
 
             echo 'All child permissions has been added.' . PHP_EOL;
 
