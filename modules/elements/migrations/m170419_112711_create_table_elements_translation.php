@@ -1,5 +1,7 @@
 <?php
 
+    namespace papalapa\yiistart\modules\elements\migrations;
+
     use yii\db\Migration;
 
     /**
@@ -25,8 +27,7 @@
             $this->createIndex('idx_elements_translation__language', '{{elements_translation}}', ['[[language]]']);
             $this->createIndex('idx_elements_translation__language_content_id', '{{elements_translation}}', ['[[language]]', '[[content_id]]'], true);
             $this->addForeignKey('fk_elements_translation__elements__id', '{{elements_translation}}', ['[[content_id]]'],
-                '{{elements}}', ['[[id]]'],
-                'CASCADE', 'CASCADE');
+                '{{elements}}', ['[[id]]'], 'CASCADE', 'CASCADE');
         }
 
         /**

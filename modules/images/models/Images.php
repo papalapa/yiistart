@@ -1,6 +1,6 @@
 <?php
 
-    namespace papalapa\yiistart\modules\photo\models;
+    namespace papalapa\yiistart\modules\images\models;
 
     use papalapa\yiistart\helpers\FileHelper;
     use papalapa\yiistart\models\MultilingualActiveRecord;
@@ -12,30 +12,30 @@
     use yii\helpers\ArrayHelper;
 
     /**
-     * This is the model class for table "photo".
-     * @property integer            $id
-     * @property string             $title
-     * @property string             $text
-     * @property string             $image
-     * @property integer            $size
-     * @property integer            $width
-     * @property integer            $height
-     * @property integer            $order
-     * @property integer            $is_active
-     * @property integer            $created_by
-     * @property integer            $updated_by
-     * @property string             $created_at
-     * @property string             $updated_at
-     * @property PhotoTranslation[] $photoTranslations
+     * This is the model class for table "images".
+     * @property integer             $id
+     * @property string              $title
+     * @property string              $text
+     * @property string              $image
+     * @property integer             $size
+     * @property integer             $width
+     * @property integer             $height
+     * @property integer             $order
+     * @property integer             $is_active
+     * @property integer             $created_by
+     * @property integer             $updated_by
+     * @property string              $created_at
+     * @property string              $updated_at
+     * @property ImagesTranslation[] $imagesTranslations
      */
-    class Photo extends MultilingualActiveRecord
+    class Images extends MultilingualActiveRecord
     {
         /**
          * @inheritdoc
          */
         public static function tableName()
         {
-            return 'photo';
+            return 'images';
         }
 
         /**
@@ -74,8 +74,8 @@
                     'class' => BlameableBehavior::className(),
                 ],
                 'MultilingualBehavior' => [
-                    'langClassName' => PhotoTranslation::className(),
-                    'tableName'     => PhotoTranslation::tableName(),
+                    'langClassName' => ImagesTranslation::className(),
+                    'tableName'     => ImagesTranslation::tableName(),
                     'attributes'    => ['title', 'text'],
                 ],
             ]);
@@ -103,7 +103,7 @@
                 [['image'], FilePathValidator::className()],
             ]);
 
-            if ($rule = ArrayHelper::getValue(\Yii::$app->params, 'photo.upload.rule', false)) {
+            if ($rule = ArrayHelper::getValue(\Yii::$app->params, 'images.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
@@ -128,8 +128,8 @@
         /**
          * @return \yii\db\ActiveQuery
          */
-        public function getPhotoTranslations()
+        public function getImagesTranslations()
         {
-            return $this->hasMany(PhotoTranslation::className(), ['content_id' => 'id']);
+            return $this->hasMany(ImagesTranslation::className(), ['content_id' => 'id']);
         }
     }

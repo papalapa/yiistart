@@ -3,7 +3,7 @@
     use yii\db\Migration;
 
     /**
-     * Handles the creation of table `photo_translation`.
+     * Handles the creation of table `yiistart\modules\images_translation`.
      */
     class m170504_043149_create_table_pages_translation extends Migration
     {

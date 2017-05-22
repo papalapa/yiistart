@@ -1,14 +1,14 @@
 <?php
 
-    namespace papalapa\yiistart\modules\photo\controllers;
+    namespace papalapa\yiistart\modules\images\controllers;
 
     use papalapa\yiistart\controllers\MultilingualManageController;
-    use papalapa\yiistart\modules\photo\models\Photo;
-    use papalapa\yiistart\modules\photo\models\PhotoSearch;
+    use papalapa\yiistart\modules\images\models\Images;
+    use papalapa\yiistart\modules\images\models\ImagesSearch;
 
     /**
      * Class DefaultController
-     * @package backend\modules\photo\controllers
+     * @package papalapa\yiistart\modules\images\controllers
      */
     class DefaultController extends MultilingualManageController
     {
@@ -16,11 +16,11 @@
          * @var array
          */
         protected $permissions = [
-            'create' => 'createPhoto',
-            'view'   => 'viewPhoto',
-            'update' => 'updatePhoto',
-            'index'  => 'indexPhoto',
-            'delete' => 'deletePhoto',
+            'create' => 'createImage',
+            'view'   => 'viewImage',
+            'update' => 'updateImage',
+            'index'  => 'indexImage',
+            'delete' => 'deleteImage',
         ];
 
         /**
@@ -28,8 +28,8 @@
          */
         public function init()
         {
-            $this->model       = Photo::className();
-            $this->searchModel = PhotoSearch::className();
+            $this->model       = Images::className();
+            $this->searchModel = ImagesSearch::className();
             parent::init();
         }
     }

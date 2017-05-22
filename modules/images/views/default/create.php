@@ -3,13 +3,13 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model \papalapa\yiistart\modules\photo\models\Photo */
+    /* @var $model \papalapa\yiistart\modules\images\models\Images */
 
     $this->title                   = 'Создание фотографии';
     $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="photo-create">
+<div class="yiistart\modules\images-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

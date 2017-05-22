@@ -26,7 +26,7 @@
                 ['email', 'required'],
                 ['email', 'email'],
                 ['email', 'string', 'max' => 128],
-                ['email', 'unique', 'targetClass' => (\Yii::$app->user->identity)::className()],
+                ['email', 'unique', 'targetClass' => BaseUser::className()],
 
                 [['password'], 'required'],
                 [['password'], 'string', 'min' => 6],

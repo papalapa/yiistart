@@ -1,12 +1,14 @@
 <?php
 
+    namespace papalapa\yiistart\modules\images\migrations;
+
     use yii\db\Migration;
 
     /**
-     * Class m170420_183208_create_photo_table
-     * Handles the creation of table `photo`.
+     * Class m170420_183208_create_images_table
+     * Handles the creation of table `images`.
      */
-    class m170420_183208_create_photo_table extends Migration
+    class m170420_183208_create_images_table extends Migration
     {
         /**
          * @inheritdoc
@@ -14,7 +16,7 @@
         public function up()
         {
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
-            $this->createTable('{{photo}}', [
+            $this->createTable('{{images}}', [
                 'id'         => $this->primaryKey(),
                 'title'      => $this->string(128)->defaultValue(null),
                 'text'       => $this->text()->defaultValue(null),
@@ -30,7 +32,7 @@
                 'updated_at' => $this->timestamp()->defaultValue(null),
             ], $tableOptions);
 
-            $this->alterColumn('{{photo}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+            $this->alterColumn('{{images}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
         }
 
         /**
@@ -38,6 +40,6 @@
          */
         public function down()
         {
-            $this->dropTable('{{photo}}');
+            $this->dropTable('{{images}}');
         }
     }

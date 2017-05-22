@@ -1,15 +1,15 @@
 <?php
 
-    namespace papalapa\yiistart\modules\photo\models;
+    namespace papalapa\yiistart\modules\images\models;
 
     use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
-     * Class PhotoSearch
-     * @package papalapa\yiistart\modules\photo\models
+     * Class ImagesSearch
+     * @package papalapa\yiistart\modules\images\models
      */
-    class PhotoSearch extends Photo
+    class ImagesSearch extends Images
     {
         /**
          * @inheritdoc
@@ -38,7 +38,7 @@
          */
         public function search($params)
         {
-            $query = Photo::find()->multilingual();
+            $query = Images::find()->multilingual();
 
             // add conditions that should always apply here
 
@@ -56,9 +56,9 @@
 
             // grid filtering conditions
             $query->andFilterWhere([
-                'id'           => $this->id,
-                'order' => $this->order,
-                'is_active'    => $this->is_active,
+                'id'        => $this->id,
+                'order'     => $this->order,
+                'is_active' => $this->is_active,
             ]);
 
             return $dataProvider;

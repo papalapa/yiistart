@@ -33,6 +33,14 @@
         const STATUS_DELETED = -1;
 
         /**
+         * @return string
+         */
+        public static function tableName()
+        {
+            return '{{user}}';
+        }
+
+        /**
          * @return array
          */
         public static function statuses()
@@ -138,7 +146,7 @@
             }
 
             $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-            $expire    = ArrayHelper::getValue(\Yii::$app->params, 'user.passwordResetTokenExpire', 3600 * 24);
+            $expire    = ArrayHelper::getValue(\Yii::$app->params, 'user.password.reset.token.expire', 3600);
 
             return $timestamp + $expire >= time();
         }

@@ -1,17 +1,17 @@
 <?php
 
-    namespace papalapa\yiistart\modules\photo;
+    namespace papalapa\yiistart\modules\images;
 
     /**
      * Class Module
-     * @package papalapa\yiistart\modules\photo
+     * @package papalapa\yiistart\modules\images
      */
     class Module extends \yii\base\Module
     {
         /**
          * @inheritdoc
          */
-        public $controllerNamespace = 'papalapa\yiistart\modules\photo\controllers';
+        public $controllerNamespace = 'papalapa\yiistart\modules\images\controllers';
 
         /**
          * @inheritdoc

@@ -1,27 +1,27 @@
 <?php
 
-    namespace papalapa\yiistart\modules\photo\models;
+    namespace papalapa\yiistart\modules\images\models;
 
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\db\ActiveRecord;
 
     /**
-     * This is the model class for table "photo_translation".
+     * This is the model class for table "image_translation".
      * @property integer $id
      * @property string  $language
      * @property integer $content_id
      * @property string  $title
      * @property string  $text
-     * @property Photo   $content
+     * @property Images  $content
      */
-    class PhotoTranslation extends ActiveRecord
+    class ImagesTranslation extends ActiveRecord
     {
         /**
          * @inheritdoc
          */
         public static function tableName()
         {
-            return 'photo_translation';
+            return 'image_translation';
         }
 
         /**
@@ -46,7 +46,7 @@
             return [
                 [['content_id'], 'required'],
                 [['content_id'], 'integer'],
-                [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => Photo::className(), 'targetAttribute' => ['content_id' => 'id']],
+                [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => Images::className(), 'targetAttribute' => ['content_id' => 'id']],
 
                 [['title', 'text'], WhiteSpaceNormalizerValidator::className()],
                 [['title'], 'string', 'max' => 128],
@@ -69,6 +69,6 @@
          */
         public function getContent()
         {
-            return $this->hasOne(Photo::className(), ['id' => 'content_id']);
+            return $this->hasOne(Images::className(), ['id' => 'content_id']);
         }
     }

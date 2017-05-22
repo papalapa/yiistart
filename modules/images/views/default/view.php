@@ -6,26 +6,26 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model \papalapa\yiistart\modules\photo\models\Photo */
+    /* @var $model \papalapa\yiistart\modules\images\models\Images */
 
     $this->title                   = sprintf('№%s', $model->id, $model->order);
     $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="photo-view">
+<div class="images-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'updatePhoto' => [
+                'updateImage' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
                     'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
-                'deletePhoto' => [
+                'deleteImage' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',
@@ -48,7 +48,7 @@
             [
                 'attribute' => 'image',
                 'format'    => 'html',
-                'value'     => function ($model) /* @var \papalapa\yiistart\modules\photo\models\Photo $model */ {
+                'value'     => function ($model) /* @var \papalapa\yiistart\modules\images\models\Images $model */ {
                     return $model->image ? Html::img($model->image, ['width' => 200]) : null;
                 },
             ],

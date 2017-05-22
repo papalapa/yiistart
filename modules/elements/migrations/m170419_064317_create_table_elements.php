@@ -1,5 +1,7 @@
 <?php
 
+    namespace papalapa\yiistart\modules\elements\migrations;
+
     use papalapa\yiistart\modules\elements\models\Elements;
     use yii\db\Migration;
 

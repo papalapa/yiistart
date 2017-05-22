@@ -1,6 +1,6 @@
 <?php
 
-    use papalapa\yiistart\modules\photo\models\Photo;
+    use papalapa\yiistart\modules\images\models\Images;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
@@ -10,20 +10,20 @@
     use yii\widgets\Pjax;
 
     /* @var $this yii\web\View */
-    /* @var $searchModel \papalapa\yiistart\modules\photo\models\PhotoSearch */
+    /* @var $searchModel \papalapa\yiistart\modules\images\models\ImagesSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
     $this->title                   = 'Фотографии';
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="photo-index">
+<div class="yiistart\modules\images-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'createPhoto' => [
+                'createImage' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
@@ -33,13 +33,13 @@
         ]);
     ?>
 
-    <?php Pjax::begin(['id' => 'pjax-photo-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
+    <?php Pjax::begin(['id' => 'pjax-images-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
         $siteUrlManager          = clone Yii::$app->urlManager;
         $siteUrlManager->baseUrl = '/';
 
-        $indexNumbers = Photo::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
+        $indexNumbers = Images::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
@@ -59,7 +59,7 @@
                 [
                     'attribute' => 'image',
                     'format'    => 'html',
-                    'content'   => function ($model) use ($siteUrlManager) /* @var Photo $model */ {
+                    'content'   => function ($model) use ($siteUrlManager) /* @var Images $model */ {
                         $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;
 
                         return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-pjax' => 0, 'target' => '_blank']) : null;
@@ -67,7 +67,7 @@
                 ],
                 [
                     'attribute' => 'size',
-                    'content'   => function ($model) /* @var Photo $model */ {
+                    'content'   => function ($model) /* @var Images $model */ {
                         return sprintf('%s МБ', number_format($model->size / 1024 / 1024, 2));
                     },
                 ],
@@ -86,9 +86,9 @@
                 [
                     'class'       => GridActionColumn::className(),
                     'permissions' => [
-                        'view'   => 'viewPhoto',
-                        'update' => 'updatePhoto',
-                        'delete' => 'deletePhoto',
+                        'view'   => 'viewImage',
+                        'update' => 'updateImage',
+                        'delete' => 'deleteImage',
                     ],
                 ],
             ],

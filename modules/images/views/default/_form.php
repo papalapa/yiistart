@@ -6,11 +6,11 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model \papalapa\yiistart\modules\photo\models\Photo */
+    /* @var $model \papalapa\yiistart\modules\images\models\Images */
     /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="photo-form">
+<div class="images-form">
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 

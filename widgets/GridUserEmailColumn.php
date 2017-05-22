@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\widgets;
 
+    use papalapa\yiistart\models\BaseUser;
     use yii\base\InvalidConfigException;
     use yii\db\ActiveRecord;
     use yii\grid\DataColumn;
@@ -23,7 +24,7 @@
              */
             $this->content = function ($model) {
                 return $model->getAttribute($this->attribute)
-                    ? (\Yii::$app->user->identity)::findOne(['id' => $model->getAttribute($this->attribute)])->email
+                    ? BaseUser::findOne(['id' => $model->getAttribute($this->attribute)])->email
                     : null;
             };
 

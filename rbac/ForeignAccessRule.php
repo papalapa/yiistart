@@ -57,7 +57,7 @@
             }
 
             if (isset($attribute)) {
-                $owner = (Yii::$app->user->identity)::findOne(['id' => $attribute]);
+                $owner = BaseUser::findOne(['id' => $attribute]);
 
                 // владелец контента должен быть ниже текущего пользователя, либо текущий пользователь должен быть выше менеджера
                 return $owner->role < Yii::$app->user->identity->role || Yii::$app->user->identity->role > BaseUser::ROLE_MANAGER;
