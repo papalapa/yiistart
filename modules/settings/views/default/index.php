@@ -7,10 +7,7 @@
     use papalapa\yiistart\widgets\GridToggleColumn;
     use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
-<<<<<<< HEAD
     use yii\helpers\ArrayHelper;
-=======
->>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -25,11 +22,8 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-<<<<<<< HEAD
     <h4>Изменения вступают в силу в течение <?= ArrayHelper::getValue(Yii::$app->params, 'cache.duration.setting', 0) ?> сек.</h4>
 
-=======
->>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
     <?
         echo ControlButtonsPanel::widget([
             'items' => [

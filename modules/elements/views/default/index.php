@@ -27,25 +27,19 @@
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-<<<<<<< HEAD
                 'createElement'        => [
-=======
                 'createElement' => [
->>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
                 ],
-<<<<<<< HEAD
                 'indexElementCategory' => [
                     'title' => 'Категории',
                     'url'   => ['category/index'],
                     'ico'   => 'fa fa-th-large',
                     'class' => 'btn btn-default',
                 ],
-=======
->>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
             ],
         ]);
     ?>
