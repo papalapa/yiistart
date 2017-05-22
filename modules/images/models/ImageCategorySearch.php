@@ -2,14 +2,14 @@
 
     namespace papalapa\yiistart\modules\images\models;
 
-    use papalapa\yiistart\models\BaseUser;
+    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
-     * Class ImagesSearch
+     * Class ImageCategorySearch
      * @package papalapa\yiistart\modules\images\models
      */
-    class ImagesSearch extends Images
+    class ImageCategorySearch extends ImageCategory
     {
         /**
          * @inheritdoc
@@ -17,7 +17,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Images::scenarios();
+            return Model::scenarios();
         }
 
         /**
@@ -26,8 +26,9 @@
         public function rules()
         {
             return [
-                [['id', 'order'], 'integer'],
-                [['is_active'], 'boolean'],
+                [['id'], 'integer'],
+                [['is_visible', 'is_active'], 'boolean'],
+                [['alias', 'name'], 'string'],
             ];
         }
 
@@ -38,7 +39,7 @@
          */
         public function search($params)
         {
-            $query = Images::find()->multilingual();
+            $query = ImageCategory::find();
 
             // add conditions that should always apply here
 
@@ -56,21 +57,15 @@
 
             // grid filtering conditions
             $query->andFilterWhere([
-                'id'        => $this->id,
-                'order'     => $this->order,
-                'is_active' => $this->is_active,
+                'id'         => $this->id,
+                'is_visible' => $this->is_visible,
+                'is_active'  => $this->is_active,
             ]);
 
-            if (\Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) {
-                $query->joinWith([
-                    'category' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                        return $q->from(['{{CATEGORY}}' => ImageCategory::tableName()])
-                                 ->andWhere(['{{CATEGORY}}.[[is_visible]]' => true]);
-                    },
-                ]);
-            }
+            $query->andFilterWhere(['like', 'alias', $this->alias])
+                  ->andFilterWhere(['like', 'name', $this->name]);
 
-            $query->with('category');
+            $query->with('images');
 
             return $dataProvider;
         }

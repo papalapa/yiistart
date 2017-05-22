@@ -43,6 +43,10 @@
         'model'      => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'category_id',
+                'value'     => $model->category->name,
+            ],
             'title',
             'text:text',
             [

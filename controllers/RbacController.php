@@ -243,17 +243,29 @@
             $deleteSubscriber              = $this->authManager->createPermission('deleteSubscriber');
             $deleteSubscriber->description = 'Удаление подписчика';
 
+            /** Управление категориями изображений */
+            $createImageCategory              = $this->authManager->createPermission('createImageCategory');
+            $createImageCategory->description = 'Создание категорий изображений';
+            $viewImageCategory                = $this->authManager->createPermission('viewImageCategory');
+            $viewImageCategory->description   = 'Просмотр категорий изображений';
+            $indexImageCategory               = $this->authManager->createPermission('indexImageCategory');
+            $indexImageCategory->description  = 'Листинг категорий изображений';
+            $updateImageCategory              = $this->authManager->createPermission('updateImageCategory');
+            $updateImageCategory->description = 'Изменение категорий изображений';
+            $deleteImageCategory              = $this->authManager->createPermission('deleteImageCategory');
+            $deleteImageCategory->description = 'Удаление категорий изображений';
+
             /** Управление изображениями */
-            $createImages              = $this->authManager->createPermission('createImages');
-            $createImages->description = 'Создание изображений';
-            $viewImages                = $this->authManager->createPermission('viewImages');
-            $viewImages->description   = 'Просмотр изображений';
-            $indexImages               = $this->authManager->createPermission('indexImages');
-            $indexImages->description  = 'Листинг изображений';
-            $updateImages              = $this->authManager->createPermission('updateImages');
-            $updateImages->description = 'Изменение изображений';
-            $deleteImages              = $this->authManager->createPermission('deleteImages');
-            $deleteImages->description = 'Удаление изображений';
+            $createImage              = $this->authManager->createPermission('createImage');
+            $createImage->description = 'Создание изображений';
+            $viewImage                = $this->authManager->createPermission('viewImage');
+            $viewImage->description   = 'Просмотр изображений';
+            $indexImage               = $this->authManager->createPermission('indexImage');
+            $indexImage->description  = 'Листинг изображений';
+            $updateImage              = $this->authManager->createPermission('updateImage');
+            $updateImage->description = 'Изменение изображений';
+            $deleteImage              = $this->authManager->createPermission('deleteImage');
+            $deleteImage->description = 'Удаление изображений';
 
             echo 'New permissions has been created.'.PHP_EOL;
 
@@ -314,11 +326,17 @@
             $this->authManager->add($updateSubscriber);
             $this->authManager->add($deleteSubscriber);
 
-            $this->authManager->add($createImages);
-            $this->authManager->add($viewImages);
-            $this->authManager->add($indexImages);
-            $this->authManager->add($updateImages);
-            $this->authManager->add($deleteImages);
+            $this->authManager->add($createImageCategory);
+            $this->authManager->add($viewImageCategory);
+            $this->authManager->add($indexImageCategory);
+            $this->authManager->add($updateImageCategory);
+            $this->authManager->add($deleteImageCategory);
+
+            $this->authManager->add($createImage);
+            $this->authManager->add($viewImage);
+            $this->authManager->add($indexImage);
+            $this->authManager->add($updateImage);
+            $this->authManager->add($deleteImage);
 
             echo 'New permissions has been added.'.PHP_EOL;
 
@@ -376,11 +394,11 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateSubscriber);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteSubscriber);
 
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createImages);
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewImages);
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexImages);
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateImages);
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createImage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewImage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexImage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateImage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteImage);
 
             /** Developer */
 
@@ -392,6 +410,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexElementCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateElementCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElementCategory);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createImageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewImageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexImageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateImageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteImageCategory);
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElement);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElement);

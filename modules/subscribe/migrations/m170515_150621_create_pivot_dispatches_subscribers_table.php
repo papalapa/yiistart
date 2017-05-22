@@ -1,9 +1,12 @@
 <?php
 
+    namespace papalapa\yiistart\modules\subscribe\migrations;
+
     use yii\db\Migration;
 
     /**
-     * Handles the creation of table `pivot_subscriptions_subscribers`.
+     * Class m170515_150621_create_pivot_dispatches_subscribers_table
+     * @package papalapa\yiistart\modules\subscribe\migrations
      */
     class m170515_150621_create_pivot_dispatches_subscribers_table extends Migration
     {

@@ -21,7 +21,7 @@
          */
         public static function tableName()
         {
-            return 'image_translation';
+            return 'images_translation';
         }
 
         /**

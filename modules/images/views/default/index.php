@@ -1,5 +1,7 @@
 <?php
 
+    use papalapa\yiistart\models\BaseUser;
+    use papalapa\yiistart\modules\images\models\ImageCategory;
     use papalapa\yiistart\modules\images\models\Images;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
@@ -39,7 +41,13 @@
         $siteUrlManager          = clone Yii::$app->urlManager;
         $siteUrlManager->baseUrl = '/';
 
-        $indexNumbers = Images::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
+        $orders = Images::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
+
+        $categoryFind = ImageCategory::find()->select(['id', 'name']);
+        if (Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) {
+            $categoryFind->andWhere(['is_visible' => true]);
+        }
+        $categories = $categoryFind->orderBy(['name' => SORT_ASC])->asArray()->indexBy('id')->all();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
@@ -48,8 +56,15 @@
                 //['class' => 'yii\grid\SerialColumn'],
                 //'id',
                 [
+                    'attribute' => 'category_id',
+                    'filter'    => ArrayHelper::map($categories, 'id', 'name'),
+                    'content'   => function ($model) /* @var Images $model */ {
+                        return $model->category->name;
+                    },
+                ],
+                [
                     'attribute' => 'order',
-                    'filter'    => ArrayHelper::map($indexNumbers, 'order', 'order'),
+                    'filter'    => ArrayHelper::map($orders, 'order', 'order'),
                 ],
                 [
                     'attribute' => 'title',

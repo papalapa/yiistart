@@ -20,7 +20,7 @@
      * @property string  $password write-only password
      * @package papalapa\yiistart\models
      */
-    abstract class BaseUser extends ActiveRecord implements IdentityInterface
+    class BaseUser extends ActiveRecord implements IdentityInterface
     {
         const ROLE_GUEST     = 0;
         const ROLE_USER      = 1;
