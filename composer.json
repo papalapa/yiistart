@@ -1,0 +1,36 @@
+{
+    "name"       : "papalapa/yiistart",
+    "description": "Papalapa yii2 components.",
+    "keywords"   : [
+        "yii2",
+        "components"
+    ],
+    "homepage"   : "https://github.com/papalapa/yiistart",
+    "type"       : "yii2-extension",
+    "license"    : "MIT License",
+    "authors"    : [
+        {
+            "name"    : "Dmitriy Kim",
+            "email"   : "mail@dmitriy.kim",
+            "homepage": "http://dmitriy.kim/"
+        }
+    ],
+    "require"    : {
+        "yiisoft/yii2"                     : "~2.0.6",
+        "yiisoft/yii2-bootstrap"           : "~2.0.0",
+        "yiisoft/yii2-swiftmailer"         : "~2.0.0",
+        "yiisoft/yii2-imagine"             : "~2.0.0",
+        "fortawesome/font-awesome"         : "4.7.0",
+        "kartik-v/yii2-widgets"            : "~3.4",
+        "mihaildev/yii2-ckeditor"          : "~1.0",
+        "mihaildev/yii2-elfinder"          : "~1.2",
+        "omgdef/yii2-multilingual-behavior": "~2.1",
+        "codemix/yii2-localeurls"          : "~1.4",
+        "yiister/yii2-gentelella"          : "~1.2"
+    },
+    "autoload"   : {
+        "psr-4": {
+            "papalapa\\yiistart\\": ""
+        }
+    }
+}
