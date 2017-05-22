@@ -38,7 +38,7 @@
         $siteUrlManager          = clone (Yii::$app->urlManager);
         $siteUrlManager->baseUrl = '/';
 
-        $orders = Menu::find()->select(['sort'])->orderBy(['sort' => SORT_ASC])->column();
+        $orders = Menu::find()->select(['order'])->orderBy(['order' => SORT_ASC])->column();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,

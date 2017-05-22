@@ -65,7 +65,7 @@
 
     <?php
         if ($model->isNewRecord && !$model->hasErrors()) {
-            $model->order = $model::find()->max('order') + 1;
+            $model->order = $model::find()->max('[[order]]') + 1;
         }
         echo $form->field($model, 'order')->textInput(['type' => 'number']);
     ?>
