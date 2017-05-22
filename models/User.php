@@ -14,10 +14,15 @@
      * @property string  $token
      * @property integer $status
      * @property integer $role
+<<<<<<< HEAD
      * @property integer $last_ip
      * @property integer $created_at
      * @property integer $updated_at
      * @property integer $activity_at
+=======
+     * @property integer $created_at
+     * @property integer $updated_at
+>>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
      * @property string  $password write-only password
      * @package papalapa\yiistart\models
      */
@@ -44,10 +49,15 @@
                 'token'         => 'Токен',
                 'status'        => 'Статус',
                 'role'          => 'Роль',
+<<<<<<< HEAD
                 'last_ip'       => 'Последний IP',
                 'created_at'    => 'Дата создания',
                 'updated_at'    => 'Дата изменения',
                 'activity_at'   => 'Дата активности',
+=======
+                'created_at'    => 'Дата создания',
+                'updated_at'    => 'Дата изменения',
+>>>>>>> 94cc280992f13bd215657ffd6639f2b10cabdb99
             ];
         }
 
