@@ -5,7 +5,8 @@
     use yii\db\Migration;
 
     /**
-     * Handles the creation of table `images_translation`.
+     * Class m170420_184016_create_images_translation_table
+     * @package papalapa\yiistart\modules\images\migrations
      */
     class m170420_184016_create_images_translation_table extends Migration
     {

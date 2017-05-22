@@ -6,7 +6,7 @@
 
     /**
      * Class m170420_183208_create_images_table
-     * Handles the creation of table `images`.
+     * @package papalapa\yiistart\modules\images\migrations
      */
     class m170420_183208_create_images_table extends Migration
     {

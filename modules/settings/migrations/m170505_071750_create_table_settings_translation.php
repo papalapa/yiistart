@@ -1,9 +1,12 @@
 <?php
 
+    namespace papalapa\yiistart\modules\settings\migrations;
+
     use yii\db\Migration;
 
     /**
      * Class m170505_071750_create_table_settings_translation
+     * @package papalapa\yiistart\modules\settings\migrations
      */
     class m170505_071750_create_table_settings_translation extends Migration
     {

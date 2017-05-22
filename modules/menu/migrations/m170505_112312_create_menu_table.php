@@ -6,7 +6,8 @@
     use yii\db\Migration;
 
     /**
-     * Handles the creation of table `menu`.
+     * Class m170505_112312_create_menu_table
+     * @package papalapa\yiistart\modules\menu\migrations
      */
     class m170505_112312_create_menu_table extends Migration
     {

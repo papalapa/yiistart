@@ -6,6 +6,7 @@
 
     /**
      * Class m170419_112711_create_table_elements_translation
+     * @package papalapa\yiistart\modules\elements\migrations
      */
     class m170419_112711_create_table_elements_translation extends Migration
     {

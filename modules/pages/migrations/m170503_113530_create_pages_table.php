@@ -1,9 +1,12 @@
 <?php
 
+    namespace papalapa\yiistart\modules\pages\migrations;
+
     use yii\db\Migration;
 
     /**
-     * Handles the creation of table `pages`.
+     * Class m170503_113530_create_pages_table
+     * @package papalapa\yiistart\modules\pages\migrations
      */
     class m170503_113530_create_pages_table extends Migration
     {

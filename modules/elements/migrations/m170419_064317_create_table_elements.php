@@ -7,6 +7,7 @@
 
     /**
      * Class m170419_064317_create_table_elements
+     * @package papalapa\yiistart\modules\elements\migrations
      */
     class m170419_064317_create_table_elements extends Migration
     {
