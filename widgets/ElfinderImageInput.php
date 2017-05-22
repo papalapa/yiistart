@@ -64,7 +64,7 @@
         public function init()
         {
             if ($this->model) {
-                $this->path = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName(), '_');
+                $this->path = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName());
             }
 
             $this->template = implode(null, [
