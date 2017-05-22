@@ -46,7 +46,7 @@
         {
             if (ArrayHelper::remove($this->clientOptions, 'upload', true)) {
                 if (!$this->uploadPath) {
-                    $this->uploadPath = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName());
+                    $this->uploadPath = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName(), '_');
                 }
                 $options = ElFinder::ckeditorOptions([
                     $this->uploadController,
