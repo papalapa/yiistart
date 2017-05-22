@@ -1,6 +1,6 @@
 <?php
 
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\MultilingualDetailView;
@@ -87,12 +87,12 @@
                 ],
                 [
                     'attribute' => 'created_by',
-                    'value'     => $model->created_by ? User::findOne(['id' => $model->created_by])->email : null,
+                    'value'     => $model->created_by ? BaseUser::findOne(['id' => $model->created_by])->email : null,
                     'format'    => 'email',
                 ],
                 [
                     'attribute' => 'updated_by',
-                    'value'     => $model->updated_by ? User::findOne(['id' => $model->updated_by])->email : null,
+                    'value'     => $model->updated_by ? BaseUser::findOne(['id' => $model->updated_by])->email : null,
                     'format'    => 'email',
                 ],
                 [

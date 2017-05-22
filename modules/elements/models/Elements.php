@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\elements\models;
 
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
-    use papalapa\yiistart\models\User;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
@@ -200,7 +200,7 @@
          */
         public function load($data, $formName = null)
         {
-            if (User::identity()->role == User::ROLE_DEVELOPER) {
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
                 $this->scenario = self::SCENARIO_DEVELOPER;
             }
 

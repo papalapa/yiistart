@@ -26,7 +26,7 @@
                 ['email', 'required'],
                 ['email', 'email'],
                 ['email', 'string', 'max' => 128],
-                ['email', 'unique', 'targetClass' => User::className()],
+                ['email', 'unique', 'targetClass' => (\Yii::$app->user->identity)::className()],
 
                 [['password'], 'required'],
                 [['password'], 'string', 'min' => 6],
@@ -101,7 +101,7 @@
                 ['email', 'email'],
                 ['email', 'exist', 'targetClass' => User::className()],
                 [['role'], 'required'],
-                [['role'], 'in', 'range' => [User::ROLE_USER, User::ROLE_AUTHOR, User::ROLE_MANAGER, User::ROLE_ADMIN, User::ROLE_DEVELOPER]],
+                [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN, BaseUser::ROLE_DEVELOPER]],
             ]);
 
             if ($model->hasErrors()) {
@@ -128,7 +128,7 @@
                 ['email', 'email'],
                 ['email', 'exist', 'targetClass' => User::className()],
                 [['status'], 'required'],
-                [['status'], 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_READY, User::STATUS_DELETED]],
+                [['status'], 'in', 'range' => [BaseUser::STATUS_ACTIVE, BaseUser::STATUS_READY, BaseUser::STATUS_DELETED]],
             ]);
 
             if ($model->hasErrors()) {

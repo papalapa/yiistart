@@ -1,6 +1,6 @@
 <?php
 
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use yii\helpers\Html;
@@ -14,13 +14,21 @@
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => User::identity()->role <> User::ROLE_DEVELOPER]); ?>
+    <?
+        if (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
+            echo $form->field($model, 'title')->textInput(['maxlength' => true]);
+        } else {
+            echo Html::tag('div', $model->title, ['class' => 'well']);
+        }
+    ?>
+
+    <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]); ?>
 
     <?php
         echo $form->field($model, 'value')->textInput(['maxlength' => true]);
         foreach (i18n::locales() as $locale) {
             if (Yii::$app->language <> $locale) {
-                echo $form->field($model, 'value_' . $locale)->textInput(['maxlength' => true]);
+                echo $form->field($model, 'value_'.$locale)->textInput(['maxlength' => true]);
             }
         }
     ?>
@@ -32,7 +40,7 @@
     <hr />
 
     <div class="form-group">
-        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']) . ' ' . ($model->isNewRecord ? 'Создать' : 'Изменить'),
+        <?= Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']).' '.($model->isNewRecord ? 'Создать' : 'Изменить'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

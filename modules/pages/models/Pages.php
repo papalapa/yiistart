@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\pages\models;
 
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
-    use papalapa\yiistart\models\User;
     use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
@@ -20,11 +20,12 @@
      * @property string             $description
      * @property string             $keywords
      * @property string             $header
-     * @property string             $context
      * @property string             $text
+     * @property boolean            $has_text
+     * @property string             $context
+     * @property string             $has_context
      * @property string             $image
-     * @property boolean            $contextable
-     * @property boolean            $imagable
+     * @property boolean            $has_image
      * @property integer            $is_active
      * @property integer            $created_by
      * @property integer            $updated_by
@@ -59,11 +60,12 @@
                 'description' => 'Мета-тег Description',
                 'keywords'    => 'Мета-тег Keywords',
                 'header'      => 'Заголовок',
-                'context'     => 'Описание',
                 'text'        => 'Текст',
+                'has_text'    => 'Страница с текстом',
+                'context'     => 'Описание',
+                'has_context' => 'Страница с описанием',
                 'image'       => 'Изображение',
-                'contextable' => 'Контекстная страница',
-                'imagable'    => 'Страница с изображением',
+                'has_image'   => 'Страница с изображением',
                 'is_active'   => 'Активность',
                 'created_by'  => 'Кем создано',
                 'updated_by'  => 'Кем изменено',
@@ -101,7 +103,7 @@
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active'],
                 self::SCENARIO_DEVELOPER => [
-                    'title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', 'url', 'contextable', 'imagable',
+                    'title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', 'url', 'has_context', 'has_text', 'has_image',
                 ],
             ]);
         }
@@ -122,13 +124,17 @@
                 [['url'], 'match', 'pattern' => '/^(\/[a-z]+(\-[a-z]+)*)+$/'],
                 [['url'], 'default', 'value' => null],
 
-                [['contextable'], 'boolean'],
-                [['contextable'], 'required',],
-                [['contextable'], 'default', 'value' => 1],
+                [['has_context'], 'boolean'],
+                [['has_context'], 'required',],
+                [['has_context'], 'default', 'value' => 1],
 
-                [['imagable'], 'boolean'],
-                [['imagable'], 'required'],
-                [['imagable'], 'default', 'value' => 1],
+                [['has_text'], 'boolean'],
+                [['has_text'], 'required',],
+                [['has_text'], 'default', 'value' => 1],
+
+                [['has_image'], 'boolean'],
+                [['has_image'], 'required'],
+                [['has_image'], 'default', 'value' => 1],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0],
@@ -175,7 +181,7 @@
          */
         public function load($data, $formName = null)
         {
-            if (User::identity()->role == User::ROLE_DEVELOPER) {
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
                 $this->scenario = self::SCENARIO_DEVELOPER;
             }
 

@@ -46,6 +46,7 @@
                     'class'     => GridIntegerColumn::className(),
                     'attribute' => 'id',
                 ],
+                'title',
                 'key',
                 'value:ntext',
                 [

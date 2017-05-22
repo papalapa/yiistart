@@ -27,6 +27,7 @@
             return [
                 [['id'], 'integer'],
                 [['is_active'], 'boolean'],
+                [['title'], 'string'],
                 [['key', 'value'], 'safe'],
             ];
         }
@@ -60,7 +61,8 @@
                 'is_active' => $this->is_active,
             ]);
 
-            $query->andFilterWhere(['like', 'key', $this->key])
+            $query->andFilterWhere(['like', 'title', $this->title])
+                  ->andFilterWhere(['like', 'key', $this->key])
                   ->andFilterWhere(['like', 'value', $this->value]);
 
             return $dataProvider;

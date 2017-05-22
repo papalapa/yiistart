@@ -69,12 +69,12 @@
                 ['email', 'email'],
 
                 [['status'], 'integer'],
-                [['status'], 'in', 'range' => [self::STATUS_DELETED, self::STATUS_READY, self::STATUS_ACTIVE]],
-                [['status'], 'default', 'value' => self::STATUS_READY],
+                [['status'], 'in', 'range' => [BaseUser::STATUS_DELETED, BaseUser::STATUS_READY, BaseUser::STATUS_ACTIVE]],
+                [['status'], 'default', 'value' => BaseUser::STATUS_READY],
 
                 [['role'], 'integer', 'min' => 0],
-                [['role'], 'in', 'range' => [self::ROLE_USER, self::ROLE_AUTHOR, self::ROLE_MANAGER, self::ROLE_ADMIN]],
-                [['role'], 'default', 'value' => self::ROLE_USER],
+                [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN]],
+                [['role'], 'default', 'value' => BaseUser::ROLE_USER],
             ];
         }
     }

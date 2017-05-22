@@ -21,8 +21,8 @@
                 'description' => $this->string(1024)->defaultValue(null),
                 'keywords'    => $this->string(1024)->defaultValue(null),
                 'header'      => $this->string(256)->defaultValue(null),
-                'context'     => $this->string(1024)->defaultValue(null),
                 'text'        => $this->text()->defaultValue(null),
+                'context'     => $this->string(1024)->defaultValue(null),
             ], $tableOptions);
 
             $this->alterColumn('{{pages_translation}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');

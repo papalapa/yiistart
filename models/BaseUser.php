@@ -144,14 +144,6 @@
         }
 
         /**
-         * @return bool
-         */
-        public static function isGuest()
-        {
-            return \Yii::$app->user->isGuest;
-        }
-
-        /**
          * @param null $attribute
          * @return static|null|string
          */
@@ -169,36 +161,6 @@
             }
 
             return $identity;
-        }
-
-        /**
-         * @param           $permissionName
-         * @param array     $params
-         * @param bool|true $allowCaching
-         * @return bool
-         */
-        public static function can($permissionName, $params = [], $allowCaching = true)
-        {
-            return \Yii::$app->user->can($permissionName, $params, $allowCaching);
-        }
-
-        /**
-         * @param bool|true $destroySession
-         * @return bool
-         */
-        public static function logout($destroySession = true)
-        {
-            return \Yii::$app->user->logout($destroySession);
-        }
-
-        /**
-         * @param IdentityInterface $identity
-         * @param int               $duration
-         * @return bool
-         */
-        public static function login(IdentityInterface $identity, $duration = 0)
-        {
-            return \Yii::$app->user->login($identity, $duration);
         }
 
         /**

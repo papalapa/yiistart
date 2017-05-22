@@ -3,7 +3,7 @@
     namespace papalapa\yiistart\widgets;
 
     use papalapa\yiistart\assets\CDN_Carhartl_JqueryCookie_Asset;
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\models\BaseUser;
     use yii\base\InvalidConfigException;
     use yii\base\Widget;
     use yii\helpers\ArrayHelper;
@@ -27,11 +27,11 @@
             parent::init();
 
             if (!is_array($this->items)) {
-                throw new InvalidConfigException('Property "items" must be an array in widget ' . __CLASS__);
+                throw new InvalidConfigException('Property "items" must be an array in widget '.__CLASS__);
             }
 
             if (!is_array($this->options)) {
-                throw new InvalidConfigException('Property "options" must be an array in widget ' . __CLASS__);
+                throw new InvalidConfigException('Property "options" must be an array in widget '.__CLASS__);
             }
         }
 
@@ -40,7 +40,7 @@
          */
         public function run()
         {
-            if (User::isGuest() || User::identity()->role < User::ROLE_MANAGER || !$this->checkAll()) {
+            if (\Yii::$app->user->isGuest || \Yii::$app->user->identity->role < BaseUser::ROLE_MANAGER || !$this->checkAll()) {
                 return null;
             }
 
@@ -82,7 +82,7 @@
                 $url    = ArrayHelper::remove($item, 'url');
                 $title  = ArrayHelper::remove($item, 'title');
                 $ico    = ArrayHelper::remove($item, 'ico');
-                $html[] = Html::a(($ico ? Html::tag('i', null, ['class' => $ico]) . ' ' : null) . $title, Url::to($url), $item);
+                $html[] = Html::a(($ico ? Html::tag('i', null, ['class' => $ico]).' ' : null).$title, Url::to($url), $item);
             }
 
             return implode(PHP_EOL, $html);

@@ -15,6 +15,7 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{settings}}', [
                 'id'         => $this->primaryKey(),
+                'title'      => $this->string(64)->defaultValue(null),
                 'key'        => $this->string(64)->notNull()->unique(),
                 'value'      => $this->text(),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),

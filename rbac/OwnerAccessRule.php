@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\rbac;
 
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\models\BaseUser;
     use yii;
     use yii\helpers\ArrayHelper;
     use yii\rbac\Item;
@@ -36,7 +36,7 @@
         public function execute($user, $item, $params)
         {
             // простые пользователи ниже автора проходят мимо
-            if (User::isGuest() || User::identity()->role < User::ROLE_AUTHOR) {
+            if (Yii::$app->user->isGuest || Yii::$app->user->identity->role < BaseUser::ROLE_AUTHOR) {
                 return false;
             }
 
@@ -55,8 +55,8 @@
             }
 
             // если не указан атрибут владельца, то контент могут изменить администратор или девелопер
-            return (!isset($attribute) && User::identity()->role > User::ROLE_MANAGER)
+            return (!isset($attribute) && Yii::$app->user->identity->role > BaseUser::ROLE_MANAGER)
                    // иначе, атрибут владельца должен совпадать
-                   || strcmp(User::identity()->id, $attribute) === 0;
+                   || strcmp(Yii::$app->user->identity->id, $attribute) === 0;
         }
     }

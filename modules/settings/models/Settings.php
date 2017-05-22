@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\settings\models;
 
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
-    use papalapa\yiistart\models\User;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -13,6 +13,7 @@
     /**
      * This is the model class for table "settings".
      * @property integer               $id
+     * @property string                $title
      * @property string                $key
      * @property string                $value
      * @property integer               $is_active
@@ -41,6 +42,7 @@
         {
             return $this->localizedAttributes([
                 'id'         => 'ID',
+                'title'      => 'Название',
                 'key'        => 'Ключ',
                 'value'      => 'Значение',
                 'is_active'  => 'Активность',
@@ -76,7 +78,7 @@
         {
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
-                self::SCENARIO_DEVELOPER => ['key', 'value', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'is_active'],
             ]);
         }
 
@@ -86,6 +88,9 @@
         public function rules()
         {
             return $this->localizedRules([
+                [['title'], WhiteSpaceNormalizerValidator::className()],
+                [['title'], 'string', 'max' => 64],
+
                 [['key'], WhiteSpaceNormalizerValidator::className()],
                 [['key'], 'required'],
                 [['key'], 'string', 'max' => 64],
@@ -131,12 +136,13 @@
         /**
          * Returns a value of a key
          * When value is not exists, search it in params.php
-         * @param $param
+         * @param string      $param
+         * @param string|null $default
          * @return null|boolean|string
          */
-        public static function valueOfParam($param)
+        public static function valueOrParam($param, $default = null)
         {
-            return ($setting = self::valueOf($param)) ? $setting : ArrayHelper::getValue(\Yii::$app->params, $param, null);
+            return ($setting = self::valueOf($param)) ? $setting : ArrayHelper::getValue(\Yii::$app->params, $param, $default);
         }
 
         /**
@@ -146,7 +152,7 @@
          */
         public function load($data, $formName = null)
         {
-            if (User::identity()->role == User::ROLE_DEVELOPER) {
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
                 $this->scenario = self::SCENARIO_DEVELOPER;
             }
 

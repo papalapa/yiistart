@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\controllers;
 
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\rbac\ForeignAccessRule;
     use papalapa\yiistart\rbac\OwnerAccessRule;
     use papalapa\yiistart\rbac\UserRoleRule;
@@ -100,27 +100,27 @@
             $userRoleRule = new UserRoleRule();
             $this->authManager->add($userRoleRule);
 
-            $this->roles[User::ROLE_GUEST]     = $this->authManager->createRole(User::roles()[User::ROLE_GUEST]);
-            $this->roles[User::ROLE_USER]      = $this->authManager->createRole(User::roles()[User::ROLE_USER]);
-            $this->roles[User::ROLE_AUTHOR]    = $this->authManager->createRole(User::roles()[User::ROLE_AUTHOR]);
-            $this->roles[User::ROLE_MANAGER]   = $this->authManager->createRole(User::roles()[User::ROLE_MANAGER]);
-            $this->roles[User::ROLE_ADMIN]     = $this->authManager->createRole(User::roles()[User::ROLE_ADMIN]);
-            $this->roles[User::ROLE_DEVELOPER] = $this->authManager->createRole(User::roles()[User::ROLE_DEVELOPER]);
+            $this->roles[BaseUser::ROLE_GUEST]     = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_GUEST]);
+            $this->roles[BaseUser::ROLE_USER]      = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_USER]);
+            $this->roles[BaseUser::ROLE_AUTHOR]    = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_AUTHOR]);
+            $this->roles[BaseUser::ROLE_MANAGER]   = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_MANAGER]);
+            $this->roles[BaseUser::ROLE_ADMIN]     = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_ADMIN]);
+            $this->roles[BaseUser::ROLE_DEVELOPER] = $this->authManager->createRole(BaseUser::roles()[BaseUser::ROLE_DEVELOPER]);
             echo 'User roles has been created.'.PHP_EOL;
 
-            $this->roles[User::ROLE_GUEST]->ruleName     = $userRoleRule->name;
-            $this->roles[User::ROLE_USER]->ruleName      = $userRoleRule->name;
-            $this->roles[User::ROLE_AUTHOR]->ruleName    = $userRoleRule->name;
-            $this->roles[User::ROLE_MANAGER]->ruleName   = $userRoleRule->name;
-            $this->roles[User::ROLE_ADMIN]->ruleName     = $userRoleRule->name;
-            $this->roles[User::ROLE_DEVELOPER]->ruleName = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_GUEST]->ruleName     = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_USER]->ruleName      = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_AUTHOR]->ruleName    = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_MANAGER]->ruleName   = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_ADMIN]->ruleName     = $userRoleRule->name;
+            $this->roles[BaseUser::ROLE_DEVELOPER]->ruleName = $userRoleRule->name;
 
-            $this->authManager->add($this->roles[User::ROLE_GUEST]);
-            $this->authManager->add($this->roles[User::ROLE_USER]);
-            $this->authManager->add($this->roles[User::ROLE_AUTHOR]);
-            $this->authManager->add($this->roles[User::ROLE_MANAGER]);
-            $this->authManager->add($this->roles[User::ROLE_ADMIN]);
-            $this->authManager->add($this->roles[User::ROLE_DEVELOPER]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_GUEST]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_USER]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_AUTHOR]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_MANAGER]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_ADMIN]);
+            $this->authManager->add($this->roles[BaseUser::ROLE_DEVELOPER]);
             echo 'User roles has been added.'.PHP_EOL;
         }
 
@@ -325,76 +325,76 @@
             // ------------------------------------------------------------------------------
 
             /** Добавление правил */
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $this->ownerPermission);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $this->foreignPermission);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $this->ownerPermission);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $this->foreignPermission);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createUser);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewUser);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexUser);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateUser);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteUser);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createUser);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewUser);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexUser);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateUser);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteUser);
 
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createTranslation); // translation creates automatic
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewTranslation);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexTranslation);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateTranslation);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteTranslation);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createTranslation); // translation creates automatic
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewTranslation);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexTranslation);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateTranslation);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteTranslation);
 
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSetting); // only for developer
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSetting);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSetting);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSetting);
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSetting); // only for developer
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createSetting); // only for developer
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewSetting);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexSetting);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateSetting);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteSetting); // only for developer
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createPage);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewPage);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexPage);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updatePage);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deletePage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createPage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewPage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexPage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updatePage);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deletePage);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createMenu);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewMenu);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexMenu);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateMenu);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteMenu);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createMenu);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewMenu);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexMenu);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateMenu);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteMenu);
 
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createElement);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewElement);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexElement);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateElement);
-            // $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteElement);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateElement);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteElement);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createDispatch);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewDispatch);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexDispatch);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateDispatch);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteDispatch);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createDispatch);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewDispatch);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexDispatch);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateDispatch);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteDispatch);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateSubscriber);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteSubscriber);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createSubscriber);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewSubscriber);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexSubscriber);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateSubscriber);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteSubscriber);
 
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $createImages);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $viewImages);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $indexImages);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $updateImages);
-            $this->authManager->addChild($this->roles[User::ROLE_ADMIN], $deleteImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateImages);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteImages);
 
             /** Developer */
 
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createSetting);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteSetting);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createSetting);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteSetting);
 
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $viewElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $indexElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $updateElementCategory);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElementCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElementCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewElementCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexElementCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateElementCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElementCategory);
 
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $createElement);
-            $this->authManager->addChild($this->roles[User::ROLE_DEVELOPER], $deleteElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElement);
 
             echo 'All child permissions has been added.'.PHP_EOL;
 
