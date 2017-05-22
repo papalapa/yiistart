@@ -18,8 +18,6 @@
      * @property integer $created_at
      * @property integer $updated_at
      * @property integer $activity_at
-     * @property integer $created_at
-     * @property integer $updated_at
      * @property string  $password write-only password
      * @package papalapa\yiistart\models
      */
@@ -50,8 +48,6 @@
                 'created_at'    => 'Дата создания',
                 'updated_at'    => 'Дата изменения',
                 'activity_at'   => 'Дата активности',
-                'created_at'    => 'Дата создания',
-                'updated_at'    => 'Дата изменения',
             ];
         }
 
