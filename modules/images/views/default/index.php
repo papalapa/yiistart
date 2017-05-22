@@ -25,11 +25,17 @@
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'createImage' => [
+                'createImage'        => [
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
+                ],
+                'indexImageCategory' => [
+                    'title' => 'Категории',
+                    'url'   => ['category/index'],
+                    'ico'   => 'fa fa-th-large',
+                    'class' => 'btn btn-default',
                 ],
             ],
         ]);

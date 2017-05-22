@@ -14,8 +14,10 @@
      * @property string  $token
      * @property integer $status
      * @property integer $role
+     * @property integer $last_ip
      * @property integer $created_at
      * @property integer $updated_at
+     * @property integer $activity_at
      * @property string  $password write-only password
      * @package papalapa\yiistart\models
      */
@@ -42,8 +44,10 @@
                 'token'         => 'Токен',
                 'status'        => 'Статус',
                 'role'          => 'Роль',
+                'last_ip'       => 'Последний IP',
                 'created_at'    => 'Дата создания',
                 'updated_at'    => 'Дата изменения',
+                'activity_at'   => 'Дата активности',
             ];
         }
 
