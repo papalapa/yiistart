@@ -6,7 +6,7 @@
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
-    /* @var $model \papalapa\yiistart\modules\users\models\User */
+    /* @var $model \common\modules\user\models\User */
     /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -14,7 +14,7 @@
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'email')->textInput() ?>
+    <?= $form->field($model, 'email')->textInput(['readonly' => 'readonly']) ?>
 
     <?
         $statuses = BaseUser::statusDescription();

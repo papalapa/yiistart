@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\validators;
 
     use papalapa\yiistart\helpers\FileHelper;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use yii\base\InvalidConfigException;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Inflector;
@@ -31,7 +32,7 @@
         public function validateAttribute($model, $attribute)
         {
             $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName(),'_');
-            $this->uploadController = ArrayHelper::getValue(\Yii::$app->params, sprintf('%s.upload.controller', $camel), $this->uploadController);
+            $this->uploadController = Settings::paramOf( sprintf('%s.upload.controller', $camel), $this->uploadController);
 
             $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'], false);
             $path     = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);

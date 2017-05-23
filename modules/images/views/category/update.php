@@ -1,14 +1,14 @@
 <?php
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model papalapa\yiistart\modules\images\models\ImageCategory */
+    /* @var $this yii\web\View */
+    /* @var $model papalapa\yiistart\modules\images\models\ImageCategory */
 
-$this->title = 'Update Image Category: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Image Categories', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+    $this->title                   = 'Изменение категории изображений: '.$model->name;
+    $this->params['breadcrumbs'][] = ['label' => 'Категории изображений', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+    $this->params['breadcrumbs'][] = 'Изменение';
 ?>
 <div class="image-category-update">
 

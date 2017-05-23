@@ -4,6 +4,7 @@
 
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
+    use yii\helpers\ArrayHelper;
 
     /**
      * Class User
@@ -19,10 +20,12 @@
      * @property integer $updated_at
      * @property integer $activity_at
      * @property string  $password write-only password
-     * @package papalapa\yiistart\models
+     * @package papalapa\yiistart\modules/users/models/
      */
     class User extends BaseUser
     {
+        const SCENARIO_UPDATE = 'update';
+
         /**
          * @inheritdoc
          */
@@ -65,11 +68,22 @@
         }
 
         /**
+         * @return array
+         */
+        public function scenarios()
+        {
+            return ArrayHelper::merge(parent::scenarios(), [
+                self::SCENARIO_UPDATE => ['status', 'role'],
+            ]);
+        }
+
+        /**
          * @inheritdoc
          */
         public function rules()
         {
             return [
+                ['email', 'trim'],
                 ['email', 'email'],
                 ['email', 'unique'],
 
@@ -81,42 +95,5 @@
                 [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN]],
                 [['role'], 'default', 'value' => BaseUser::ROLE_USER],
             ];
-        }
-
-        /**
-         * @param bool  $insert
-         * @param array $changedAttributes
-         */
-        public function afterSave($insert, $changedAttributes)
-        {
-            if ($insert) {
-                \Yii::$app->session->setFlash('success', 'Учетная запись зарегистрирована!');
-                \Yii::$app->mailer
-                    ->compose(['html' => 'signupConfirm-html', 'text' => 'signupConfirm-text'], ['user' => $this])
-                    ->setFrom([\Yii::$app->params['noreply.email'] => \Yii::$app->name.' robot'])
-                    ->setTo($this->email)
-                    ->setSubject('Подтверждение email для '.\Yii::$app->name)
-                    ->send();
-            }
-
-            parent::afterSave($insert, $changedAttributes);
-        }
-
-        /**
-         * @return bool
-         */
-        public function beforeDelete()
-        {
-            if (parent::beforeDelete()) {
-                if ($this->email == \Yii::$app->user->identity->email) {
-                    \Yii::$app->session->setFlash('error', 'Невозможно удалить свою учетную запись!');
-
-                    return false;
-                }
-
-                return true;
-            }
-
-            return false;
         }
     }

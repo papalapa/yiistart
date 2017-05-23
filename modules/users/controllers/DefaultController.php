@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\users\controllers;
 
+    use common\modules\user\models\User;
     use papalapa\yiistart\controllers\ManageController;
-    use papalapa\yiistart\modules\users\models\User;
     use papalapa\yiistart\modules\users\models\UserSearch;
 
     /**
@@ -30,6 +30,9 @@
         {
             $this->model       = User::className();
             $this->searchModel = UserSearch::className();
+            $this->scenarios   = array_merge($this->scenarios, [
+                'update' => User::SCENARIO_UPDATE,
+            ]);
             parent::init();
         }
     }

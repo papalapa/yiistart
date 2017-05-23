@@ -3,7 +3,6 @@
     namespace vendor\papalapa\yiistart\controllers;
 
     use papalapa\yiistart\modules\users\models\BaseUser;
-    use papalapa\yiistart\modules\users\models\User;
     use yii\base\DynamicModel;
     use yii\console\Controller;
 
@@ -45,7 +44,7 @@
                 $error  = reset($errors);
                 echo $error.PHP_EOL;
             } else {
-                $user         = new User();
+                $user         = new BaseUser();
                 $user->email  = $email;
                 $user->status = $status;
                 $user->role   = $role;
@@ -59,6 +58,29 @@
 
         /**
          * @param $email
+         */
+        public function actionDelete($email)
+        {
+            $model = DynamicModel::validateData(compact(['email']), [
+                ['email', 'filter', 'filter' => 'trim'],
+                ['email', 'required'],
+                ['email', 'email'],
+                ['email', 'exist', 'targetClass' => BaseUser::className()],
+            ]);
+
+            if ($model->hasErrors()) {
+                $errors = $model->getFirstErrors();
+                $error  = reset($errors);
+                echo $error.PHP_EOL;
+            } else {
+                $user = BaseUser::findByEmail($email);
+                $user->delete();
+                echo 'User deleted'.PHP_EOL;
+            }
+        }
+
+        /**
+         * @param $email
          * @param $password
          */
         public function actionPassword($email, $password)
@@ -67,12 +89,7 @@
                 ['email', 'filter', 'filter' => 'trim'],
                 ['email', 'required'],
                 ['email', 'email'],
-                [
-                    'email',
-                    'exist',
-                    'targetClass' => User::className(),
-                    'message'     => 'Указанный email в базе не найден.'.PHP_EOL,
-                ],
+                ['email', 'exist', 'targetClass' => BaseUser::className(), 'message' => 'Указанный email в базе не найден.'.PHP_EOL],
                 [['password'], 'required'],
                 [['password'], 'string', 'min' => 6],
             ]);
@@ -82,7 +99,7 @@
                 $error  = reset($errors);
                 echo $error.PHP_EOL;
             } else {
-                $user = User::findByEmail($email);
+                $user = BaseUser::findByEmail($email);
                 $user->setPassword($password);
                 $user->save(false);
                 echo 'Password changed'.PHP_EOL;
@@ -99,7 +116,7 @@
                 ['email', 'filter', 'filter' => 'trim'],
                 ['email', 'required'],
                 ['email', 'email'],
-                ['email', 'exist', 'targetClass' => User::className()],
+                ['email', 'exist', 'targetClass' => BaseUser::className()],
                 [['role'], 'required'],
                 [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN, BaseUser::ROLE_DEVELOPER]],
             ]);
@@ -109,7 +126,7 @@
                 $error  = reset($errors);
                 echo $error.PHP_EOL;
             } else {
-                $user       = User::findByEmail($email);
+                $user       = BaseUser::findByEmail($email);
                 $user->role = $role;
                 $user->save(false);
                 echo 'Role changed'.PHP_EOL;
@@ -126,7 +143,7 @@
                 ['email', 'filter', 'filter' => 'trim'],
                 ['email', 'required'],
                 ['email', 'email'],
-                ['email', 'exist', 'targetClass' => User::className()],
+                ['email', 'exist', 'targetClass' => BaseUser::className()],
                 [['status'], 'required'],
                 [['status'], 'in', 'range' => [BaseUser::STATUS_ACTIVE, BaseUser::STATUS_READY, BaseUser::STATUS_DELETED]],
             ]);
@@ -136,7 +153,7 @@
                 $error  = reset($errors);
                 echo $error.PHP_EOL;
             } else {
-                $user         = User::findByEmail($email);
+                $user         = BaseUser::findByEmail($email);
                 $user->status = $status;
                 $user->save(false);
                 echo 'Status changed'.PHP_EOL;

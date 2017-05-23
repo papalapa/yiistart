@@ -107,7 +107,7 @@
         }
 
         /**
-         * Returns a value of a key
+         * Returns a value of a key in settings db
          * @param $key
          * @return null|boolean|string
          */
@@ -131,6 +131,24 @@
             }
 
             return $model->value;
+        }
+
+        /**
+         * Returns param value
+         * @see params.php
+         * @param      $param
+         * @param null $default
+         * @return mixed
+         */
+        public static function paramOf($param, $default = null)
+        {
+            if (false === $value = ArrayHelper::getValue(\Yii::$app->params, $param, false)) {
+                \Yii::warning(sprintf('Используется недостающая настройка из конфигурации "%s".', $param));
+
+                return $default;
+            }
+
+            return $value;
         }
 
         /**

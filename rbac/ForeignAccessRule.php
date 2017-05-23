@@ -57,10 +57,10 @@
             }
 
             if (isset($attribute)) {
-                $owner = BaseUser::findOne(['id' => $attribute]);
-
-                // владелец контента должен быть ниже текущего пользователя, либо текущий пользователь должен быть выше менеджера
-                return $owner->role < Yii::$app->user->identity->role || Yii::$app->user->identity->role > BaseUser::ROLE_MANAGER;
+                // уровень прав текущего пользователя должен быть выше владельца, либо текущий пользователь должен быть выше менеджера
+                if ($owner = BaseUser::findOne(['id' => $attribute])) {
+                    return Yii::$app->user->identity->role > $owner->role || Yii::$app->user->identity->role > BaseUser::ROLE_MANAGER;
+                }
             }
 
             // если не указан атрибут владельца, то контент могут изменить администратор или девелопер

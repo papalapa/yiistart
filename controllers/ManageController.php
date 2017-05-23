@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\controllers;
 
+    use yii\base\Model;
     use yii\db\ActiveRecord;
     use yii\filters\AccessControl;
     use yii\filters\VerbFilter;
@@ -37,6 +38,17 @@
             'update' => null,
             'index'  => null,
             'delete' => null,
+        ];
+        /**
+         * Scenarios of actions
+         * @var array
+         */
+        protected $scenarios = [
+            'create' => Model::SCENARIO_DEFAULT,
+            'view'   => Model::SCENARIO_DEFAULT,
+            'update' => Model::SCENARIO_DEFAULT,
+            'index'  => Model::SCENARIO_DEFAULT,
+            'delete' => Model::SCENARIO_DEFAULT,
         ];
 
         /**
@@ -97,7 +109,8 @@
          */
         public function actionView($id)
         {
-            $model = $this->findModel($id);
+            $model           = $this->findModel($id);
+            $model->scenario = $this->scenarios['view'];
 
             if (!$model->getAttribute('is_active') && !\Yii::$app->user->can($this->permissions['view'])) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на просмотр');
@@ -119,7 +132,8 @@
             }
 
             /* @var $model ActiveRecord */
-            $model = new $this->model;
+            $model           = new $this->model;
+            $model->scenario = $this->scenarios['create'];
 
             if ($model->load(\Yii::$app->request->post()) && $model->save()) {
                 \Yii::$app->session->setFlash('success', 'Объект успешно создан и сохранен!');
@@ -145,7 +159,8 @@
             }
 
             /* @var $model ActiveRecord */
-            $model = $this->findModel($id);
+            $model           = $this->findModel($id);
+            $model->scenario = $this->scenarios['update'];
 
             if (!\Yii::$app->user->can('ownerAccess', $model) && !\Yii::$app->user->can('foreignAccess', $model)) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на изменение чужих записей');
@@ -176,7 +191,8 @@
             }
 
             /* @var $model ActiveRecord */
-            $model = $this->findModel($id);
+            $model           = $this->findModel($id);
+            $model->scenario = $this->scenarios['delete'];
 
             if (!\Yii::$app->user->can('ownerAccess', $model) && !\Yii::$app->user->can('foreignAccess', $model)) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на удаление чужих записей');
@@ -199,7 +215,9 @@
         public function actionToggle($id, $attribute, $value = null)
         {
             if (!\Yii::$app->request->isAjax) {
-                $this->redirect(['index'], [400 => 'Метод не поддерживается']);
+                \Yii::$app->session->setFlash('info', sprintf('Метод "%s" не поддерживается!',\Yii::$app->request->method));
+
+                return $this->redirect(['index']);
             }
 
             try {

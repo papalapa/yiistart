@@ -25,19 +25,17 @@
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'createImage' => [
-                    'createImage'        => [
-                        'title' => 'Создать',
-                        'url'   => ['create'],
-                        'ico'   => 'fa fa-plus-circle',
-                        'class' => 'btn btn-success',
-                    ],
-                    'indexImageCategory' => [
-                        'title' => 'Категории',
-                        'url'   => ['category/index'],
-                        'ico'   => 'fa fa-th-large',
-                        'class' => 'btn btn-default',
-                    ],
+                'createImage'        => [
+                    'title' => 'Создать',
+                    'url'   => ['create'],
+                    'ico'   => 'fa fa-plus-circle',
+                    'class' => 'btn btn-success',
+                ],
+                'indexImageCategory' => [
+                    'title' => 'Категории',
+                    'url'   => ['category/index'],
+                    'ico'   => 'fa fa-th-large',
+                    'class' => 'btn btn-default',
                 ],
             ],
         ]);
@@ -76,11 +74,11 @@
                 ],
                 [
                     'attribute' => 'title',
-                    'filter'    => false,
                 ],
                 // 'text:ntext',
                 [
                     'attribute' => 'image',
+                    'filter'    => false,
                     'format'    => 'html',
                     'content'   => function ($model) use ($siteUrlManager) /* @var Images $model */ {
                         $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;

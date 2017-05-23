@@ -4,6 +4,7 @@
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\pages\models\Pages;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -153,7 +154,7 @@
                 self::POSITION_BOTTOM => 'Нижнее меню',
             ];
 
-            $positions = ArrayHelper::getValue(\Yii::$app->params, 'menu.positions', $initialPositions);
+            $positions = Settings::paramOf( 'menu.positions', $initialPositions);
 
             return $positions;
         }

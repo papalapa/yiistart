@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\i18n\models;
 
+    use papalapa\yiistart\modules\settings\models\Settings;
     use yii\base\InvalidParamException;
-    use yii\helpers\ArrayHelper;
 
     /**
      * Class i18n
@@ -16,7 +16,7 @@
          */
         public static function locales()
         {
-            if (false === $locales = ArrayHelper::getValue(\Yii::$app->params, 'i18n.locales.available', false)) {
+            if (false === $locales = Settings::paramOf('i18n.locales.available', false)) {
                 throw new InvalidParamException("Need to set available locales in 'params.php' file: ['ru','en'] or ['ru' => 'Ru', 'en' => 'En']");
             }
 

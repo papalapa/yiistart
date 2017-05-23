@@ -1,13 +1,13 @@
 <?php
 
-    use backend\widgets\Permissions;
-    use common\models\User;
+    use papalapa\yiistart\modules\users\models\BaseUser;
+    use papalapa\yiistart\widgets\ControlButtonsPanel;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\DetailView;
 
     /* @var $this yii\web\View */
-    /* @var $model common\models\User */
+    /* @var $model \papalapa\yiistart\modules\users\models\User */
 
     $this->title                   = $model->email;
     $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
@@ -18,17 +18,19 @@
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
-        echo Permissions::widget([
+        echo ControlButtonsPanel::widget([
             'items' => [
                 'updateUser' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
+                    'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
                 'deleteUser' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',
+                    'ico'   => 'fa fa-trash',
                     'data'  => [
                         'confirm' => 'Вы уверены, что хотите удалить?',
                         'method'  => 'post',
@@ -49,13 +51,13 @@
             [
                 'attribute' => 'status',
                 'value'     => function ($model) {
-                    return ArrayHelper::getValue(User::statusDescription(), $model->status);
+                    return ArrayHelper::getValue(BaseUser::statusDescription(), $model->status);
                 },
             ],
             [
                 'attribute' => 'role',
                 'value'     => function ($model) {
-                    return ArrayHelper::getValue(User::roleDescription(), $model->role);
+                    return ArrayHelper::getValue(BaseUser::roleDescription(), $model->role);
                 },
             ],
             [
@@ -73,7 +75,7 @@
                 'value'     => function ($model) {
                     return Yii::$app->formatter->asDate($model->activity_at, 'd MMMM YYYY, HH:mm');
                 },
-                'format' => 'html',
+                'format'    => 'html',
             ],
             [
                 'attribute' => 'last_ip',

@@ -2,10 +2,10 @@
 
     namespace papalapa\yiistart\modules\users\models;
 
+    use papalapa\yiistart\modules\settings\models\Settings;
     use yii\base\InvalidParamException;
     use yii\base\NotSupportedException;
     use yii\db\ActiveRecord;
-    use yii\helpers\ArrayHelper;
     use yii\web\IdentityInterface;
 
     /**
@@ -146,7 +146,7 @@
             }
 
             $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-            $expire    = ArrayHelper::getValue(\Yii::$app->params, 'user.password.reset.token.expire', 3600);
+            $expire    = Settings::paramOf('user.password.reset.token.expire', 3600);
 
             return $timestamp + $expire >= time();
         }

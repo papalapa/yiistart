@@ -4,6 +4,7 @@
 
     use papalapa\yiistart\helpers\FileHelper;
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
@@ -139,7 +140,7 @@
                 [['image'], FilePathValidator::className()],
             ]);
 
-            if ($rule = ArrayHelper::getValue(\Yii::$app->params, 'images.upload.rule', false)) {
+            if ($rule = Settings::paramOf('images.upload.rule', false)) {
                 $rules[] = $rule;
             }
 

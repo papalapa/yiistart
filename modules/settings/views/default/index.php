@@ -1,5 +1,6 @@
 <?php
 
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridDateColumn;
@@ -22,7 +23,7 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <h4>Изменения вступают в силу в течение <?= ArrayHelper::getValue(Yii::$app->params, 'cache.duration.setting', 0) ?> сек.</h4>
+    <h4>Изменения вступают в силу в течение <?= Settings::paramOf('cache.duration.setting', 0) ?> сек.</h4>
 
     <?
         echo ControlButtonsPanel::widget([

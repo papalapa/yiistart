@@ -66,12 +66,12 @@
             ],
             [
                 'attribute' => 'created_by',
-                'value'     => $model->created_by ? BaseUser::findOne(['id' => $model->created_by])->email : null,
+                'value'     => ($model->created_by && $user = BaseUser::findOne(['id' => $model->created_by])) ? $user->email : null,
                 'format'    => 'email',
             ],
             [
                 'attribute' => 'updated_by',
-                'value'     => $model->updated_by ? BaseUser::findOne(['id' => $model->updated_by])->email : null,
+                'value'     => ($model->updated_by && $user = BaseUser::findOne(['id' => $model->updated_by])) ? $user->email : null,
                 'format'    => 'email',
             ],
             [

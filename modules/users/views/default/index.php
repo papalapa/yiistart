@@ -8,7 +8,7 @@
     use yii\widgets\Pjax;
 
     /* @var $this yii\web\View */
-    /* @var $searchModel backend\modules\user\models\UserSearch */
+    /* @var $searchModel \papalapa\yiistart\modules\users\models\UserSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
     $this->title                   = 'Пользователи';

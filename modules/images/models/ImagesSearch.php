@@ -26,7 +26,8 @@
         public function rules()
         {
             return [
-                [['id', 'order'], 'integer'],
+                [['id', 'category_id', 'order'], 'integer'],
+                [['title'], 'string'],
                 [['is_active'], 'boolean'],
             ];
         }
@@ -56,9 +57,10 @@
 
             // grid filtering conditions
             $query->andFilterWhere([
-                'id'        => $this->id,
-                'order'     => $this->order,
-                'is_active' => $this->is_active,
+                'id'          => $this->id,
+                'order'       => $this->order,
+                'is_active'   => $this->is_active,
+                'category_id' => $this->category_id,
             ]);
 
             if (\Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) {
@@ -69,6 +71,8 @@
                     },
                 ]);
             }
+
+            $query->andFilterWhere(['like', 'title', $this->title]);
 
             $query->with('category');
 

@@ -3,12 +3,12 @@
     namespace vendor\papalapa\yiistart\controllers;
 
     use frontend\models\SubscribeForm;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\subscribe\models\Dispatches;
     use papalapa\yiistart\modules\subscribe\models\PivotDispatchesSubscribers;
     use papalapa\yiistart\modules\subscribe\models\Subscribers;
     use yii\console\Controller;
     use yii\db\Expression;
-    use yii\helpers\ArrayHelper;
 
     /**
      * Class SendController
@@ -23,14 +23,14 @@
          */
         public function actionMail()
         {
-            $domain = ArrayHelper::getValue(\Yii::$app->params, 'domain');
+            $domain = Settings::paramOf('domain');
 
             if (!$domain) {
-                exit('Set domain param to params.php file in console app' . PHP_EOL);
+                exit('Set domain param to params.php file in console app'.PHP_EOL);
             }
 
             if (!$pivots = $this->activePivots()) {
-                echo 'No anyone active dispatches' . PHP_EOL;
+                echo 'No anyone active dispatches'.PHP_EOL;
                 exit;
             }
 
@@ -49,12 +49,12 @@
                 $html .= sprintf('<br /><p><small>Если вы не хотите больше получать подобные уведомления, перейдите по <a href="%s">этой</a> ссылке.</small></p>',
                     $unsubscribeUrl);
 
-                $text .= PHP_EOL . PHP_EOL . sprintf('Если вы не хотите больше получать подобные уведомления, перейдите по ссылке %s',
+                $text .= PHP_EOL.PHP_EOL.sprintf('Если вы не хотите больше получать подобные уведомления, перейдите по ссылке %s',
                         $unsubscribeUrl);
 
                 \Yii::$app->mailer
                     ->compose()
-                    ->setFrom([\Yii::$app->params['noreply.email'] => \Yii::$app->name . ' robot'])
+                    ->setFrom([\Yii::$app->params['noreply.email'] => \Yii::$app->name.' robot'])
                     ->setTo($pivot->subscriber->email)
                     ->setSubject($pivot->dispatch->subject)
                     ->setHtmlBody($html)
@@ -63,11 +63,11 @@
 
                 $pivot->updateAttributes(['status' => PivotDispatchesSubscribers::STATUS_SEND]);
 
-                echo sprintf('Email to %s is sent', $pivot->subscriber->email) . PHP_EOL;
+                echo sprintf('Email to %s is sent', $pivot->subscriber->email).PHP_EOL;
             }
 
-            echo '----------' . PHP_EOL;
-            echo sprintf('%d emails sent', $count) . PHP_EOL;
+            echo '----------'.PHP_EOL;
+            echo sprintf('%d emails sent', $count).PHP_EOL;
         }
 
         /**
@@ -108,12 +108,12 @@
         protected function connectPivot()
         {
             if (!$dispatch = $this->activeDispatch()) {
-                echo 'No anyone active dispatches' . PHP_EOL;
+                echo 'No anyone active dispatches'.PHP_EOL;
                 exit;
             }
 
             if (!$emails = $this->activeSubscribers()) {
-                echo 'No anyone active subscribers' . PHP_EOL;
+                echo 'No anyone active subscribers'.PHP_EOL;
                 exit;
             }
 
@@ -138,6 +138,6 @@
 
             $dispatch->updateAttributes(['status' => Dispatches::STATUS_END]);
 
-            echo sprintf('%d subscribers has been connected with dispatch %d', $count, $dispatch->id) . PHP_EOL;
+            echo sprintf('%d subscribers has been connected with dispatch %d', $count, $dispatch->id).PHP_EOL;
         }
     }

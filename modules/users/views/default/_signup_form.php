@@ -4,7 +4,7 @@
     use yii\widgets\ActiveForm;
 
     /* @var $this yii\web\View */
-    /* @var $model \papalapa\yiistart\modules\users\models\User */
+    /* @var $model \common\modules\user\models\User */
     /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -13,6 +13,8 @@
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+    <hr />
 
     <div class="form-group">
         <?= Html::submitButton('Создать', ['class' => 'btn btn-success']) ?>

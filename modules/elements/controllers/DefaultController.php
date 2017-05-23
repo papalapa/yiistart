@@ -30,7 +30,6 @@
         {
             $this->model       = Elements::className();
             $this->searchModel = ElementsSearch::className();
-
             parent::init();
         }
     }
