@@ -1,10 +1,10 @@
 <?php
 
     use kartik\select2\Select2;
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\elements\models\ElementCategory;
     use papalapa\yiistart\modules\elements\models\Elements;
     use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use papalapa\yiistart\widgets\CKEditor;
     use yii\helpers\ArrayHelper;

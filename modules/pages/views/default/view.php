@@ -1,7 +1,7 @@
 <?php
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\pages\models\Pages;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\MultilingualDetailView;
     use yii\helpers\Html;

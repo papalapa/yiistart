@@ -3,8 +3,8 @@
     namespace papalapa\yiistart\modules\images\models;
 
     use papalapa\yiistart\helpers\FileHelper;
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;

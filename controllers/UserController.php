@@ -2,8 +2,8 @@
 
     namespace vendor\papalapa\yiistart\controllers;
 
-    use papalapa\yiistart\models\BaseUser;
-    use papalapa\yiistart\models\User;
+    use papalapa\yiistart\modules\users\models\BaseUser;
+    use papalapa\yiistart\modules\users\models\User;
     use yii\base\DynamicModel;
     use yii\console\Controller;
 

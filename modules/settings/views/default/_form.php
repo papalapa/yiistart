@@ -1,7 +1,7 @@
 <?php
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use yii\helpers\Html;
 

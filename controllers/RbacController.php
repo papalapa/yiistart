@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\controllers;
 
-    use papalapa\yiistart\models\BaseUser;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\rbac\ForeignAccessRule;
     use papalapa\yiistart\rbac\OwnerAccessRule;
     use papalapa\yiistart\rbac\UserRoleRule;

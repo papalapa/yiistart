@@ -1,6 +1,6 @@
 <?php
 
-    namespace papalapa\yiistart\models;
+    namespace papalapa\yiistart\modules\users\models;
 
     use yii\base\InvalidParamException;
     use yii\base\NotSupportedException;
@@ -18,7 +18,7 @@
      * @property integer $status
      * @property integer $role
      * @property string  $password write-only password
-     * @package papalapa\yiistart\models
+     * @package papalapa\yiistart\modules\users\models
      */
     class BaseUser extends ActiveRecord implements IdentityInterface
     {

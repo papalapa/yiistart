@@ -2,7 +2,7 @@
 
     namespace papalapa\yiistart\rbac;
 
-    use papalapa\yiistart\models\BaseUser;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use yii;
     use yii\helpers\ArrayHelper;
     use yii\rbac\Item;

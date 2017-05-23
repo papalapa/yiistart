@@ -3,7 +3,7 @@
     namespace papalapa\yiistart\widgets;
 
     use papalapa\yiistart\assets\CDN_Carhartl_JqueryCookie_Asset;
-    use papalapa\yiistart\models\BaseUser;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use yii\base\InvalidConfigException;
     use yii\base\Widget;
     use yii\helpers\ArrayHelper;

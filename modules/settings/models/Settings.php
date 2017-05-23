@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\settings\models;
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;

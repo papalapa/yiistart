@@ -2,8 +2,8 @@
 
     namespace papalapa\yiistart\modules\elements\models;
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;

@@ -1,8 +1,8 @@
 <?php
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\modules\images\models\ImageCategory;
     use papalapa\yiistart\modules\images\models\Images;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;

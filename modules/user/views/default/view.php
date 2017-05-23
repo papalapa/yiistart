@@ -1,35 +1,34 @@
 <?php
 
-    use papalapa\yiistart\modules\users\models\BaseUser;
-    use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use backend\widgets\Permissions;
+    use common\models\User;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\DetailView;
 
     /* @var $this yii\web\View */
-    /* @var $model papalapa\yiistart\modules\elements\models\ElementCategory */
+    /* @var $model common\models\User */
 
-    $this->title                   = $model->name;
-    $this->params['breadcrumbs'][] = ['label' => 'Категории элементов', 'url' => ['index']];
+    $this->title                   = $model->email;
+    $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="element-category-view">
+<div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?
-        echo ControlButtonsPanel::widget([
+        echo Permissions::widget([
             'items' => [
-                'updateElementCategory' => [
+                'updateUser' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
-                    'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
-                'deleteElementCategory' => [
+                'deleteUser' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',
-                    'ico'   => 'fa fa-trash',
                     'data'  => [
                         'confirm' => 'Вы уверены, что хотите удалить?',
                         'method'  => 'post',
@@ -43,16 +42,21 @@
         'model'      => $model,
         'attributes' => [
             'id',
-            'name',
+            'email:email',
+            //'auth_key',
+            //'password_hash',
+            //'token',
             [
-                'attribute' => 'created_by',
-                'value'     => $model->created_by ? BaseUser::findOne(['id' => $model->created_by])->email : null,
-                'format'    => 'email',
+                'attribute' => 'status',
+                'value'     => function ($model) {
+                    return ArrayHelper::getValue(User::statusDescription(), $model->status);
+                },
             ],
             [
-                'attribute' => 'updated_by',
-                'value'     => $model->updated_by ? BaseUser::findOne(['id' => $model->updated_by])->email : null,
-                'format'    => 'email',
+                'attribute' => 'role',
+                'value'     => function ($model) {
+                    return ArrayHelper::getValue(User::roleDescription(), $model->role);
+                },
             ],
             [
                 'attribute' => 'created_at',
@@ -63,6 +67,19 @@
                 'attribute' => 'updated_at',
                 'value'     => Yii::$app->formatter->asDate($model->updated_at, 'd MMMM YYYY, HH:mm'),
                 'format'    => 'html',
+            ],
+            [
+                'attribute' => 'activity_at',
+                'value'     => function ($model) {
+                    return Yii::$app->formatter->asDate($model->activity_at, 'd MMMM YYYY, HH:mm');
+                },
+                'format' => 'html',
+            ],
+            [
+                'attribute' => 'last_ip',
+                'value'     => function ($model) {
+                    return long2ip($model->last_ip ? $model->last_ip : 0);
+                },
             ],
         ],
     ]) ?>

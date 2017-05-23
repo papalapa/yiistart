@@ -2,9 +2,9 @@
 
     namespace papalapa\yiistart\modules\pages\models;
 
-    use papalapa\yiistart\models\BaseUser;
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\menu\models\Menu;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
