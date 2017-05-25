@@ -5,6 +5,7 @@
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -70,6 +71,7 @@
                 ],
                 [
                     'attribute' => 'order',
+                    'class'     => GridOrderColumn::className(),
                     'filter'    => ArrayHelper::map($orders, 'order', 'order'),
                 ],
                 [

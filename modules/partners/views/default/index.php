@@ -1,29 +1,29 @@
 <?php
 
-    use papalapa\yiistart\modules\menu\models\Menu;
+    use papalapa\yiistart\modules\partners\models\Partners;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
     /* @var $this yii\web\View */
-    /* @var $searchModel papalapa\yiistart\modules\menu\models\MenuSearch */
+    /* @var $searchModel papalapa\yiistart\modules\partners\models\PartnersSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
-    $this->title                   = 'Меню';
+    $this->title                   = 'Партнеры';
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="menu-index">
+<div class="partners-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'createMenu' => [
+                'createPartner' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
@@ -33,40 +33,37 @@
         ]);
     ?>
 
-    <?php Pjax::begin(['id' => 'pjax-menu-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
+    <?php Pjax::begin(['id' => 'pjax-partners-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
-        $siteUrlManager          = clone (Yii::$app->urlManager);
+        $siteUrlManager          = clone Yii::$app->urlManager;
         $siteUrlManager->baseUrl = '/';
 
-        $orders = Menu::find()->select(['order'])->orderBy(['order' => SORT_ASC])->column();
+        $orders = Partners::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel'  => $searchModel,
             'columns'      => [
-                //['class' => 'yii\grid\SerialColumn'],
+                // ['class' => 'yii\grid\SerialColumn'],
+                // 'id',
                 [
                     'attribute' => 'order',
                     'class'     => GridOrderColumn::className(),
-                    'filter'    => array_combine($orders, $orders),
+                    'filter'    => ArrayHelper::map($orders, 'order', 'order'),
                 ],
                 [
-                    'attribute' => 'position',
-                    'filter'    => Menu::positions(),
-                    'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ {
-                        return $model->position;
+                    'attribute' => 'image',
+                    'format'    => 'html',
+                    'content'   => function ($model) use ($siteUrlManager) /* @var \papalapa\yiistart\modules\partners\models\Partners $model */ {
+                        $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;
+
+                        return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-pjax' => 0, 'target' => '_blank']) : null;
                     },
                 ],
-                [
-                    'attribute' => 'title',
-                ],
-                [
-                    'attribute' => 'url',
-                    'content'   => function ($model, $key, $index, $column) use ($siteUrlManager) {
-                        return Html::a($model->url, $siteUrlManager->createUrl([$model->url]), ['target' => '_blank']);
-                    },
-                ],
+                'url:url',
+                'title',
+                'alt',
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
@@ -80,14 +77,11 @@
                 [
                     'class'       => GridActionColumn::className(),
                     'permissions' => [
-                        'view'   => 'viewMenu',
-                        'update' => 'updateMenu',
-                        'delete' => 'deleteMenu',
+                        'view'   => 'viewPartner',
+                        'update' => 'updatePartner',
+                        'delete' => 'deletePartner',
                     ],
                 ],
             ],
-        ]);
-    ?>
-
-    <?php Pjax::end(); ?>
-</div>
+        ]); ?>
+    <?php Pjax::end(); ?></div>

@@ -30,4 +30,9 @@
          * @var array
          */
         public $filterInputOptions = ['class' => 'form-control', 'type' => 'number', 'min' => '0'];
+
+        public function init()
+        {
+            parent::init();
+        }
     }

@@ -267,6 +267,18 @@
             $deleteImage              = $this->authManager->createPermission('deleteImage');
             $deleteImage->description = 'Удаление изображений';
 
+            /** Управление партнерами компании */
+            $createPartner              = $this->authManager->createPermission('createPartner');
+            $createPartner->description = 'Создание партнеров';
+            $viewPartner                = $this->authManager->createPermission('viewPartner');
+            $viewPartner->description   = 'Просмотр партнеров';
+            $indexPartner               = $this->authManager->createPermission('indexPartner');
+            $indexPartner->description  = 'Листинг партнеров';
+            $updatePartner              = $this->authManager->createPermission('updatePartner');
+            $updatePartner->description = 'Изменение партнеров';
+            $deletePartner              = $this->authManager->createPermission('deletePartner');
+            $deletePartner->description = 'Удаление партнеров';
+
             echo 'New permissions has been created.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -338,6 +350,12 @@
             $this->authManager->add($updateImage);
             $this->authManager->add($deleteImage);
 
+            $this->authManager->add($createPartner);
+            $this->authManager->add($viewPartner);
+            $this->authManager->add($indexPartner);
+            $this->authManager->add($updatePartner);
+            $this->authManager->add($deletePartner);
+
             echo 'New permissions has been added.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -399,6 +417,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexImage);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateImage);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteImage);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createPartner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewPartner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexPartner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updatePartner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deletePartner);
 
             /** Developer */
 

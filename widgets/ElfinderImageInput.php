@@ -69,7 +69,7 @@
 
             $this->template = implode(null, [
                 Html::beginTag('div', ['class' => 'input-group elfinder-image-widget']),
-                Html::beginTag('span', ['class' => 'input-group-btn']),
+                Html::beginTag('span', ['class' => 'input-group-btn elfinder-image-wrapper']),
                 Html::img(null, ['class' => 'btn btn-default elfinder-image', 'data-src' => $this->model->{$this->attribute}, 'height' => 34]),
                 Html::endTag('span'),
                 '{input}',
@@ -106,6 +106,7 @@
             $this->view->registerJs("
                 $('.elfinder-image-widget').each(function(i){
                     var elfinderWidget = $(this);
+                    var elfinderImageWrapper = elfinderWidget.find('.elfinder-image-wrapper');
                     var elfinderImage = elfinderWidget.find('.elfinder-image');
                     var elfinderCleaner = elfinderWidget.find('.elfinder-cleaner');
                     /**
@@ -115,7 +116,7 @@
                         elfinderImage.attr('src', elfinderImage.attr('data-src'));
                     }
                     else {
-                        elfinderImage.hide();
+                        elfinderImageWrapper.hide();
                         elfinderCleaner.closest('span').hide();
                     }
                     /**
@@ -124,12 +125,12 @@
                     elfinderWidget.find('input').on('change', function(){
                         if ($(this).val()){
                             elfinderImage.attr('src', $(this).val());
-                            elfinderImage.show();
+                            elfinderImageWrapper.show();
                             elfinderCleaner.closest('span').show();
                         }
                         else {
+                            elfinderImageWrapper.hide();
                             elfinderImage.removeAttr('src');
-                            elfinderImage.hide();
                             elfinderCleaner.closest('span').hide();
                         }
                     });
