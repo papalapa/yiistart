@@ -17,6 +17,11 @@
          */
         public $format = 'html';
         /**
+         * If wrap image in link tag is needed
+         * @var bool
+         */
+        public $linked = true;
+        /**
          * @var array
          */
         public $filter = [0 => 'нет', 1 => 'есть'];
@@ -27,11 +32,20 @@
         public function init()
         {
             $this->content = function ($model) /* @var $model ActiveRecord */ {
-                return $model->hasAttribute($this->attribute) && $model->getAttribute($this->attribute)
-                    ? Html::a(Html::img($model->getAttribute($this->attribute), ['width' => 150]),
-                        $model->getAttribute($this->attribute), ['target' => '_blank', 'data-pjax' => 0]
-                    )
-                    : null;
+                if ($model->hasAttribute($this->attribute) && $model->getAttribute($this->attribute)) {
+                    $image = Html::img($model->getAttribute($this->attribute), ['height' => 40]);
+                    if ($this->linked) {
+                        $siteUrlManager          = clone \Yii::$app->urlManager;
+                        $siteUrlManager->baseUrl = '/';
+
+                        return Html::a($image, $siteUrlManager->createUrl([$model->getAttribute($this->attribute)]),
+                            ['data-pjax' => 0, 'target' => '_blank']);
+                    }
+
+                    return $image;
+                }
+
+                return null;
             };
         }
     }

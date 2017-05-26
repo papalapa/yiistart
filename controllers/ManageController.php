@@ -90,9 +90,14 @@
         /**
          * Lists all models.
          * @return string
+         * @throws ForbiddenHttpException
          */
         public function actionIndex()
         {
+            if (!\Yii::$app->user->can($this->permissions['index'])) {
+                throw new ForbiddenHttpException('У вас недостаточно прав на просмотр');
+            }
+
             /* @var $searchModel ActiveRecord */
             $searchModel  = new $this->searchModel;
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
@@ -109,12 +114,12 @@
          */
         public function actionView($id)
         {
-            $model           = $this->findModel($id);
-            $model->scenario = $this->scenarios['view'];
-
-            if (!$model->getAttribute('is_active') && !\Yii::$app->user->can($this->permissions['view'])) {
+            if (!\Yii::$app->user->can($this->permissions['view'])) {
                 throw new ForbiddenHttpException('У вас недостаточно прав на просмотр');
             }
+
+            $model           = $this->findModel($id);
+            $model->scenario = $this->scenarios['view'];
 
             return $this->render('view', ['model' => $model]);
         }
@@ -206,6 +211,7 @@
         }
 
         /**
+         * Toggling attribute as on/off
          * @param      $id
          * @param      $attribute
          * @param null $value
@@ -215,7 +221,7 @@
         public function actionToggle($id, $attribute, $value = null)
         {
             if (!\Yii::$app->request->isAjax) {
-                \Yii::$app->session->setFlash('info', sprintf('Метод "%s" не поддерживается!',\Yii::$app->request->method));
+                \Yii::$app->session->setFlash('info', sprintf('Метод "%s" не поддерживается!', \Yii::$app->request->method));
 
                 return $this->redirect(['index']);
             }
@@ -223,7 +229,7 @@
             try {
                 $model = $this->findModel($id);
             } catch (NotFoundHttpException $e) {
-                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Не найдено!']);
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Объект не найден!']);
             }
 
             if (!\Yii::$app->user->can($this->permissions['update'])) {
@@ -261,6 +267,74 @@
             \Yii::$app->session->setFlash('info', 'Изменения приняты!');
 
             return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-toggle-column.php',
+                ['model' => $model, 'attribute' => $attribute]);
+        }
+
+        /**
+         * Ordering "order" attribute as +1/-1
+         * @param mixed   $id
+         * @param string  $attribute
+         * @param integer $direction
+         * @return string
+         * @throws BadRequestHttpException
+         */
+        public function actionReorder($id, $attribute, $direction)
+        {
+            if (!\Yii::$app->request->isAjax) {
+                \Yii::$app->session->setFlash('info', sprintf('Метод "%s" не поддерживается!', \Yii::$app->request->method));
+
+                return $this->redirect(['index']);
+            }
+
+            try {
+                $model = $this->findModel($id);
+            } catch (NotFoundHttpException $e) {
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Объект не найден!']);
+            }
+
+            if (!\Yii::$app->user->can($this->permissions['update'])) {
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Нет прав на изменение!']);
+            }
+
+            if (!\Yii::$app->user->can('ownerAccess', $model) && !\Yii::$app->user->can('foreignAccess', $model)) {
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Нет прав на изменение!']);
+            }
+
+            if (!$model->hasAttribute($attribute)) {
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут не найден!']);
+            }
+
+            if (!$model->isAttributeSafe($attribute)) {
+                return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Заданный атрибут не доступен для изменения!']);
+            }
+
+            try {
+                $direction = $direction / abs($direction);
+                $oldOrder  = $model->getAttribute($attribute);
+                $maxOrder  = $model::find()->max(sprintf('[[%s]]', $attribute));
+
+                if (is_null($oldOrder)) {
+                    $model->updateAttributes([$attribute => $maxOrder + 1]);
+                } else {
+                    $newOrder = $model->getAttribute($attribute) + $direction;
+                    if ($newOrder >= 0) {
+                        $modelOnNewOrder = $model::find()->where([sprintf('[[%s]]', $attribute) => $newOrder])->one();
+                        if ($modelOnNewOrder) {
+                            $modelOnNewOrder->updateAttributes([$attribute => $maxOrder]);
+                            $model->updateAttributes([$attribute => $newOrder]);
+                            $modelOnNewOrder->updateAttributes([$attribute => $oldOrder]);
+                            $this->view->registerJs("$('.grid-view').yiiGridView('applyFilter');");
+                        } else {
+                            $model->updateAttributes([$attribute => $newOrder]);
+                        }
+                    }
+                }
+            } catch (\Exception $e) {
+            }
+
+            \Yii::$app->session->setFlash('info', 'Изменения приняты!');
+
+            return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-order-column.php',
                 ['model' => $model, 'attribute' => $attribute]);
         }
 

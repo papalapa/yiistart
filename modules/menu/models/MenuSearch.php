@@ -27,7 +27,7 @@
             return [
                 [['order'], 'integer'],
                 [['is_active'], 'boolean'],
-                [['position'], 'in', 'range' => Menu::positions()],
+                [['position'], 'in', 'range' => array_keys(Menu::positions())],
                 [['title', 'url'], 'safe'],
             ];
         }

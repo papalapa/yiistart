@@ -1,12 +1,11 @@
 <?php
 
-    use papalapa\yiistart\modules\partners\models\Partners;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridImageColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
-    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -36,34 +35,26 @@
     <?php Pjax::begin(['id' => 'pjax-partners-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
-        $siteUrlManager          = clone Yii::$app->urlManager;
-        $siteUrlManager->baseUrl = '/';
-
-        $orders = Partners::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
-
         echo GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel'  => $searchModel,
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
                 // 'id',
-                [
-                    'attribute' => 'order',
-                    'class'     => GridOrderColumn::className(),
-                    'filter'    => ArrayHelper::map($orders, 'order', 'order'),
-                ],
-                [
-                    'attribute' => 'image',
-                    'format'    => 'html',
-                    'content'   => function ($model) use ($siteUrlManager) /* @var \papalapa\yiistart\modules\partners\models\Partners $model */ {
-                        $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;
-
-                        return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-pjax' => 0, 'target' => '_blank']) : null;
-                    },
-                ],
-                'url:url',
                 'title',
+                'url:url',
+                [
+                    'class'     => GridImageColumn::className(),
+                    'attribute' => 'image',
+                    'filter'    => false,
+                ],
                 'alt',
+                [
+                    'class'      => GridOrderColumn::className(),
+                    'attribute'  => 'order',
+                    'labelTitle' => 'Порядок',
+                    'labelIco'   => 'fa fa-sort',
+                ],
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',

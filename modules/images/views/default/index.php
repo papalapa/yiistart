@@ -5,6 +5,7 @@
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridImageColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
@@ -19,7 +20,7 @@
     $this->title                   = 'Фотографии';
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="yiistart\modules\images-index">
+<div class="images-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -45,11 +46,6 @@
     <?php Pjax::begin(['id' => 'pjax-images-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
 
     <?
-        $siteUrlManager          = clone Yii::$app->urlManager;
-        $siteUrlManager->baseUrl = '/';
-
-        $orders = Images::find()->select(['order'])->orderBy(['order' => SORT_ASC])->asArray()->all();
-
         $categoryFind = ImageCategory::find()->select(['id', 'name']);
         if (Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) {
             $categoryFind->andWhere(['is_visible' => true]);
@@ -70,23 +66,19 @@
                     },
                 ],
                 [
-                    'attribute' => 'order',
-                    'class'     => GridOrderColumn::className(),
-                    'filter'    => ArrayHelper::map($orders, 'order', 'order'),
+                    'class'      => GridOrderColumn::className(),
+                    'attribute'  => 'order',
+                    'labelTitle' => 'Порядок',
+                    'labelIco'   => 'fa fa-sort',
                 ],
                 [
                     'attribute' => 'title',
                 ],
                 // 'text:ntext',
                 [
+                    'class'     => GridImageColumn::className(),
                     'attribute' => 'image',
                     'filter'    => false,
-                    'format'    => 'html',
-                    'content'   => function ($model) use ($siteUrlManager) /* @var Images $model */ {
-                        $img = $model->image ? Html::img($model->image, ['height' => 40]) : null;
-
-                        return $img ? Html::a($img, $siteUrlManager->createUrl([$model->image]), ['data-pjax' => 0, 'target' => '_blank']) : null;
-                    },
                 ],
                 [
                     'attribute' => 'size',

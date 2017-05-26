@@ -1,9 +1,13 @@
 <?php
 
+    namespace papalapa\yiistart\modules\partners\migrations;
+
     use yii\db\Migration;
 
     /**
+     * Class m170525_102315_create_partners_table
      * Handles the creation of table `partners`.
+     * @package papalapa\yiistart\modules\partners\migrations
      */
     class m170525_102315_create_partners_table extends Migration
     {

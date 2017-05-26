@@ -6,6 +6,7 @@
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -47,15 +48,16 @@
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
                 [
-                    'attribute' => 'order',
-                    'class'     => GridOrderColumn::className(),
-                    'filter'    => array_combine($orders, $orders),
+                    'class'      => GridOrderColumn::className(),
+                    'attribute'  => 'order',
+                    'labelTitle' => 'Порядок',
+                    'labelIco'   => 'fa fa-sort',
                 ],
                 [
                     'attribute' => 'position',
                     'filter'    => Menu::positions(),
                     'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ {
-                        return $model->position;
+                        return ArrayHelper::getValue(Menu::positions(), $model->position);
                     },
                 ],
                 [

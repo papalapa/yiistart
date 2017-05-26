@@ -64,8 +64,7 @@
         public function renderStatic($model)
         {
             return is_null($model->{$this->attribute}) ? null : Html::tag('i', null, [
-                'class' => $model->{$this->attribute} ?
-                    'fa fa-check text-success' : 'fa fa-times-circle text-danger',
+                'class' => $model->{$this->attribute} ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger',
             ]);
         }
 

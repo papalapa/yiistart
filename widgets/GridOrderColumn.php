@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\widgets;
 
     use yii\grid\DataColumn;
+    use yii\helpers\Html;
 
     /**
      * Class GridOrderColumn
@@ -17,11 +18,20 @@
         /**
          * @var string
          */
-        public $format = 'html';
+        public $format = 'raw';
         /**
          * @var bool
          */
         public $encodeLabel = false;
+        /**
+         * @var array
+         */
+        public $contentOptions = ['class' => 'text-center'];
+        /**
+         * Enable/disable ajax switching
+         * @var bool
+         */
+        public $enableAjax = true;
         /**
          * @var string
          */
@@ -30,9 +40,64 @@
          * @var array
          */
         public $filterInputOptions = ['class' => 'form-control', 'type' => 'number', 'min' => '0'];
+        /**
+         * @var string
+         */
+        public $labelTitle;
+        /**
+         * @var string
+         */
+        public $labelIco;
 
+        /**
+         * @inheritdoc
+         */
         public function init()
         {
-            parent::init();
+            $this->label = Html::tag('i', null, ['class' => $this->labelIco, 'data-toggle' => 'tooltip', 'title' => $this->labelTitle]);
+
+            $this->value = function ($model, $key, $index, $column) {
+                return $this->enableAjax ? $this->renderDynamic($model) : $this->renderStatic($model);
+            };
+        }
+
+        /**
+         * @param $model
+         * @return string
+         */
+        public function renderStatic($model)
+        {
+            return is_null($model->{$this->attribute}) ? null : Html::tag('span', $model->{$this->attribute}, ['class' => 'badge']);
+        }
+
+        /**
+         * @param $model
+         * @return string
+         */
+        public function renderDynamic($model)
+        {
+            \Yii::$app->view->registerJs("
+                $(document).on('click', '.pjax-reorder-attribute-{$this->attribute}-handler a', function (event) {
+                    var container = $(this).closest('[data-pjax-container]');
+                    $.pjax.click(event, {
+                        cache:               false,
+                        skipOuterContainers: true,
+                        container:           container,
+                        push:                false,
+                        replace:             false,
+                        timeout:             10000,
+                        scrollTo:            false
+                    });
+                });
+            ");
+
+            ob_start();
+
+            echo \Yii::$app->view->renderFile('@vendor/papalapa/yiistart/widgets/views/grid-order-column.php', [
+                'model'     => $model,
+                'attribute' => $this->attribute,
+            ]);
+
+            return ob_get_clean();
         }
     }

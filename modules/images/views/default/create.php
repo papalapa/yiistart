@@ -9,7 +9,7 @@
     $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="yiistart\modules\images-create">
+<div class="images-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
