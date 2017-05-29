@@ -131,7 +131,7 @@
                     ['text'],
                     TagsStripperValidator::className(),
                     'when' => function ($model) /* @var $model Elements */ {
-                        return $model->format <> self::FORMAT_HTML;
+                        return $model->format == self::FORMAT_TEXT;
                     },
                 ],
                 [['text', 'name'], WhiteSpaceNormalizerValidator::className()],
