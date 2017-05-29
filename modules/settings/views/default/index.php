@@ -4,6 +4,7 @@
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridDateColumn;
     use papalapa\yiistart\widgets\GridIntegerColumn;
+    use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
@@ -47,7 +48,10 @@
                     'attribute' => 'id',
                 ],
                 'key',
-                'value:ntext',
+                [
+                    'class'     => GridTextColumn::className(),
+                    'attribute' => 'value',
+                ],
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',

@@ -5,6 +5,7 @@
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridIntegerColumn;
+    use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -71,7 +72,10 @@
                     'attribute' => 'text',
                     'format'    => 'html',
                 ],
-                // 'description',
+                [
+                    'class'     => GridTextColumn::className(),
+                    'attribute' => 'description',
+                ],
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
