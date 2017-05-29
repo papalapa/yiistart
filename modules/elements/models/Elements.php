@@ -37,6 +37,7 @@
         const FORMAT_TEXT        = 'text';
         const FORMAT_EMAIL       = 'email';
         const FORMAT_TEL         = 'tel';
+        const FORMAT_RAW         = 'raw';
         const ICO_FORMAT_HTML    = 'html';
         const ICO_FORMAT_TEXT    = 'text';
         const ICO_FORMAT_EMAIL   = 'email';
@@ -230,6 +231,7 @@
                 self::FORMAT_HTML  => 'HTML',
                 self::FORMAT_EMAIL => 'Email',
                 self::FORMAT_TEL   => 'Телефон',
+                self::FORMAT_RAW   => 'Без форматирования',
             ];
         }
 
