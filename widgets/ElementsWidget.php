@@ -69,8 +69,10 @@
                     return \Yii::$app->formatter->asHtml($this->model->text);
                 case Elements::FORMAT_EMAIL:
                     return \Yii::$app->formatter->asEmail($this->model->text);
-                default:
+                case Elements::FORMAT_TEXT:
                     return \Yii::$app->formatter->asText($this->model->text);
+                default:
+                    return \Yii::$app->formatter->asRaw($this->model->text);
             }
         }
     }
