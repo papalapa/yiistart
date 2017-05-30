@@ -79,7 +79,7 @@
                             'allow'        => false,
                             'roles'        => [],
                             'denyCallback' => function ($rule, $action) {
-                                $this->deniedError();
+                                return $this->deniedError();
                             },
                         ],
                     ],
