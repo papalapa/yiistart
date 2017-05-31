@@ -3,13 +3,14 @@
     /* @var $attribute string */
     /* @var $value boolean */
 
+    use papalapa\yiistart\helpers\StringHelper;
     use papalapa\yiistart\widgets\ToastrAlert;
     use yii\db\ActiveRecord;
     use yii\helpers\Url;
 
     echo ToastrAlert::widget();
 ?>
-<div class="pjax-toggle-attribute-<?= $attribute ?>-handler" id="pjax-toggle-attribute-<?= $attribute ?>-<?= $model->primaryKey ?>" data-pjax-container="">
+<div class="pjax-toggle-attribute-<?= $attribute ?>-handler" id="pjax-toggle-attribute-<?= $attribute ?>-<?= StringHelper::translate($model->primaryKey) ?>" data-pjax-container="">
     <? if (is_null($model->getAttribute($attribute))) : ?>
         <a class="inline-block" href="<?= Url::to(['toggle', 'id' => $model->primaryKey, 'attribute' => $attribute, 'value' => 0]) ?>">
             <i class="fa fa-toggle-off text-danger"></i>

@@ -11,9 +11,13 @@
     class GridTextColumn extends DataColumn
     {
         /**
-         * @var string
+         * @var integer
          */
-        public $maxWidth = 200;
+        public $maxWidth = 500;
+        /**
+         * @var integer
+         */
+        public $minWidth = 400;
 
         /**
          * @inheritdoc
@@ -22,6 +26,8 @@
         {
             $this->contentOptions = [
                 'style' => [
+                    'width'       => 'auto',
+                    'min-width'   => sprintf('%dpx', $this->minWidth),
                     'max-width'   => sprintf('%dpx', $this->maxWidth),
                     'word-wrap'   => 'break-word',
                     'white-space' => 'normal',

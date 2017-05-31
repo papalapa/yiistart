@@ -12,7 +12,10 @@
      */
     class CDN_Carhartl_JqueryCookie_Asset extends AssetBundle
     {
-        public $js = [
+        public $js      = [
             'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
+        ];
+        public $depends = [
+            'yii\web\JqueryAsset',
         ];
     }

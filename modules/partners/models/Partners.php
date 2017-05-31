@@ -5,6 +5,7 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\validators\FilePathValidator;
+    use papalapa\yiistart\validators\ReorderValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
@@ -88,12 +89,8 @@
                 [['alt', 'title'], 'string', 'max' => 128],
 
                 [['order'], 'integer'],
-                [
-                    ['order'], 'default', 'value' => function () {
-                    return Partners::find()->max('[[order]]') + 1;
-                },
-                ],
-                [['order'], 'unique'],
+                [['order'], ReorderValidator::className()],
+                [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],

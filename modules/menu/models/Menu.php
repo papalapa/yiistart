@@ -5,6 +5,7 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\modules\settings\models\Settings;
+    use papalapa\yiistart\validators\ReorderValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -117,25 +118,7 @@
                 [['title'], 'string', 'max' => 32],
 
                 [['order'], 'integer'],
-                [
-                    ['order'], 'unique',
-                    'when' => function ($model) /* @var $model $this */ {
-                        if (!empty($model->order)) {
-                            self::updateAllCounters(['order' => 1], ['>=', 'order', $model->order]);
-
-                            return true;
-                        }
-
-                        return false;
-                    },
-                ],
-                [
-                    ['order'],
-                    'default',
-                    'value' => function ($model) /* @var $model self */ {
-                        return self::find()->max('order') + 1;
-                    },
-                ],
+                [['order'], ReorderValidator::className()],
                 [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
@@ -154,7 +137,7 @@
                 self::POSITION_BOTTOM => 'Нижнее меню',
             ];
 
-            $positions = Settings::paramOf( 'menu.positions', $initialPositions);
+            $positions = Settings::paramOf('menu.positions', $initialPositions);
 
             return $positions;
         }

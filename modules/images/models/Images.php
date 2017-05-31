@@ -7,6 +7,7 @@
     use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\FilePathValidator;
+    use papalapa\yiistart\validators\ReorderValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -128,9 +129,9 @@
                 [['title'], 'string', 'max' => 128],
                 [['text'], 'string'],
 
-                [['order'], 'required'],
                 [['order'], 'integer'],
-                [['order'], 'unique'],
+                [['order'], ReorderValidator::className()],
+                [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],

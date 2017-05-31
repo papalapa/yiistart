@@ -310,24 +310,11 @@
 
             try {
                 $direction = $direction / abs($direction);
-                $oldOrder  = $model->getAttribute($attribute);
-                $maxOrder  = $model::find()->max(sprintf('[[%s]]', $attribute));
-
-                if (is_null($oldOrder)) {
-                    $model->updateAttributes([$attribute => $maxOrder + 1]);
-                } else {
-                    $newOrder = $model->getAttribute($attribute) + $direction;
-                    if ($newOrder >= 0) {
-                        $modelOnNewOrder = $model::find()->where([sprintf('[[%s]]', $attribute) => $newOrder])->one();
-                        if ($modelOnNewOrder) {
-                            $modelOnNewOrder->updateAttributes([$attribute => $maxOrder]);
-                            $model->updateAttributes([$attribute => $newOrder]);
-                            $modelOnNewOrder->updateAttributes([$attribute => $oldOrder]);
-                            $this->view->registerJs("$('.grid-view').yiiGridView('applyFilter');");
-                        } else {
-                            $model->updateAttributes([$attribute => $newOrder]);
-                        }
-                    }
+                if ($model->getAttribute($attribute)) {
+                    $model->setAttribute($attribute, $model->getAttribute($attribute) + $direction);
+                }
+                if ($model->save()) {
+                    $this->view->registerJs("$('.grid-view').yiiGridView('applyFilter');");
                 }
             } catch (\Exception $e) {
             }
