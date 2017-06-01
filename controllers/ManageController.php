@@ -310,7 +310,7 @@
 
             try {
                 $direction = $direction / abs($direction);
-                if ($model->getAttribute($attribute)) {
+                if (!empty($model->getAttribute($attribute)) || $model->getAttribute($attribute) === 0) {
                     $model->setAttribute($attribute, $model->getAttribute($attribute) + $direction);
                 }
                 if ($model->save()) {

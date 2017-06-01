@@ -130,7 +130,7 @@
                 [['text'], 'string'],
 
                 [['order'], 'integer'],
-                [['order'], ReorderValidator::className()],
+                [['order'], ReorderValidator::className(), 'extraFields' => ['category_id']],
                 [['order'], 'required'],
 
                 [['is_active'], 'boolean'],

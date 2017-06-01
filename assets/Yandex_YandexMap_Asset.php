@@ -8,7 +8,7 @@
      * Class YandexYandex_MapAsset
      * @package papalapa\yiistart\assets
      */
-    class YandexYandex_MapAsset extends AssetBundle
+    class Yandex_YandexMap_Asset extends AssetBundle
     {
         public $js = [
             '//api-maps.yandex.ru/2.1/?lang=ru_RU',

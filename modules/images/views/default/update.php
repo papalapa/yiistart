@@ -5,8 +5,8 @@
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\images\models\Images */
 
-    $this->title                   = 'Изменение фотографии: ' . sprintf('№%s', $model->order);
-    $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
+    $this->title                   = 'Изменение изображения: ' . sprintf('№%s', $model->order);
+    $this->params['breadcrumbs'][] = ['label' => 'Изображения', 'url' => ['index']];
     $this->params['breadcrumbs'][] = ['label' => sprintf('№%s', $model->order), 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = 'Изменение';
 ?>

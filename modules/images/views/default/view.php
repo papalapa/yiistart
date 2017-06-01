@@ -8,8 +8,8 @@
     /* @var $this yii\web\View */
     /* @var $model \papalapa\yiistart\modules\images\models\Images */
 
-    $this->title                   = sprintf('№%s', $model->id, $model->order);
-    $this->params['breadcrumbs'][] = ['label' => 'Фотографии', 'url' => ['index']];
+    $this->title                   = sprintf('Изображение №%s в "%s"', $model->order, $model->category->name);
+    $this->params['breadcrumbs'][] = ['label' => 'Изображения', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="images-view">

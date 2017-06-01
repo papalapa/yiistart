@@ -41,14 +41,14 @@
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
                 // 'id',
-                'title',
                 'url:url',
+                'title',
+                'alt',
                 [
                     'class'     => GridImageColumn::className(),
                     'attribute' => 'image',
                     'filter'    => false,
                 ],
-                'alt',
                 [
                     'class'      => GridOrderColumn::className(),
                     'attribute'  => 'order',

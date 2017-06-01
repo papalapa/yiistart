@@ -17,7 +17,7 @@
     /* @var $searchModel \papalapa\yiistart\modules\images\models\ImagesSearch */
     /* @var $dataProvider yii\data\ActiveDataProvider */
 
-    $this->title                   = 'Фотографии';
+    $this->title                   = 'Изображения';
     $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="images-index">
