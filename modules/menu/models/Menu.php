@@ -118,7 +118,7 @@
                 [['title'], 'string', 'max' => 32],
 
                 [['order'], 'integer'],
-                [['order'], ReorderValidator::className()],
+                [['order'], ReorderValidator::className(), 'extraFields' => ['position']],
                 [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
