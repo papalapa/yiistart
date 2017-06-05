@@ -11,10 +11,13 @@
      */
     class CDN_CodeSeven_Toastr_Asset extends AssetBundle
     {
-        public $css = [
+        public $css     = [
             'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css',
         ];
-        public $js  = [
+        public $js      = [
             'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js',
+        ];
+        public $depends = [
+            'yii\web\JqueryAsset',
         ];
     }
