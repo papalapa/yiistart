@@ -108,10 +108,11 @@
 
         /**
          * Returns a value of a key in settings db
-         * @param $key
+         * @param string      $key
+         * @param string|null $default
          * @return null|boolean|string
          */
-        public static function valueOf($key)
+        public static function valueOf($key, $default = null)
         {
             /* @var $model self */
             $model = \Yii::$app->db->cache(function () use ($key) {
@@ -121,23 +122,45 @@
             if (is_null($model)) {
                 \Yii::warning(sprintf('Используется несуществующая настройка "%s".', $key));
 
-                return null;
+                return $default;
             }
 
             if (!$model->is_active) {
                 \Yii::warning(sprintf('Используется отключенная настройка "%s".', $key));
 
-                return null;
+                return $default;
             }
 
             return $model->value;
         }
 
         /**
+         * Returns a value if a key splitted by pattern
+         * @param string        $key
+         * @param string|null   $default
+         * @param callable|null $function
+         * @param string        $pattern
+         * @return array
+         */
+        public static function valuesOf($key, $default = null, $function = null, $pattern = '/[\s+]?(,|;)[\s+]?/')
+        {
+            $values = preg_split($pattern, self::valueOf($key, $default));
+
+            if (is_callable($function)) {
+                $values = array_map($function, (array)$values);
+            }
+            else {
+                \Yii::warning('Аргумент не является анонимной фукнцией и не может быть вызван.');
+            }
+
+            return $values;
+        }
+
+        /**
          * Returns param value
          * @see params.php
-         * @param      $param
-         * @param null $default
+         * @param string $param
+         * @param null   $default
          * @return mixed
          */
         public static function paramOf($param, $default = null)
