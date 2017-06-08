@@ -31,8 +31,8 @@
          */
         public function validateAttribute($model, $attribute)
         {
-            $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName(),'_');
-            $this->uploadController = Settings::paramOf( sprintf('%s.upload.controller', $camel), $this->uploadController);
+            $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
+            $this->uploadController = Settings::paramOf(sprintf('%s.upload.controller', $camel), $this->uploadController);
 
             $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'], false);
             $path     = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);
@@ -43,11 +43,11 @@
 
             $dirname = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
 
-            if (FileHelper::normalizePath($path . DIRECTORY_SEPARATOR . $dirname) <> pathinfo($model->$attribute, PATHINFO_DIRNAME)) {
+            if (FileHelper::normalizePath($path.DIRECTORY_SEPARATOR.$dirname) <> pathinfo($model->$attribute, PATHINFO_DIRNAME)) {
                 return $this->addError($model, $attribute, 'Путь к файлу не соответствует указанной модели', $params = []);
             }
 
-            $file = FileHelper::normalizePath($basePath . DIRECTORY_SEPARATOR . $model->$attribute);
+            $file = FileHelper::normalizePath($basePath.DIRECTORY_SEPARATOR.$model->$attribute);
 
             if (!FileHelper::exists($file) || !FileHelper::is_file($file)) {
                 return $this->addError($model, $attribute, 'Файл не найден', $params = []);
