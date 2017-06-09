@@ -69,17 +69,21 @@
                 ],
                 'access' => [
                     'class' => AccessControl::className(),
-                    'only'  => ['index', 'view', 'create', 'update', 'delete'],
+                    // 'only'  => ['index', 'view', 'create', 'update', 'delete'],
                     'rules' => [
                         [
                             'allow' => true,
                             'roles' => ['manager', 'admin', 'developer'],
                         ],
                         [
-                            'allow'        => false,
-                            'roles'        => [],
-                            'denyCallback' => function ($rule, $action) {
-                                return $this->deniedError();
+                            'allow'         => true,
+                            'roles'         => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                if (!\Yii::$app->user->isGuest) {
+                                    \Yii::$app->user->logout();
+                                }
+
+                                throw new ForbiddenHttpException('Недостаточно прав');
                             },
                         ],
                     ],
