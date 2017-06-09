@@ -197,7 +197,13 @@
             ];
         }
 
-        public static function valueOf($key)
+        /**
+         * Returns html element by key
+         * @param integer|string $key
+         * @param string|null    $default
+         * @return null|string
+         */
+        public static function valueOf($key, $default = null)
         {
             /* @var $model self */
             $model = \Yii::$app->db->cache(function () use ($key) {
@@ -208,15 +214,15 @@
             }, Settings::paramOf('cache.duration.element', null));
 
             if (is_null($model)) {
-                \Yii::warning(sprintf('Используется несуществующий HTML элемент "%s"', $key));
+                \Yii::warning(sprintf('Используется несуществующий HTML элемент "%s".', $key));
 
                 return null;
             }
 
             if (!$model->is_active) {
-                \Yii::warning(sprintf('Используется отключенный HTML элемент "%s"', $key));
+                \Yii::warning(sprintf('Используется отключенный HTML элемент "%s".', $key));
 
-                return null;
+                return $default;
             }
 
             switch ($model->format) {

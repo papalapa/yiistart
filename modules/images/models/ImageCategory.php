@@ -101,6 +101,39 @@
         }
 
         /**
+         * Returns all slides of category alias
+         * @param $alias
+         * @return array
+         */
+        public static function slidesOf($alias)
+        {
+            $model = static::findOne(['alias' => $alias]);
+            if (is_null($model)) {
+                $model        = new static();
+                $model->alias = $alias;
+                $model->name  = $alias;
+                if ($model->save()) {
+                    \Yii::info(sprintf('Создана отсутствующая категория изображений "%s".', $alias));
+                } else {
+                    foreach ($model->firstErrors as $firstError) {
+                        \Yii::warning(sprintf('Произошла ошибка при попытке создания категории изображений "%s": %s.', $alias, $firstError));
+                    }
+                }
+            }
+
+            if (!is_null($model)) {
+                return Images::find()->from(['{{IMAGES}}' => Images::tableName()])->joinWith([
+                    'category' => function ($query) use ($alias) /* @var $query \yii\db\ActiveQuery */ {
+                        return $query->from(['{{CATEGORY}}' => ImageCategory::tableName()])
+                            ->where(['{{CATEGORY}}.[[alias]]' => $alias, '{{CATEGORY}}.[[is_active]]' => true]);
+                    },
+                ])->where(['{{IMAGES}}.[[is_active]]' => true])->orderBy(['{{IMAGES}}.[[order]]' => SORT_ASC])->all();
+            }
+
+            return [];
+        }
+
+        /**
          * @return \yii\db\ActiveQuery
          */
         public function getImages()

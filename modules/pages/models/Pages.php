@@ -12,6 +12,7 @@
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
+    use yii\web\NotFoundHttpException;
 
     /**
      * This is the model class for table "pages".
@@ -144,7 +145,7 @@
                 [['image'], FilePathValidator::className()],
             ]);
 
-            if ($rule = Settings::paramOf( 'page.upload.rule', false)) {
+            if ($rule = Settings::paramOf('page.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
@@ -173,6 +174,33 @@
             }
 
             return parent::beforeDelete();
+        }
+
+        /**
+         * Returns pae instance
+         * @param             $key
+         * @param string|null $strict
+         * @return null|static|NotFoundHttpException
+         * @throws \yii\web\NotFoundHttpException
+         */
+        public static function pageOf($key, $strict = null)
+        {
+            /* @var $model static */
+            if (is_numeric($key)) {
+                $model = static::find()->where(['id' => $key])->one();
+            } elseif (is_array($key)) {
+                $model = static::find()->where(['url' => vsprintf('/%s/%s', $key)])->one();
+            }
+
+            if (!isset($model) || is_null($model)) {
+                if ($strict) {
+                    throw new NotFoundHttpException($strict);
+                } else {
+                    return null;
+                }
+            }
+
+            return $model;
         }
 
         /**

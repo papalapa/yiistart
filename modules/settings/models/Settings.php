@@ -116,23 +116,25 @@
         {
             /* @var $model self */
             $model = \Yii::$app->db->cache(function () use ($key) {
-                return self::find()->multilingual()->where(['key' => $key])->one();
+                return static::find()->multilingual()->where(['key' => $key])->one();
             }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting', null));
 
             if (is_null($model)) {
-                $model        = new self();
-                $model->key   = $key;
-                $model->value = $default;
+                $model = new static();
                 $model->detachBehavior('BlameableBehavior');
+                $model->key        = $key;
+                $model->value      = $default;
                 $model->created_by = 0;
                 $model->updated_by = 0;
 
                 if ($model->save()) {
-                    \Yii::warning(sprintf('Создана несуществующая настройка "%s".', $key));
+                    \Yii::info(sprintf('Создана несуществующая настройка "%s".', $key));
 
                     return $model->value;
                 } else {
-                    \Yii::warning(sprintf('Используется несуществующая настройка "%s".', $key));
+                    foreach ($model->firstErrors as $firstError) {
+                        \Yii::warning(sprintf('Произошла ошибка при попытке создания настройки "%s": %s.', $key, $firstError));
+                    }
 
                     return $default;
                 }
