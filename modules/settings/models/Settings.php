@@ -159,10 +159,12 @@
         {
             $values = preg_split($pattern, self::valueOf($key, $default));
 
-            if (is_callable($function)) {
-                $values = array_map($function, (array)$values);
-            } else {
-                \Yii::warning('Аргумент не является анонимной фукнцией и не может быть вызван.');
+            if (!is_null($function)) {
+                if (is_callable($function)) {
+                    $values = array_map($function, (array)$values);
+                } else {
+                    \Yii::warning('Аргумент не является анонимной фукнцией и не может быть вызван.');
+                }
             }
 
             return $values;
