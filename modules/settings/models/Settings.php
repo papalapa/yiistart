@@ -120,9 +120,22 @@
             }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting', null));
 
             if (is_null($model)) {
-                \Yii::warning(sprintf('Используется несуществующая настройка "%s".', $key));
+                $model        = new self();
+                $model->key   = $key;
+                $model->value = $default;
+                $model->detachBehavior('BlameableBehavior');
+                $model->created_by = 0;
+                $model->updated_by = 0;
 
-                return $default;
+                if ($model->save()) {
+                    \Yii::warning(sprintf('Создана несуществующая настройка "%s".', $key));
+
+                    return $model->value;
+                } else {
+                    \Yii::warning(sprintf('Используется несуществующая настройка "%s".', $key));
+
+                    return $default;
+                }
             }
 
             if (!$model->is_active) {
@@ -148,8 +161,7 @@
 
             if (is_callable($function)) {
                 $values = array_map($function, (array)$values);
-            }
-            else {
+            } else {
                 \Yii::warning('Аргумент не является анонимной фукнцией и не может быть вызван.');
             }
 

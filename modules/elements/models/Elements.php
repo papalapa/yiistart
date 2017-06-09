@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\modules\elements\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
@@ -11,6 +12,7 @@
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
+    use yii\helpers\Html;
 
     /**
      * This is the model class for table "elements".
@@ -193,6 +195,42 @@
                 self::FORMAT_TEL   => 'Телефон',
                 self::FORMAT_RAW   => 'Без форматирования',
             ];
+        }
+
+        public static function valueOf($key)
+        {
+            /* @var $model self */
+            $model = \Yii::$app->db->cache(function () use ($key) {
+                $id    = is_numeric($key) ? $key : null;
+                $alias = !is_numeric($key) ? $key : null;
+
+                return self::find()->andFilterWhere(['alias' => $alias])->andFilterWhere(['id' => $id])->one();
+            }, Settings::paramOf('cache.duration.element', null));
+
+            if (is_null($model)) {
+                \Yii::warning(sprintf('Используется несуществующий HTML элемент "%s"', $key));
+
+                return null;
+            }
+
+            if (!$model->is_active) {
+                \Yii::warning(sprintf('Используется отключенный HTML элемент "%s"', $key));
+
+                return null;
+            }
+
+            switch ($model->format) {
+                case self::FORMAT_TEL:
+                    return Html::a($model->text, sprintf('tel:%s', $model->text));
+                case self::FORMAT_HTML:
+                    return \Yii::$app->formatter->asHtml($model->text);
+                case self::FORMAT_EMAIL:
+                    return \Yii::$app->formatter->asEmail($model->text);
+                case self::FORMAT_TEXT:
+                    return \Yii::$app->formatter->asText($model->text);
+                default:
+                    return \Yii::$app->formatter->asRaw($model->text);
+            }
         }
 
         /**
