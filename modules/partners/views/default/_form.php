@@ -1,5 +1,6 @@
 <?php
 
+    use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\partners\models\Partners;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use papalapa\yiistart\widgets\ElfinderImageInput;
@@ -16,9 +17,23 @@
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?
+        echo $form->field($model, 'title')->textInput(['maxlength' => true]);
+        foreach (i18n::locales() as $locale) {
+            if (Yii::$app->language <> $locale) {
+                echo $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]);
+            }
+        }
+    ?>
 
-    <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
+    <?
+        echo $form->field($model, 'alt')->textInput(['maxlength' => true]);
+        foreach (i18n::locales() as $locale) {
+            if (Yii::$app->language <> $locale) {
+                echo $form->field($model, 'alt_'.$locale)->textInput(['maxlength' => true]);
+            }
+        }
+    ?>
 
     <?= $form->field($model, 'image')->widget(ElfinderImageInput::className(), ['filter' => ['image', 'application/pdf']]) ?>
 
