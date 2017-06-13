@@ -22,11 +22,11 @@
                 $sourceMessage = new SourceMessage();
                 $sourceMessage->setAttributes(['category' => $event->category, 'message' => $event->message]);
                 $sourceMessage->save();
+
+                \Yii::warning(sprintf('Translation (%s|%s) created as "%s"', $event->category, $event->language, $event->message));
             }
 
             $sourceMessage->initMessages();
             $sourceMessage->saveMessages();
-
-            \Yii::warning(sprintf('Translation message added to DB: (%s|%s) "%s"', $event->category, $event->language, $event->message));
         }
     }
