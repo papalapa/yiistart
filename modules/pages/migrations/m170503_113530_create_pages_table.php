@@ -19,7 +19,7 @@
             $this->createTable('{{pages}}', [
                 'id'          => $this->primaryKey(),
                 'url'         => $this->string(64)->defaultValue(null),
-                'title'       => $this->string(256)->notNull(),
+                'title'       => $this->string(256)->defaultValue(null),
                 'description' => $this->string(1024)->defaultValue(null),
                 'keywords'    => $this->string(1024)->defaultValue(null),
                 'header'      => $this->string(256)->defaultValue(null),
