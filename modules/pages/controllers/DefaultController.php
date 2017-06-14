@@ -5,6 +5,7 @@
     use papalapa\yiistart\controllers\MultilingualManageController;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\modules\pages\models\PagesSearch;
+    use papalapa\yiistart\modules\users\models\BaseUser;
 
     /**
      * Class DefaultController
@@ -30,6 +31,13 @@
         {
             $this->model       = Pages::className();
             $this->searchModel = PagesSearch::className();
+
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
+                $this->scenarios = array_replace($this->scenarios, [
+                    'create' => Pages::SCENARIO_DEVELOPER,
+                    'update' => Pages::SCENARIO_DEVELOPER,
+                ]);
+            }
 
             parent::init();
         }

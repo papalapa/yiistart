@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\modules\elements\models;
 
+    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
@@ -16,7 +17,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Elements::scenarios();
+            return Model::scenarios();
         }
 
         /**
@@ -64,8 +65,8 @@
             ]);
 
             $query->andFilterWhere(['like', 'alias', $this->alias])
-                  ->andFilterWhere(['like', 'name', $this->name])
-                  ->andFilterWhere(['like', 'description', $this->description]);
+                ->andFilterWhere(['like', 'name', $this->name])
+                ->andFilterWhere(['like', 'description', $this->description]);
 
             $query->with('category');
 

@@ -28,6 +28,7 @@
             return [
                 [['email'], 'safe'],
                 [['status', 'role'], 'integer'],
+                [['activity_at'], 'date', 'format' => 'yyyy-mm-dd'],
                 [['last_ip'], 'ip', 'ipv4' => true],
             ];
         }
@@ -62,6 +63,7 @@
                 'last_ip' => $this->last_ip,
             ]);
 
+            $query->andFilterWhere(['like', 'activity_at', $this->activity_at]);
             $query->andFilterWhere(['like', 'email', $this->email]);
 
             return $dataProvider;

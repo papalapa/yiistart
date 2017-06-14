@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\modules\images\models;
 
     use papalapa\yiistart\modules\users\models\BaseUser;
+    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
@@ -17,7 +18,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Images::scenarios();
+            return Model::scenarios();
         }
 
         /**
@@ -67,7 +68,7 @@
                 $query->joinWith([
                     'category' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
                         return $q->from(['{{CATEGORY}}' => ImageCategory::tableName()])
-                                 ->andWhere(['{{CATEGORY}}.[[is_visible]]' => true]);
+                            ->andWhere(['{{CATEGORY}}.[[is_visible]]' => true]);
                     },
                 ]);
             }

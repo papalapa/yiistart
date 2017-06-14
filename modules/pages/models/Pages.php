@@ -5,7 +5,6 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\modules\settings\models\Settings;
-    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
@@ -210,20 +209,6 @@
             }
 
             return $model;
-        }
-
-        /**
-         * @param array $data
-         * @param null  $formName
-         * @return bool
-         */
-        public function load($data, $formName = null)
-        {
-            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-                $this->scenario = self::SCENARIO_DEVELOPER;
-            }
-
-            return parent::load($data, $formName);
         }
 
         /**

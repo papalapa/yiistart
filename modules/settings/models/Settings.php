@@ -3,7 +3,6 @@
     namespace papalapa\yiistart\modules\settings\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
-    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -200,20 +199,6 @@
         public static function valueOrParam($param, $default = null)
         {
             return ($setting = self::valueOf($param)) ? $setting : ArrayHelper::getValue(\Yii::$app->params, $param, $default);
-        }
-
-        /**
-         * @param array $data
-         * @param null  $formName
-         * @return bool
-         */
-        public function load($data, $formName = null)
-        {
-            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-                $this->scenario = self::SCENARIO_DEVELOPER;
-            }
-
-            return parent::load($data, $formName);
         }
 
         /**

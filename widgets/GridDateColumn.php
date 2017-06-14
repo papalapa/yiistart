@@ -15,6 +15,10 @@
          * @var string
          */
         public $dateFormat = 'd MMMM YYYY, HH:mm';
+        /**
+         * @var
+         */
+        public $model;
 
         /**
          * @inheritdoc
@@ -30,6 +34,11 @@
                     ? \Yii::$app->formatter->asDate($model->getAttribute($this->attribute), $this->dateFormat)
                     : null;
             };
+
+            $this->filter = DateTimePicker::widget([
+                'model'     => $this->model,
+                'attribute' => $this->attribute,
+            ]);
 
             parent::init();
         }

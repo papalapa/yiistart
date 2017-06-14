@@ -2,6 +2,8 @@
 
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
+    use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridDateColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -82,10 +84,20 @@
                 ],
                 // 'created_at',
                 // 'updated_at',
-                // 'activity_at',
-                // 'last_ip',
-
-                ['class' => 'yii\grid\ActionColumn'],
+                'last_ip',
+                [
+                    'class'     => GridDateColumn::className(),
+                    'attribute' => 'activity_at',
+                    'model'     => $searchModel,
+                ],
+                [
+                    'class'       => GridActionColumn::className(),
+                    'permissions' => [
+                        'view'   => 'viewUser',
+                        'update' => 'updateUser',
+                        'delete' => 'deleteUser',
+                    ],
+                ],
             ],
         ]);
     ?>

@@ -4,7 +4,6 @@
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\settings\models\Settings;
-    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
@@ -237,20 +236,6 @@
                 default:
                     return \Yii::$app->formatter->asRaw($model->text);
             }
-        }
-
-        /**
-         * @param array $data
-         * @param null  $formName
-         * @return bool
-         */
-        public function load($data, $formName = null)
-        {
-            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-                $this->scenario = self::SCENARIO_DEVELOPER;
-            }
-
-            return parent::load($data, $formName);
         }
 
         /**

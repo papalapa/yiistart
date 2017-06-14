@@ -5,6 +5,7 @@
     use papalapa\yiistart\controllers\MultilingualManageController;
     use papalapa\yiistart\modules\elements\models\Elements;
     use papalapa\yiistart\modules\elements\models\ElementsSearch;
+    use papalapa\yiistart\modules\users\models\BaseUser;
 
     /**
      * Class DefaultController
@@ -30,6 +31,14 @@
         {
             $this->model       = Elements::className();
             $this->searchModel = ElementsSearch::className();
+
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
+                $this->scenarios = array_replace($this->scenarios, [
+                    'create' => Elements::SCENARIO_DEVELOPER,
+                    'update' => Elements::SCENARIO_DEVELOPER,
+                ]);
+            }
+
             parent::init();
         }
     }

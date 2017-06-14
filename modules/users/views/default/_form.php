@@ -30,9 +30,13 @@
     ?>
 
     <?
-        $roles = BaseUser::roleDescription();
         echo $form->field($model, 'role')->widget(Select2::className(), [
-            'data'          => $roles,
+            'data'          => [
+                BaseUser::ROLE_USER    => 'Пользователь',
+                BaseUser::ROLE_AUTHOR  => 'Автор',
+                BaseUser::ROLE_MANAGER => 'Менеджер',
+                BaseUser::ROLE_ADMIN   => 'Администратор',
+            ],
             'options'       => [
                 'placeholder' => 'Выберите роль',
             ],

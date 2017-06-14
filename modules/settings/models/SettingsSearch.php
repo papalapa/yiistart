@@ -2,7 +2,9 @@
 
     namespace papalapa\yiistart\modules\settings\models;
 
+    use yii\base\Model;
     use yii\data\ActiveDataProvider;
+    use yii\helpers\ArrayHelper;
 
     /**
      * Class SettingsSearch
@@ -16,7 +18,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Settings::scenarios();
+            return Model::scenarios();
         }
 
         /**
@@ -29,6 +31,7 @@
                 [['is_active'], 'boolean'],
                 [['title'], 'string'],
                 [['key', 'value'], 'safe'],
+                [['created_at', 'updated_at'], 'date', 'format' => 'yyyy-mm-dd'],
             ];
         }
 
@@ -62,8 +65,11 @@
             ]);
 
             $query->andFilterWhere(['like', 'title', $this->title])
-                  ->andFilterWhere(['like', 'key', $this->key])
-                  ->andFilterWhere(['like', 'value', $this->value]);
+                ->andFilterWhere(['like', 'key', $this->key])
+                ->andFilterWhere(['like', 'value', $this->value]);
+
+            $query->andFilterWhere(['like', 'created_at', $this->created_at]);
+            $query->andFilterWhere(['like', 'updated_at', $this->updated_at]);
 
             return $dataProvider;
         }

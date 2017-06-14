@@ -5,6 +5,7 @@
     use papalapa\yiistart\controllers\MultilingualManageController;
     use papalapa\yiistart\modules\images\models\Images;
     use papalapa\yiistart\modules\images\models\ImagesSearch;
+    use papalapa\yiistart\modules\users\models\BaseUser;
 
     /**
      * Class DefaultController
@@ -30,6 +31,14 @@
         {
             $this->model       = Images::className();
             $this->searchModel = ImagesSearch::className();
+
+            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
+                $this->scenarios = array_replace($this->scenarios, [
+                    'create' => Images::SCENARIO_DEVELOPER,
+                    'update' => Images::SCENARIO_DEVELOPER,
+                ]);
+            }
+
             parent::init();
         }
     }

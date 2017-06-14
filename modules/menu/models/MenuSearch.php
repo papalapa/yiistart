@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\modules\menu\models;
 
+    use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
     /**
@@ -16,7 +17,7 @@
         public function scenarios()
         {
             // bypass scenarios() implementation in the parent class
-            return Menu::scenarios();
+            return Model::scenarios();
         }
 
         /**

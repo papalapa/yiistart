@@ -5,7 +5,6 @@
     use common\modules\user\models\User;
     use papalapa\yiistart\controllers\ManageController;
     use papalapa\yiistart\modules\users\models\UserSearch;
-    use yii\base\Model;
 
     /**
      * Class DefaultController
@@ -23,16 +22,6 @@
             'index'  => 'indexUser',
             'delete' => 'deleteUser',
         ];
-        /**
-         * @var array
-         */
-        protected $scenarios = [
-            'create' => Model::SCENARIO_DEFAULT,
-            'view'   => Model::SCENARIO_DEFAULT,
-            'update' => User::SCENARIO_UPDATE,
-            'index'  => Model::SCENARIO_DEFAULT,
-            'delete' => Model::SCENARIO_DEFAULT,
-        ];
 
         /**
          * @inheritdoc
@@ -41,6 +30,11 @@
         {
             $this->model       = User::className();
             $this->searchModel = UserSearch::className();
+
+            $this->scenarios = array_replace($this->scenarios, [
+                'update' => User::SCENARIO_UPDATE,
+            ]);
+
             parent::init();
         }
     }

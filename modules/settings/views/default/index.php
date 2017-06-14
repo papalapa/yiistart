@@ -8,7 +8,6 @@
     use papalapa\yiistart\widgets\GridToggleColumn;
     use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
-    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -70,10 +69,12 @@
                 [
                     'class'     => GridDateColumn::className(),
                     'attribute' => 'created_at',
+                    'model'     => $searchModel,
                 ],
                 [
                     'class'     => GridDateColumn::className(),
                     'attribute' => 'updated_at',
+                    'model'     => $searchModel,
                 ],
                 [
                     'class'       => GridActionColumn::className(),
