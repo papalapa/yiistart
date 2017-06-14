@@ -127,16 +127,16 @@
                 [['url'], 'default', 'value' => null],
 
                 [['has_context'], 'boolean'],
-                [['has_context'], 'required',],
                 [['has_context'], 'default', 'value' => 1],
+                [['has_context'], 'required'],
 
                 [['has_text'], 'boolean'],
-                [['has_text'], 'required',],
                 [['has_text'], 'default', 'value' => 1],
+                [['has_text'], 'required'],
 
                 [['has_image'], 'boolean'],
-                [['has_image'], 'required'],
                 [['has_image'], 'default', 'value' => 1],
+                [['has_image'], 'required'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0],
@@ -177,24 +177,39 @@
         }
 
         /**
-         * Returns pae instance
-         * @param             $key
-         * @param string|null $strict
-         * @return null|static|NotFoundHttpException
+         * Returns page instance
+         * @param      $key
+         * @param null $error
+         * @return array|null|\yii\db\ActiveRecord
          * @throws \yii\web\NotFoundHttpException
          */
-        public static function pageOf($key, $strict = null)
+        public static function pageOf($key, $error = null)
         {
-            /* @var $model static */
+            $query = static::find();
             if (is_numeric($key)) {
-                $model = static::find()->where(['id' => $key])->one();
+                $query->where(['id' => $key]);
             } elseif (is_array($key)) {
-                $model = static::find()->where(['url' => vsprintf('/%s/%s', $key)])->one();
+                $url = '/'.implode('/', $key);
+                $query->where(['url' => $url]);
+            }
+            /* @var $model static */
+            $model = $query->one();
+
+            if (empty($model) && !empty($url)) {
+                $model      = new static();
+                $model->url = $url;
+                if ($model->save()) {
+                    \Yii::info(sprintf('Создана отсутствующая запрошенная страница "%s"', $url));
+                } else {
+                    $firstErrors = $model->firstErrors;
+                    \Yii::warning(sprintf('Ошибка при создании запрошенной страницы "%s": %s', $url, reset($firstErrors)));
+                    unset($model);
+                }
             }
 
-            if (!isset($model) || is_null($model)) {
-                if ($strict) {
-                    throw new NotFoundHttpException($strict);
+            if (empty($model) || !$model->is_active) {
+                if ($error) {
+                    throw new NotFoundHttpException($error);
                 } else {
                     return null;
                 }

@@ -28,8 +28,17 @@
         const ROLE_MANAGER   = 8;
         const ROLE_ADMIN     = 16;
         const ROLE_DEVELOPER = 32;
-        const STATUS_READY   = 0;
-        const STATUS_ACTIVE  = 1;
+        /**
+         * User just register your account
+         */
+        const STATUS_READY = 0;
+        /**
+         * User confirm your account by email
+         */
+        const STATUS_ACTIVE = 1;
+        /**
+         * User has been deleted
+         */
         const STATUS_DELETED = -1;
 
         /**
@@ -95,6 +104,7 @@
         }
 
         /**
+         * Finds user by ID
          * @inheritdoc
          */
         public static function findIdentity($id)
@@ -103,6 +113,7 @@
         }
 
         /**
+         * Finds user by Access token
          * @inheritdoc
          */
         public static function findIdentityByAccessToken($token, $type = null)
@@ -172,6 +183,7 @@
         }
 
         /**
+         * Gets user identity ID
          * @inheritdoc
          */
         public function getId()
@@ -180,6 +192,7 @@
         }
 
         /**
+         * Validates auth key
          * @inheritdoc
          */
         public function validateAuthKey($authKey)
@@ -188,6 +201,7 @@
         }
 
         /**
+         * Gets auth key
          * @inheritdoc
          */
         public function getAuthKey()
