@@ -50,7 +50,8 @@
          */
         public function init()
         {
-            $this->label = Html::tag('i', null, ['class' => $this->labelIco, 'data-toggle' => 'tooltip', 'title' => $this->labelTitle]);
+            $this->label = $this->label ? $this->label : Html::tag('i', null,
+                ['class' => $this->labelIco, 'data-toggle' => 'tooltip', 'title' => $this->labelTitle]);
 
             $this->value = function ($model, $key, $index, $column) {
                 return $this->enableAjax ? $this->renderDynamic($model) : $this->renderStatic($model);

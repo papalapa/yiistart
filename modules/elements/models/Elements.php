@@ -3,12 +3,12 @@
     namespace papalapa\yiistart\modules\elements\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
-    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
+    use yii\caching\TagDependency;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -183,6 +183,17 @@
         }
 
         /**
+         * @param bool  $insert
+         * @param array $changedAttributes
+         */
+        public function afterSave($insert, $changedAttributes)
+        {
+            parent::afterSave($insert, $changedAttributes);
+
+            TagDependency::invalidate(\Yii::$app->cache, 'elements');
+        }
+
+        /**
          * @return array
          */
         public static function formats()
@@ -209,8 +220,8 @@
                 $id    = is_numeric($key) ? $key : null;
                 $alias = !is_numeric($key) ? $key : null;
 
-                return self::find()->andFilterWhere(['alias' => $alias])->andFilterWhere(['id' => $id])->one();
-            }, Settings::paramOf('cache.duration.element', null));
+                return static::find()->andFilterWhere(['alias' => $alias])->andFilterWhere(['id' => $id])->one();
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.element'), new TagDependency(['tags' => 'elements']));
 
             if (is_null($model)) {
                 \Yii::warning(sprintf('Используется несуществующий HTML элемент "%s".', $key));

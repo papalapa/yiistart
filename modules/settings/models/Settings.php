@@ -6,6 +6,7 @@
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
+    use yii\caching\TagDependency;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
 
@@ -24,6 +25,7 @@
      */
     class Settings extends MultilingualActiveRecord
     {
+        const SCENARIO_AUTO      = 'auto';
         const SCENARIO_DEVELOPER = 'developer';
 
         /**
@@ -76,6 +78,7 @@
         public function scenarios()
         {
             return $this->localizedScenarios([
+                self::SCENARIO_AUTO      => ['value', 'is_active'],
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
                 self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'is_active'],
             ]);
@@ -97,12 +100,24 @@
                 [['key'], 'unique'],
 
                 [['value'], WhiteSpaceNormalizerValidator::className()],
-                [['value'], 'required'],
+                [['value'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
                 [['value'], 'string'],
 
                 [['is_active'], 'boolean'],
-                [['is_active'], 'default', 'value' => 0],
+                [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],
+                [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_AUTO, self::SCENARIO_DEVELOPER]],
             ]);
+        }
+
+        /**
+         * @param bool  $insert
+         * @param array $changedAttributes
+         */
+        public function afterSave($insert, $changedAttributes)
+        {
+            parent::afterSave($insert, $changedAttributes);
+
+            TagDependency::invalidate(\Yii::$app->cache, 'settings');
         }
 
         /**
@@ -116,10 +131,11 @@
             /* @var $model self */
             $model = \Yii::$app->db->cache(function () use ($key) {
                 return static::find()->multilingual()->where(['key' => $key])->one();
-            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting', null));
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting'), new TagDependency(['tags' => 'settings']));
 
             if (is_null($model)) {
-                $model = new static();
+                $model           = new static();
+                $model->scenario = self::SCENARIO_AUTO;
                 $model->detachBehavior('BlameableBehavior');
                 $model->key        = $key;
                 $model->value      = $default;

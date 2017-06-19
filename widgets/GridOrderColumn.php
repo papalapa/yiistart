@@ -43,11 +43,11 @@
         /**
          * @var string
          */
-        public $labelTitle;
+        public $labelTitle = 'Порядок';
         /**
          * @var string
          */
-        public $labelIco;
+        public $labelIco = 'fa fa-sort';
 
         /**
          * @inheritdoc
