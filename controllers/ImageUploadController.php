@@ -16,12 +16,21 @@
 
     /**
      * Class ImageUploadController
+     * To use this controller edit main.config like this:
+     * ```php
+     *      'controllerMap' => [
+     *          'image-upload'    => [
+     *              'class' => papalapa\yiistart\controllers\ImageUploadController::className(),
+     *              'storage' => 'files'
+     *          ],
+     *      ]
+     * ```
      * @package papalapa\yiistart\controllers
      */
     class ImageUploadController extends Controller
     {
         /**
-         * Directory on frontend to upload images
+         * Directory on frontend web to upload images
          * @var string
          */
         public $storage = 'files';
@@ -82,7 +91,13 @@
                 if ($uploadForm->upload($this->storage)) {
                     $data = [
                         'initialPreview'       => [
-                            Html::img($uploadForm->path, ['class' => 'file-preview-image', 'style' => 'max-height:100%;max-width:100%;'])
+                            Html::img($uploadForm->path, [
+                                'class' => 'file-preview-image',
+                                'style' => [
+                                    'max-width'  => '100%;',
+                                    'max-height' => '100%',
+                                ],
+                            ])
                             .Html::hiddenInput(sprintf('%s[_images][]', $formName), $uploadForm->path),
                         ],
                         'initialPreviewConfig' => [
@@ -94,8 +109,7 @@
                                 'url'       => Url::to([
                                     '/image-upload/delete',
                                     'path'  => $uploadForm->path,
-                                    'token' => \Yii::$app->security->encryptByKey($uploadForm->path,
-                                        Settings::valueOf('security.hash.token')),
+                                    'token' => \Yii::$app->security->encryptByKey($uploadForm->path, Settings::valueOf('security.hash.token')),
                                 ]),
                             ],
                         ],

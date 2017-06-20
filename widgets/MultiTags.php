@@ -61,7 +61,11 @@
             $model   = $this->model;
             $content = $model->contentType();
 
-            $this->pluginOptions['ajax']['url']            = Url::to(['/tags/default/index']);
+            /**
+             * Using TagsAjaxController action
+             * @see papalapa\yiistart\controllers\TagsAjaxController
+             */
+            $this->pluginOptions['ajax']['url']            = Url::to(['/tags-ajax']);
             $this->pluginOptions['ajax']['data']           = new JsExpression("function(params){ return {tag: params.term, content: '{$content}'}}");
             $this->pluginOptions['ajax']['processResults'] = new JsExpression("function(data, page){ return {results: data.items}}");
         }
