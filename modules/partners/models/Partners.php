@@ -100,7 +100,7 @@
                 [['image'], FilePathValidator::className()],
             ]);
 
-            if ($rule = Settings::paramOf('partner.upload.rule', false)) {
+            if ($rule = Settings::paramOf('partners.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
