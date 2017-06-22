@@ -185,13 +185,12 @@
 
             if (is_null($model) && isset($url)) {
                 $model = new static();
-                $model->detachBehavior('MultilingualBehavior');
                 $model->detachBehavior('BlameableBehavior');
                 $model->header     = $url;
                 $model->url        = $url;
                 $model->created_by = 0;
                 $model->updated_by = 0;
-                if ($model->save()) {
+                if ($model->save(false)) {
                     \Yii::info(sprintf('Создана отсутствующая запрошенная страница "%s"', $url));
                 } else {
                     $firstErrors = $model->firstErrors;
