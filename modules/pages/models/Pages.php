@@ -35,9 +35,7 @@
      */
     class Pages extends MultilingualActiveRecord
     {
-        /**
-         * Developer`s scenario
-         */
+        const SCENARIO_AUTO      = 'auto';
         const SCENARIO_DEVELOPER = 'developer';
 
         /**
@@ -101,6 +99,7 @@
         public function scenarios()
         {
             return $this->localizedScenarios([
+                self::SCENARIO_AUTO      => ['url', 'header'],
                 self::SCENARIO_DEFAULT   => ['title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active'],
                 self::SCENARIO_DEVELOPER => [
                     'title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', 'url', 'has_context', 'has_text', 'has_image',
@@ -186,11 +185,12 @@
             if (is_null($model) && isset($url)) {
                 $model = new static();
                 $model->detachBehavior('BlameableBehavior');
-                $model->header     = $url;
-                $model->url        = $url;
                 $model->created_by = 0;
                 $model->updated_by = 0;
-                if ($model->save(false)) {
+                $model->scenario   = self::SCENARIO_AUTO;
+                $model->header     = $url;
+                $model->url        = $url;
+                if ($model->save()) {
                     \Yii::info(sprintf('Создана отсутствующая запрошенная страница "%s"', $url));
                 } else {
                     $firstErrors = $model->firstErrors;
