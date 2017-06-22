@@ -142,7 +142,7 @@
                 $model->created_by = 0;
                 $model->updated_by = 0;
 
-                if ($model->save()) {
+                if ($model->validate(['key', 'value', 'is_active']) && $model->save(false)) {
                     \Yii::info(sprintf('Создана несуществующая настройка "%s".', $key));
 
                     return $model->value;
