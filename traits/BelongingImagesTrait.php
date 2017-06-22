@@ -25,6 +25,7 @@
             return $this->hasMany(BelongingImages::className(), ['content_id' => 'id'])
                 ->andFilterWhere(['content_type' => static::contentType()])
                 ->andWhere(['is_outdated' => false])
-                ->orderBy(['[[order]]' => SORT_ASC]);
+                // ->orderBy(['[[order]]' => SORT_ASC])
+                ;
         }
     }

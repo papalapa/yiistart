@@ -17,7 +17,7 @@
         /**
          * @var integer
          */
-        public $minWidth = 400;
+        public $minWidth = 300;
 
         /**
          * @inheritdoc

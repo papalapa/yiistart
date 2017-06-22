@@ -11,7 +11,6 @@
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
-    use yii\web\NotFoundHttpException;
 
     /**
      * This is the model class for table "pages".
@@ -167,12 +166,10 @@
 
         /**
          * Returns page instance or create module page
-         * @param      $key
-         * @param null $error
-         * @return array|null|\yii\db\ActiveRecord
-         * @throws \yii\web\NotFoundHttpException
+         * @param integer|string|array $key
+         * @return null|\papalapa\yiistart\modules\pages\models\Pages
          */
-        public static function pageOf($key, $error = null)
+        public static function pageOf($key)
         {
             $query = static::find();
             if (is_numeric($key)) {
@@ -184,7 +181,7 @@
             /* @var $model static */
             $model = $query->one();
 
-            if (empty($model) && !empty($url)) {
+            if (is_null($model) && isset($url)) {
                 $model = new static();
                 $model->detachBehavior('BlameableBehavior');
                 $model->header     = $url;
@@ -196,15 +193,7 @@
                 } else {
                     $firstErrors = $model->firstErrors;
                     \Yii::warning(sprintf('Ошибка при создании запрошенной страницы "%s": %s', $url, reset($firstErrors)));
-                    unset($model);
-                }
-            }
-
-            if (empty($model) || !$model->is_active) {
-                if ($error) {
-                    throw new NotFoundHttpException($error);
-                } else {
-                    return null;
+                    $model = null;
                 }
             }
 
