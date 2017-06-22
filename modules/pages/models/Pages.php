@@ -123,14 +123,17 @@
                 [['url'], 'default', 'value' => null],
 
                 [['has_context'], 'boolean'],
+                [['has_context'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_context'], 'default', 'value' => 1],
                 [['has_context'], 'required'],
 
                 [['has_text'], 'boolean'],
+                [['has_text'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_text'], 'default', 'value' => 1],
                 [['has_text'], 'required'],
 
                 [['has_image'], 'boolean'],
+                [['has_image'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_image'], 'default', 'value' => 1],
                 [['has_image'], 'required'],
 
@@ -183,11 +186,12 @@
             if (is_null($model) && isset($url)) {
                 $model = new static();
                 $model->detachBehavior('BlameableBehavior');
+                $model->scenario   = self::SCENARIO_DEVELOPER;
                 $model->created_by = 0;
                 $model->updated_by = 0;
                 $model->header     = $url;
                 $model->url        = $url;
-                if ($model->validate(['url', 'header']) && $model->save(false)) {
+                if ($model->validate(['url', 'header', 'has_context', 'has_text', 'has_image']) && $model->save(false)) {
                     \Yii::info(sprintf('Создана отсутствующая запрошенная страница "%s"', $url));
                 } else {
                     $firstErrors = $model->firstErrors;
