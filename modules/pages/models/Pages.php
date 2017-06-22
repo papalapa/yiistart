@@ -174,6 +174,8 @@
             $query = static::find();
             if (is_numeric($key)) {
                 $query->where(['id' => $key]);
+            } elseif (is_string($key)) {
+                $query->where(['url' => $key]);
             } elseif (is_array($key)) {
                 $url = '/'.implode('/', $key);
                 $query->where(['url' => $url]);
@@ -183,6 +185,7 @@
 
             if (is_null($model) && isset($url)) {
                 $model = new static();
+                $model->detachBehavior('MultilingualBehavior');
                 $model->detachBehavior('BlameableBehavior');
                 $model->header     = $url;
                 $model->url        = $url;
