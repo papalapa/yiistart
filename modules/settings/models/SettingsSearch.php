@@ -68,8 +68,8 @@
                 ->andFilterWhere(['like', 'key', $this->key])
                 ->andFilterWhere(['like', 'value', $this->value]);
 
-            $query->andFilterWhere(['like', 'created_at', $this->created_at]);
-            $query->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            $query->andFilterWhere(['>=', 'created_at', $this->created_at]);
+            $query->andFilterWhere(['>=', 'updated_at', $this->updated_at]);
 
             return $dataProvider;
         }

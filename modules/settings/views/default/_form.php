@@ -14,12 +14,7 @@
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 
-    <?
-        if (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-            echo $form->field($model, 'title')->textInput(['maxlength' => true]);
-        } else {
-            echo Html::tag('div', $model->title, ['class' => 'well']);
-        }
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Название', 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]);
     ?>
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]); ?>
