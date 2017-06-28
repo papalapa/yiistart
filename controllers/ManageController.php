@@ -60,11 +60,11 @@
                 'verbs'  => [
                     'class'   => VerbFilter::className(),
                     'actions' => [
-                        'index'   => ['get'],
-                        'view'    => ['get'],
-                        'create'  => ['get', 'post'],
-                        'update'  => ['get', 'put', 'post'],
-                        'delete'  => ['post', 'delete'],
+                        'index'  => ['get'],
+                        'view'   => ['get'],
+                        'create' => ['get', 'post'],
+                        'update' => ['get', 'put', 'post'],
+                        'delete' => ['post', 'delete'],
                     ],
                 ],
                 'access' => [
@@ -318,12 +318,17 @@
                     $model->setAttribute($attribute, $model->getAttribute($attribute) + $direction);
                 }
                 if ($model->save()) {
+                    \Yii::$app->session->setFlash('info', 'Изменения приняты!');
                     $this->view->registerJs("$('.grid-view').yiiGridView('applyFilter');");
+                } else {
+                    foreach ($model->errors as $error) {
+                        \Yii::$app->session->addFlash('error', $error);
+                    }
+                    $model->refresh();
                 }
             } catch (\Exception $e) {
+                \Yii::$app->session->setFlash('error', $e->getMessage());
             }
-
-            \Yii::$app->session->setFlash('info', 'Изменения приняты!');
 
             return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-order-column.php',
                 ['model' => $model, 'attribute' => $attribute]);
