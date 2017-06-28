@@ -26,8 +26,8 @@
          * @var array
          */
         public $attributes = [
-            'title'       => 'header',
-            'description' => 'info',
+            'title'       => 'info-circle',
+            'description' => 'question-circle',
             'keywords'    => 'key',
         ];
 
@@ -36,7 +36,7 @@
          */
         public function init()
         {
-            $this->content = function ($model, $key, $index, $column) {
+            $this->content = function ($model, $key, $index, $column) /* @var $model ActiveRecord|MultilingualActiveRecord */ {
                 return $this->renderAttributes($model);
             };
         }
@@ -52,7 +52,7 @@
 
             foreach ($this->attributes as $attribute => $ico) {
                 if ($model->hasAttribute($attribute)) {
-                    if ($model->hasAttribute($attribute)) {
+                    if ($model->getBehavior('MultilingualBehavior')) {
                         foreach (i18n::locales() as $locale) {
                             $html[] = $this->renderAttribute($model, $attribute, $ico, $locale);
                         }
@@ -76,12 +76,12 @@
         protected function renderAttribute($model, $attribute, $ico, $locale = null)
         {
             $html[] = Html::beginTag('span', [
-                'class'       => 'label label-danger',
+                'class'       => $model->{$attribute.($locale ? sprintf('_%s', $locale) : null)} ? 'label label-success' : 'label label-danger',
+                'title'       => $model->getAttributeLabel($attribute).($locale ? sprintf(' (%s)', $locale) : null),
                 'data-toggle' => 'tooltip',
-                'title'       => $locale ? sprintf('%s (%s)', $model->getAttributeLabel($attribute), $locale) : $model->getAttributeLabel($attribute),
             ]);
             $html[] = Html::tag('i', null, ['class' => sprintf('fa fa-%s', $ico)]);
-            $html[] = $locale ? ' | ' . $locale : null;
+            $html[] = $locale ? ' '.$locale : null;
             $html[] = Html::endTag('span');
 
             return implode(null, $html);

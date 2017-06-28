@@ -47,7 +47,6 @@
                 [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => Settings::className(), 'targetAttribute' => ['content_id' => 'id']],
 
                 [['value'], WhiteSpaceNormalizerValidator::className()],
-                [['value'], 'required'],
                 [['value'], 'string'],
 
                 [['language'], 'required'],
