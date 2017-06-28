@@ -13,6 +13,18 @@
     class UserController extends Controller
     {
         /**
+         * List all users
+         */
+        public function actionIndex()
+        {
+            /* @var $models BaseUser[] */
+            $models = BaseUser::find()->orderBy(['role' => SORT_DESC, 'email' => SORT_ASC])->all();
+            foreach ($models as $model) {
+                echo implode(' | ', [$model->email, $model->status, $model->role]).PHP_EOL;
+            }
+        }
+
+        /**
          * @param      $email
          * @param      $password
          * @param null $status
