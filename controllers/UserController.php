@@ -29,12 +29,11 @@
         /**
          * @param      $email
          * @param      $password
-         * @param null $status
          * @param null $role
          */
-        public function actionCreate($email, $password, $status = null, $role = null)
+        public function actionCreate($email, $password, $role = null)
         {
-            $model = DynamicModel::validateData(compact(['email', 'password', 'status', 'role']), [
+            $model = DynamicModel::validateData(compact(['email', 'password', 'role']), [
                 ['email', 'filter', 'filter' => 'trim'],
                 ['email', 'required'],
                 ['email', 'email'],
@@ -43,10 +42,6 @@
 
                 [['password'], 'required'],
                 [['password'], 'string', 'min' => 6],
-
-                [['status'], 'integer'],
-                [['status'], 'in', 'range' => [BaseUser::STATUS_DELETED, BaseUser::STATUS_READY, BaseUser::STATUS_ACTIVE]],
-                [['status'], 'default', 'value' => BaseUser::STATUS_ACTIVE],
 
                 [['role'], 'integer', 'min' => 0],
                 [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN, BaseUser::ROLE_DEVELOPER]],
@@ -60,7 +55,7 @@
             } else {
                 $user         = new BaseUser();
                 $user->email  = $email;
-                $user->status = $status;
+                $user->status = BaseUser::STATUS_ACTIVE;
                 $user->role   = $role;
                 $user->generateAuthKey();
                 $user->generateToken();
