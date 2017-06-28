@@ -49,11 +49,7 @@
                 }
             }
 
-            if (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-                echo $form->field($model, 'description')->textarea(['rows' => 2, 'maxlength' => true]);
-            } else {
-                echo Html::tag('div', $model->description, ['class' => 'well']);
-            }
+            echo $form->field($model, 'description')->textarea(['rows' => 2, 'maxlength' => true, 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]);
         ?>
 
         <br />
