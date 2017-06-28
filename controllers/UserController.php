@@ -5,6 +5,7 @@
     use papalapa\yiistart\modules\users\models\BaseUser;
     use yii\base\DynamicModel;
     use yii\console\Controller;
+    use yii\helpers\ArrayHelper;
 
     /**
      * Class UserController
@@ -20,7 +21,8 @@
             /* @var $models BaseUser[] */
             $models = BaseUser::find()->orderBy(['role' => SORT_DESC, 'email' => SORT_ASC])->all();
             foreach ($models as $model) {
-                echo implode(' | ', [$model->email, $model->status, $model->role]).PHP_EOL;
+                echo sprintf('%\'.-64.64s | %\'.10s | %\'.10s', $model->email, ArrayHelper::getValue(BaseUser::statuses(), $model->status),
+                        ArrayHelper::getValue(BaseUser::roles(), $model->role)).PHP_EOL;
             }
         }
 
