@@ -20,7 +20,7 @@
          */
         public function init()
         {
-            $this->value = function ($model, $key, $index, $column) {
+            $this->content = function ($model, $key, $index, $column) {
                 return long2ip($model->ip);
             };
         }
