@@ -48,7 +48,7 @@
                 'id',
                 [
                     'attribute' => 'category_id',
-                    'value'     => $model->category->name,
+                    'value'     => $model->category ? $model->category->name : null,
                 ],
                 'alias',
                 'name',

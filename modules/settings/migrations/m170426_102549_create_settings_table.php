@@ -20,7 +20,7 @@
                 'id'         => $this->primaryKey(),
                 'title'      => $this->string(64)->defaultValue(null),
                 'key'        => $this->string(64)->notNull()->unique(),
-                'value'      => $this->text(),
+                'value'      => $this->text()->defaultValue(null),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),

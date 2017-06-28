@@ -63,7 +63,7 @@
                     'attribute' => 'category_id',
                     'filter'    => ArrayHelper::map($categories, 'id', 'name'),
                     'content'   => function ($model) /* @var Elements $model */ {
-                        return $model->category->name;
+                        return $model->category ? $model->category->name : null;
                     },
                 ],
                 'name',

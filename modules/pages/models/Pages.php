@@ -195,7 +195,7 @@
                     \Yii::info(sprintf('Создана отсутствующая запрошенная страница "%s"', $url));
                 } else {
                     $firstErrors = $model->firstErrors;
-                    \Yii::warning(sprintf('Ошибка при создании запрошенной страницы "%s": %s', $url, reset($firstErrors)));
+                    \Yii::error(sprintf('Ошибка при создании запрошенной страницы "%s": %s', $url, reset($firstErrors)));
                     $model = null;
                 }
             }

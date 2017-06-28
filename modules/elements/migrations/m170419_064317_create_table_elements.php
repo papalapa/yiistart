@@ -28,11 +28,11 @@
 
             $this->createTable('{{elements}}', [
                 'id'          => $this->primaryKey(),
-                'category_id' => $this->integer()->unsigned()->notNull(),
-                'alias'       => $this->string(64)->notNull()->unique(),
-                'name'        => $this->string(64)->notNull(),
-                'text'        => $this->text()->notNull(),
-                'format'      => $this->string(16)->notNull()->defaultValue(Elements::FORMAT_TEXT),
+                'category_id' => $this->integer()->unsigned()->defaultValue(null),
+                'alias'       => $this->string(64)->defaultValue(null)->unique(),
+                'name'        => $this->string(64)->defaultValue(null),
+                'text'        => $this->text()->defaultValue(null),
+                'format'      => $this->string(16)->notNull()->defaultValue(Elements::FORMAT_RAW),
                 'pattern'     => $this->string(128)->defaultValue(null),
                 'description' => $this->string(256)->defaultValue(null),
                 'is_active'   => $this->boolean()->unsigned()->notNull()->defaultValue(0),

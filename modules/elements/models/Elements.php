@@ -117,7 +117,6 @@
                 [['alias'], 'match', 'pattern' => '/^[a-z]+(\.[a-z]+)*$/'],
                 [['alias'], 'unique'],
 
-                [['category_id'], 'required'],
                 [['category_id'], 'integer'],
                 [
                     ['category_id'],
@@ -129,7 +128,6 @@
 
                 [['text'], WhiteSpaceNormalizerValidator::className()],
                 [['text'], 'string'],
-                [['text'], 'required'],
                 [
                     ['text'],
                     TagsStripperValidator::className(),
@@ -164,12 +162,11 @@
                 ],
 
                 [['name'], WhiteSpaceNormalizerValidator::className()],
-                [['name'], 'required'],
                 [['name'], 'string', 'max' => 64],
 
-                [['format'], 'required'],
                 [['format'], 'string', 'max' => 16],
                 [['format'], 'in', 'range' => array_keys(self::formats())],
+                [['format'], 'default', 'value' => self::FORMAT_RAW],
 
                 [['pattern'], WhiteSpaceNormalizerValidator::className()],
                 [['pattern'], 'string', 'max' => 128],
@@ -178,7 +175,8 @@
                 [['description'], 'string', 'max' => 256],
 
                 [['is_active'], 'boolean'],
-                [['is_active'], 'default', 'value' => 0],
+                [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],
+                [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_DEVELOPER]],
             ]);
         }
 
@@ -190,7 +188,7 @@
         {
             parent::afterSave($insert, $changedAttributes);
 
-            TagDependency::invalidate(\Yii::$app->cache, 'elements');
+            TagDependency::invalidate(\Yii::$app->cache, get_called_class());
         }
 
         /**
@@ -199,8 +197,8 @@
         public static function formats()
         {
             return [
-                self::FORMAT_TEXT  => 'Текст',
                 self::FORMAT_HTML  => 'HTML',
+                self::FORMAT_TEXT  => 'Текст',
                 self::FORMAT_EMAIL => 'Email',
                 self::FORMAT_TEL   => 'Телефон',
                 self::FORMAT_RAW   => 'Без форматирования',
@@ -221,12 +219,29 @@
                 $alias = !is_numeric($key) ? $key : null;
 
                 return static::find()->andFilterWhere(['alias' => $alias])->andFilterWhere(['id' => $id])->one();
-            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.element'), new TagDependency(['tags' => 'elements']));
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.element'), new TagDependency(['tags' => get_called_class()]));
 
-            if (is_null($model)) {
-                \Yii::warning(sprintf('Используется несуществующий HTML элемент "%s".', $key));
+            if (is_null($model) && !is_numeric($key)) {
+                $model           = new static();
+                $model->scenario = self::SCENARIO_DEVELOPER;
+                $model->detachBehavior('BlameableBehavior');
+                $model->alias      = $key;
+                $model->name       = $key;
+                $model->text       = $default;
+                $model->created_by = 0;
+                $model->updated_by = 0;
 
-                return null;
+                if ($model->validate(['alias', 'name', 'text', 'format', 'is_active']) && $model->save(false)) {
+                    \Yii::info(sprintf('Создан несуществующий HTML элемент "%s".', $key));
+
+                    return $model->text;
+                } else {
+                    foreach ($model->firstErrors as $firstError) {
+                        \Yii::error(sprintf('Произошла ошибка при попытке создания HTML элемента "%s": %s.', $key, $firstError));
+                    }
+
+                    return $default;
+                }
             }
 
             if (!$model->is_active) {

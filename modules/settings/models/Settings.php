@@ -25,7 +25,6 @@
      */
     class Settings extends MultilingualActiveRecord
     {
-        const SCENARIO_AUTO      = 'auto';
         const SCENARIO_DEVELOPER = 'developer';
 
         /**
@@ -75,10 +74,12 @@
             ]);
         }
 
+        /**
+         * @return mixed
+         */
         public function scenarios()
         {
             return $this->localizedScenarios([
-                self::SCENARIO_AUTO      => ['value', 'is_active'],
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
                 self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'is_active'],
             ]);
@@ -105,7 +106,7 @@
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],
-                [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_AUTO, self::SCENARIO_DEVELOPER]],
+                [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_DEVELOPER]],
             ]);
         }
 
@@ -117,7 +118,7 @@
         {
             parent::afterSave($insert, $changedAttributes);
 
-            TagDependency::invalidate(\Yii::$app->cache, 'settings');
+            TagDependency::invalidate(\Yii::$app->cache, get_called_class());
         }
 
         /**
@@ -131,11 +132,11 @@
             /* @var $model self */
             $model = \Yii::$app->db->cache(function () use ($key) {
                 return static::find()->multilingual()->where(['key' => $key])->one();
-            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting'), new TagDependency(['tags' => 'settings']));
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.setting'), new TagDependency(['tags' => get_called_class()]));
 
             if (is_null($model)) {
                 $model           = new static();
-                $model->scenario = self::SCENARIO_AUTO;
+                $model->scenario = self::SCENARIO_DEVELOPER;
                 $model->detachBehavior('BlameableBehavior');
                 $model->key        = $key;
                 $model->value      = $default;
@@ -148,7 +149,7 @@
                     return $model->value;
                 } else {
                     foreach ($model->firstErrors as $firstError) {
-                        \Yii::warning(sprintf('Произошла ошибка при попытке создания настройки "%s": %s.', $key, $firstError));
+                        \Yii::error(sprintf('Произошла ошибка при попытке создания настройки "%s": %s.', $key, $firstError));
                     }
 
                     return $default;
@@ -180,7 +181,7 @@
                 if (is_callable($function)) {
                     $values = array_map($function, (array)$values);
                 } else {
-                    \Yii::warning('Аргумент не является анонимной фукнцией и не может быть вызван.');
+                    \Yii::error('Аргумент не является анонимной фукнцией и не может быть вызван.');
                 }
             }
 
