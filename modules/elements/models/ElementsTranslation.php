@@ -43,7 +43,6 @@
         {
             return [
                 [['text'], WhiteSpaceNormalizerValidator::className()],
-                [['text'], 'required'],
                 [['text'], 'string'],
 
                 [['content_id'], 'required'],
