@@ -6,7 +6,6 @@
     use papalapa\yiistart\widgets\GridMetatagsColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
-    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -60,12 +59,7 @@
                     'labelIco'   => 'fa fa-eye',
                 ],
                 [
-                    'class'      => GridMetatagsColumn::className(),
-                    'attributes' => [
-                        'title'       => 'header',
-                        'description' => 'info',
-                        'keywords'    => 'key',
-                    ],
+                    'class' => GridMetatagsColumn::className(),
                 ],
                 // 'created_by',
                 // 'updated_by',
