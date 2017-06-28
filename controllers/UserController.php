@@ -21,7 +21,7 @@
             /* @var $models BaseUser[] */
             $models = BaseUser::find()->orderBy(['role' => SORT_DESC, 'email' => SORT_ASC])->all();
             foreach ($models as $model) {
-                echo sprintf('%\'.-64.64s | %\'.10s | %\'.10s', $model->email, ArrayHelper::getValue(BaseUser::statuses(), $model->status),
+                echo sprintf('%\'.-32.32s | %\'.10s | %\'.10s', $model->email, ArrayHelper::getValue(BaseUser::statuses(), $model->status),
                         ArrayHelper::getValue(BaseUser::roles(), $model->role)).PHP_EOL;
             }
         }
