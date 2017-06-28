@@ -20,7 +20,7 @@
                 'id'         => $this->primaryKey(),
                 'language'   => $this->string(16)->notNull(),
                 'content_id' => $this->integer()->unsigned()->notNull(),
-                'text'       => $this->text()->notNull(),
+                'text'       => $this->text()->defaultValue(null),
             ], $tableOptions);
 
             $this->alterColumn('{{elements_translation}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
