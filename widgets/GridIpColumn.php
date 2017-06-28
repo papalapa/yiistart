@@ -21,7 +21,7 @@
         public function init()
         {
             $this->content = function ($model, $key, $index, $column) {
-                return long2ip($model->ip);
+                return $model->{$this->attribute} ? long2ip($model->{$this->attribute}) : null;
             };
         }
     }

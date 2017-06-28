@@ -58,10 +58,13 @@
 
             // grid filtering conditions
             $query->andFilterWhere([
-                'status'  => $this->status,
-                'role'    => $this->role,
-                'last_ip' => $this->last_ip,
+                'status' => $this->status,
+                'role'   => $this->role,
             ]);
+
+            if ($this->last_ip !== '') {
+                $query->andWhere(['last_ip' => ip2long($this->last_ip)]);
+            }
 
             $query->andFilterWhere(['like', 'activity_at', $this->activity_at]);
             $query->andFilterWhere(['like', 'email', $this->email]);

@@ -4,6 +4,7 @@
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridDateColumn;
+    use papalapa\yiistart\widgets\GridIpColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -84,7 +85,10 @@
                 ],
                 // 'created_at',
                 // 'updated_at',
-                'last_ip',
+                [
+                    'attribute' => 'last_ip',
+                    'class'     => GridIpColumn::className(),
+                ],
                 [
                     'class'     => GridDateColumn::className(),
                     'attribute' => 'activity_at',
