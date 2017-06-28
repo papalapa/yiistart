@@ -5,6 +5,7 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\validators\HtmlPurifierValidator;
     use papalapa\yiistart\validators\TagsStripperValidator;
+    use papalapa\yiistart\validators\TelephoneValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -100,10 +101,10 @@
          */
         public function scenarios()
         {
-            return [
+            return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['text', 'is_active'],
                 self::SCENARIO_DEVELOPER => ['alias', 'category_id', 'name', 'text', 'format', 'pattern', 'description', 'is_active'],
-            ];
+            ]);
         }
 
         /**
@@ -135,7 +136,6 @@
                         return ($model->format <> self::FORMAT_HTML) && ($model->format <> self::FORMAT_RAW);
                     },
                 ],
-                [['text', 'name'], WhiteSpaceNormalizerValidator::className()],
                 [
                     ['text'],
                     'email',
@@ -146,8 +146,7 @@
                 ],
                 [
                     ['text'],
-                    'match',
-                    'pattern'                => '/^(\+?\d+( ?\(\d+\))?|\(\+?\d+\)) ?(\d+(-| )?)*\d+$/',
+                    TelephoneValidator::className(),
                     'when'                   => function ($model) /* @var $model Elements */ {
                         return $model->format == self::FORMAT_TEL;
                     },
