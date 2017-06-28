@@ -21,7 +21,7 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <h4>Изменения вступают в силу в течение <?= Settings::paramOf('cache.duration.page', 60) ?> сек.</h4>
+    <h4>Изменения вступают в силу в течение <?= Settings::paramOf('cache.duration.page', 0) ?> сек.</h4>
 
     <?
         echo ControlButtonsPanel::widget([

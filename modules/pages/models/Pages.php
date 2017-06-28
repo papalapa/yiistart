@@ -9,6 +9,7 @@
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
+    use yii\caching\TagDependency;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
 
@@ -152,8 +153,18 @@
         }
 
         /**
+         * @param bool  $insert
+         * @param array $changedAttributes
+         */
+        public function afterSave($insert, $changedAttributes)
+        {
+            parent::afterSave($insert, $changedAttributes);
+
+            TagDependency::invalidate(\Yii::$app->cache, get_called_class());
+        }
+
+        /**
          * Remove menu link on deleted page
-         * @return bool
          */
         public function afterDelete()
         {
@@ -167,23 +178,23 @@
         /**
          * Returns page instance or create module page
          * @param integer|string|array $key
-         * @return null|\papalapa\yiistart\modules\pages\models\Pages
+         * @return mixed|\papalapa\yiistart\modules\pages\models\Pages
          */
         public static function pageOf($key)
         {
-            $query = static::find();
-            if (is_numeric($key)) {
-                $query->where(['id' => $key]);
-            } elseif (is_string($key)) {
-                $query->where(['url' => $key]);
-            } elseif (is_array($key)) {
-                $url = '/'.implode('/', $key);
-                $query->where(['url' => $url]);
-            }
-            /* @var $model static */
-            $model = $query->one();
+            $url   = !is_numeric($key) ? (is_array($key) ? '/'.implode('/', $key) : $key) : null;
+            $model = \Yii::$app->db->cache(function () use ($key, $url) {
+                $query = static::find();
+                if (is_numeric($key)) {
+                    $query->where(['id' => $key]);
+                } else {
+                    $query->where(['url' => $url]);
+                }
 
-            if (is_null($model) && isset($url)) {
+                return $query->one();
+            }, ArrayHelper::getValue(\Yii::$app->params, 'cache.duration.page'), new TagDependency(['tags' => get_called_class()]));
+
+            if (is_null($model) && isset($key)) {
                 $model = new static();
                 $model->detachBehavior('BlameableBehavior');
                 $model->scenario   = self::SCENARIO_DEVELOPER;
