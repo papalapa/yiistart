@@ -30,7 +30,7 @@
      * @property string              $created_at
      * @property string              $updated_at
      * @property ElementCategory     $category
-     * @property ElementsTranslation $elementsTranslations
+     * @property ElementsTranslation $translations
      */
     class Elements extends MultilingualActiveRecord
     {
@@ -274,7 +274,7 @@
         /**
          * @return \yii\db\ActiveQuery
          */
-        public function getElementsTranslations()
+        public function getTranslations()
         {
             return $this->hasMany(ElementsTranslation::className(), ['content_id' => 'id']);
         }

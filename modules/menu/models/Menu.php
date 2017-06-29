@@ -24,7 +24,7 @@
      * @property integer           $updated_by
      * @property string            $created_at
      * @property string            $updated_at
-     * @property MenuTranslation[] $menuTranslations
+     * @property MenuTranslation[] $translations
      */
     class Menu extends MultilingualActiveRecord
     {
@@ -145,7 +145,7 @@
         /**
          * @return \yii\db\ActiveQuery
          */
-        public function getMenuTranslations()
+        public function getTranslations()
         {
             return $this->hasMany(MenuTranslation::className(), ['content_id' => 'id']);
         }

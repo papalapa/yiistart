@@ -280,6 +280,18 @@
             $deletePartner              = $this->authManager->createPermission('deletePartner');
             $deletePartner->description = 'Удаление партнеров';
 
+            /** Управление партнерами компании */
+            $createHistory              = $this->authManager->createPermission('createHistory');
+            $createHistory->description = 'Создание событий';
+            $viewHistory                = $this->authManager->createPermission('viewHistory');
+            $viewHistory->description   = 'Просмотр событий';
+            $indexHistory               = $this->authManager->createPermission('indexHistory');
+            $indexHistory->description  = 'Листинг событий';
+            $updateHistory              = $this->authManager->createPermission('updateHistory');
+            $updateHistory->description = 'Изменение событий';
+            $deleteHistory              = $this->authManager->createPermission('deleteHistory');
+            $deleteHistory->description = 'Удаление событий';
+
             echo 'New permissions has been created.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -357,6 +369,12 @@
             $this->authManager->add($updatePartner);
             $this->authManager->add($deletePartner);
 
+            $this->authManager->add($createHistory);
+            $this->authManager->add($viewHistory);
+            $this->authManager->add($indexHistory);
+            $this->authManager->add($updateHistory);
+            $this->authManager->add($deleteHistory);
+
             echo 'New permissions has been added.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -424,6 +442,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexPartner);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updatePartner);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deletePartner);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createHistory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewHistory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexHistory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateHistory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteHistory);
 
             /** Developer */
 

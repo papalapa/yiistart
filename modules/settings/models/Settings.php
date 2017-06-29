@@ -21,7 +21,7 @@
      * @property integer               $updated_by
      * @property string                $created_at
      * @property string                $updated_at
-     * @property SettingsTranslation[] $settingsTranslations
+     * @property SettingsTranslation[] $translations
      */
     class Settings extends MultilingualActiveRecord
     {
@@ -221,7 +221,7 @@
         /**
          * @return \yii\db\ActiveQuery
          */
-        public function getSettingsTranslations()
+        public function getTranslations()
         {
             return $this->hasMany(SettingsTranslation::className(), ['content_id' => 'id']);
         }
