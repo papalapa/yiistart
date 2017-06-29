@@ -34,7 +34,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'pjax-users-index', 'options' => ['class' => 'pjax-spinner table-responsive'], 'timeout' => 10000]); ?>
 
     <?
         echo GridView::widget([
@@ -42,7 +42,6 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 //['class' => 'yii\grid\SerialColumn'],
-
                 'id',
                 'email',
                 //'auth_key',

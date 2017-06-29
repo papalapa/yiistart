@@ -44,7 +44,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(['id' => 'pjax-elements-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
+    <?php Pjax::begin(['id' => 'pjax-elements-index', 'options' => ['class' => 'pjax-spinner table-responsive'], 'timeout' => 10000]); ?>
 
     <?
         $categories = ElementCategory::find()->select(['id', 'name'])->orderBy(['name' => SORT_ASC])->asArray()->indexBy('id')->all();

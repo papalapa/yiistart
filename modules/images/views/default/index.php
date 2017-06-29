@@ -43,7 +43,7 @@
         ]);
     ?>
 
-    <?php Pjax::begin(['id' => 'pjax-images-index', 'options' => ['class' => 'pjax-spinner'], 'timeout' => 10000]); ?>
+    <?php Pjax::begin(['id' => 'pjax-images-index', 'options' => ['class' => 'pjax-spinner table-responsive'], 'timeout' => 10000]); ?>
 
     <?
         $categoryFind = ImageCategory::find()->select(['id', 'name']);
