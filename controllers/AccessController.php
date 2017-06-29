@@ -10,7 +10,7 @@
      * Class AccessController
      * @package papalapa\yiistart\controllers
      */
-    class AccessController extends Controller
+    abstract class AccessController extends Controller
     {
         /**
          * @var array
