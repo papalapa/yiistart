@@ -26,7 +26,8 @@
         "mihaildev/yii2-elfinder"          : "~1.2",
         "omgdef/yii2-multilingual-behavior": "~2.1",
         "codemix/yii2-localeurls"          : "~1.4",
-        "yiister/yii2-gentelella"          : "~1.2"
+        "yiister/yii2-gentelella"          : "~1.2",
+        "samdark/yii2-webshell"            : "~2.0"
     },
     "autoload"   : {
         "psr-4": {
