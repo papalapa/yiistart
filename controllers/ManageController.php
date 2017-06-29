@@ -4,11 +4,10 @@
 
     use yii\base\Model;
     use yii\db\ActiveRecord;
-    use yii\filters\AccessControl;
     use yii\filters\VerbFilter;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\web\BadRequestHttpException;
-    use yii\web\Controller;
     use yii\web\ForbiddenHttpException;
     use yii\web\NotFoundHttpException;
 
@@ -16,7 +15,7 @@
      * Class ManageController
      * @package papalapa\yiistart\controllers
      */
-    abstract class ManageController extends Controller
+    abstract class ManageController extends AccessController
     {
         /**
          * Default active record model class
@@ -56,38 +55,20 @@
          */
         public function behaviors()
         {
-            return [
-                'verbs'  => [
+            return ArrayHelper::merge(parent::behaviors(), [
+                'verbs' => [
                     'class'   => VerbFilter::className(),
                     'actions' => [
-                        'index'  => ['get'],
-                        'view'   => ['get'],
-                        'create' => ['get', 'post'],
-                        'update' => ['get', 'put', 'post'],
-                        'delete' => ['post', 'delete'],
+                        'index'   => ['get'],
+                        'view'    => ['get'],
+                        'create'  => ['get', 'post'],
+                        'update'  => ['get', 'put', 'post'],
+                        'delete'  => ['post', 'delete'],
+                        'toggle'  => ['get', 'post'],
+                        'reorder' => ['get', 'post'],
                     ],
                 ],
-                'access' => [
-                    'class' => AccessControl::className(),
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['manager', 'admin', 'developer'],
-                        ],
-                        [
-                            'allow'         => true,
-                            'roles'         => ['@'],
-                            'matchCallback' => function ($rule, $action) {
-                                if (!\Yii::$app->user->isGuest) {
-                                    \Yii::$app->user->logout();
-                                }
-
-                                throw new ForbiddenHttpException('Недостаточно прав!');
-                            },
-                        ],
-                    ],
-                ],
-            ];
+            ]);
         }
 
         /**
