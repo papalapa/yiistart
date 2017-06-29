@@ -27,17 +27,6 @@
         ];
 
         /**
-         * @inheritdoc
-         */
-        public function init()
-        {
-            $this->model       = SourceMessage::className();
-            $this->searchModel = SourceMessageSearch::className();
-
-            parent::init();
-        }
-
-        /**
          * @param $id
          * @return string
          * @throws ForbiddenHttpException
@@ -70,6 +59,22 @@
 
                 return $this->render('update', ['model' => $model]);
             }
+        }
+
+        /**
+         * @param \yii\base\Action $action
+         * @return bool
+         */
+        public function beforeAction($action)
+        {
+            if (parent::beforeAction($action)) {
+                $this->model       = SourceMessage::className();
+                $this->searchModel = SourceMessageSearch::className();
+
+                return true;
+            }
+
+            return false;
         }
 
         /**

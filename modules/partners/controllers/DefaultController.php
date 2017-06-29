@@ -24,13 +24,18 @@
         ];
 
         /**
-         * @inheritdoc
+         * @param \yii\base\Action $action
+         * @return bool
          */
-        public function init()
+        public function beforeAction($action)
         {
-            $this->model       = Partners::className();
-            $this->searchModel = PartnersSearch::className();
+            if (parent::beforeAction($action)) {
+                $this->model       = Partners::className();
+                $this->searchModel = PartnersSearch::className();
 
-            parent::init();
+                return true;
+            }
+
+            return false;
         }
     }

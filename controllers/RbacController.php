@@ -6,13 +6,14 @@
     use papalapa\yiistart\rbac\ForeignAccessRule;
     use papalapa\yiistart\rbac\OwnerAccessRule;
     use papalapa\yiistart\rbac\UserRoleRule;
+    use yii\console\Controller;
     use yii\rbac\ManagerInterface;
 
     /**
      * Class RbacController
      * @package papalapa\yiistart\controllers
      */
-    class RbacController extends \yii\console\Controller
+    class RbacController extends Controller
     {
         /**
          * Permission to access to owner content
@@ -394,11 +395,11 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateMenu);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteMenu);
 
-            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createElement);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createElement); // only for developer
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewElement);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexElement);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateElement);
-            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteElement);
+            // $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteElement); // only for developer
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createDispatch);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewDispatch);
@@ -429,6 +430,9 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createSetting);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteSetting);
 
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElement);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElement);
+
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElementCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewElementCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexElementCategory);
@@ -440,9 +444,6 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteImageCategory);
-
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElement);
-            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElement);
 
             echo 'All child permissions has been added.'.PHP_EOL;
 

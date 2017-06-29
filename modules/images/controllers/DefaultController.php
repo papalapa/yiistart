@@ -25,20 +25,25 @@
         ];
 
         /**
-         * @inheritdoc
+         * @param \yii\base\Action $action
+         * @return bool
          */
-        public function init()
+        public function beforeAction($action)
         {
-            $this->model       = Images::className();
-            $this->searchModel = ImagesSearch::className();
+            if (parent::beforeAction($action)) {
+                $this->model       = Images::className();
+                $this->searchModel = ImagesSearch::className();
 
-            if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
-                $this->scenarios = array_replace($this->scenarios, [
-                    'create' => Images::SCENARIO_DEVELOPER,
-                    'update' => Images::SCENARIO_DEVELOPER,
-                ]);
+                if (\Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
+                    $this->scenarios = array_replace($this->scenarios, [
+                        'create' => Images::SCENARIO_DEVELOPER,
+                        'update' => Images::SCENARIO_DEVELOPER,
+                    ]);
+                }
+
+                return true;
             }
 
-            parent::init();
+            return false;
         }
     }

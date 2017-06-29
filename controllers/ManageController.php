@@ -69,7 +69,6 @@
                 ],
                 'access' => [
                     'class' => AccessControl::className(),
-                    // 'only'  => ['index', 'view', 'create', 'update', 'delete'],
                     'rules' => [
                         [
                             'allow' => true,
@@ -83,7 +82,7 @@
                                     \Yii::$app->user->logout();
                                 }
 
-                                throw new ForbiddenHttpException('Недостаточно прав');
+                                throw new ForbiddenHttpException('Недостаточно прав!');
                             },
                         ],
                     ],
@@ -332,15 +331,6 @@
 
             return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-order-column.php',
                 ['model' => $model, 'attribute' => $attribute]);
-        }
-
-        /**
-         * Not authorized user see this exception
-         * @throws ForbiddenHttpException
-         */
-        protected function deniedError()
-        {
-            throw new ForbiddenHttpException('У вас недостаточно прав.');
         }
 
         /**

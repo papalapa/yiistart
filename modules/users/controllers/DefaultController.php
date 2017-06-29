@@ -24,17 +24,22 @@
         ];
 
         /**
-         * @inheritdoc
+         * @param \yii\base\Action $action
+         * @return bool
          */
-        public function init()
+        public function beforeAction($action)
         {
-            $this->model       = User::className();
-            $this->searchModel = UserSearch::className();
+            if (parent::beforeAction($action)) {
+                $this->model       = User::className();
+                $this->searchModel = UserSearch::className();
 
-            $this->scenarios = array_replace($this->scenarios, [
-                'update' => User::SCENARIO_UPDATE,
-            ]);
+                $this->scenarios = array_replace($this->scenarios, [
+                    'update' => User::SCENARIO_UPDATE,
+                ]);
 
-            parent::init();
+                return true;
+            }
+
+            return false;
         }
     }
