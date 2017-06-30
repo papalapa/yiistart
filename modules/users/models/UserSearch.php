@@ -62,7 +62,7 @@
                 'role'   => $this->role,
             ]);
 
-            if ($this->last_ip !== '') {
+            if (isset($this->last_ip) && $this->last_ip !== '') {
                 $query->andWhere(['last_ip' => ip2long($this->last_ip)]);
             }
 
