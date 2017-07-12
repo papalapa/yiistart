@@ -95,7 +95,7 @@
                 [['image'], FilePathValidator::className()],
             ]);
 
-            if ($rule = Settings::paramOf('history.upload.rule', false)) {
+            if ($rule = Settings::paramOf('histories.upload.rule', false)) {
                 $rules[] = $rule;
             }
 

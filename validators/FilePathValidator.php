@@ -19,7 +19,8 @@
     class FilePathValidator extends Validator
     {
         /**
-         * Upload controller
+         * Upload default controller
+         * To change controller add param %model%.upload.controller
          * @var string
          */
         public $uploadController = 'upload';
