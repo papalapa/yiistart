@@ -57,9 +57,11 @@
                 ],
                 'message:ntext',
                 [
-                    'label'   => 'Переведено',
-                    'format'  => 'html',
-                    'content' => function ($model) /* @var $model SourceMessage */ {
+                    'attribute' => 'is_translated',
+                    'label'     => 'Переведено',
+                    'filter'    => [0 => 'нет', 1 => 'да'],
+                    'format'    => 'html',
+                    'content'   => function ($model) /* @var $model SourceMessage */ {
                         return $model->isTranslated()
                             ? Html::tag('i', null, ['class' => 'text-success fa fa-check'])
                             : Html::tag('i', null, ['class' => 'text-danger fa fa-times-circle']);

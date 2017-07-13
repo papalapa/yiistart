@@ -39,12 +39,24 @@
         ]);
     ?>
 
-    <?= DetailView::widget([
-        'model'      => $model,
-        'attributes' => [
+    <?
+        $attributes = [
             'id',
             'message',
-        ],
+        ];
+
+        foreach ($model->messages as $message) {
+            $attributes[] = [
+                'label' => sprintf('Перевод (%s)', $message->language),
+                'value' => $message->translation,
+            ];
+        }
+
+    ?>
+
+    <?= DetailView::widget([
+        'model'      => $model,
+        'attributes' => $attributes,
     ]) ?>
 
 </div>

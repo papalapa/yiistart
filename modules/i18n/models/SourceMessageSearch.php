@@ -11,6 +11,8 @@
      */
     class SourceMessageSearch extends SourceMessage
     {
+        public $is_translated;
+
         /**
          * @inheritdoc
          */
@@ -27,6 +29,7 @@
         {
             return [
                 [['id'], 'integer'],
+                [['is_translated'], 'boolean'],
                 [['category', 'message'], 'safe'],
             ];
         }
@@ -58,6 +61,22 @@
             $query->andFilterWhere([
                 'id' => $this->id,
             ]);
+
+            if (!is_null($this->is_translated) && $this->is_translated !== '') {
+                if ($this->is_translated) {
+                    $query->joinWith([
+                        'messages' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
+                            return $q->where(['OR', ['IS NOT', 'translation', null], ['<>', 'translation', '']]);
+                        },
+                    ]);
+                } else {
+                    $query->joinWith([
+                        'messages' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
+                            return $q->where(['OR', ['IS', 'translation', null], ['=', 'translation', '']]);
+                        },
+                    ]);
+                }
+            }
 
             $query->andFilterWhere(['like', 'category', $this->category])
                   ->andFilterWhere(['like', 'message', $this->message]);
