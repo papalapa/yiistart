@@ -280,7 +280,7 @@
             $deletePartner              = $this->authManager->createPermission('deletePartner');
             $deletePartner->description = 'Удаление партнеров';
 
-            /** Управление партнерами компании */
+            /** Управление событиями */
             $createHistory              = $this->authManager->createPermission('createHistory');
             $createHistory->description = 'Создание событий';
             $viewHistory                = $this->authManager->createPermission('viewHistory');
@@ -291,6 +291,30 @@
             $updateHistory->description = 'Изменение событий';
             $deleteHistory              = $this->authManager->createPermission('deleteHistory');
             $deleteHistory->description = 'Удаление событий';
+
+            /** Управление категориями баннеров */
+            $createBannerCategory              = $this->authManager->createPermission('createBannerCategory');
+            $createBannerCategory->description = 'Создание категорий баннеров';
+            $viewBannerCategory                = $this->authManager->createPermission('viewBannerCategory');
+            $viewBannerCategory->description   = 'Просмотр категорий баннеров';
+            $indexBannerCategory               = $this->authManager->createPermission('indexBannerCategory');
+            $indexBannerCategory->description  = 'Листинг категорий баннеров';
+            $updateBannerCategory              = $this->authManager->createPermission('updateBannerCategory');
+            $updateBannerCategory->description = 'Изменение категорий баннеров';
+            $deleteBannerCategory              = $this->authManager->createPermission('deleteBannerCategory');
+            $deleteBannerCategory->description = 'Удаление категорий баннеров';
+
+            /** Управление баннерами */
+            $createBanner              = $this->authManager->createPermission('createBanner');
+            $createBanner->description = 'Создание баннерами';
+            $viewBanner                = $this->authManager->createPermission('viewBanner');
+            $viewBanner->description   = 'Просмотр баннерами';
+            $indexBanner               = $this->authManager->createPermission('indexBanner');
+            $indexBanner->description  = 'Листинг баннерами';
+            $updateBanner              = $this->authManager->createPermission('updateBanner');
+            $updateBanner->description = 'Изменение баннерами';
+            $deleteBanner              = $this->authManager->createPermission('deleteBanner');
+            $deleteBanner->description = 'Удаление баннерами';
 
             echo 'New permissions has been created.'.PHP_EOL;
 
@@ -375,6 +399,18 @@
             $this->authManager->add($updateHistory);
             $this->authManager->add($deleteHistory);
 
+            $this->authManager->add($createBannerCategory);
+            $this->authManager->add($viewBannerCategory);
+            $this->authManager->add($indexBannerCategory);
+            $this->authManager->add($updateBannerCategory);
+            $this->authManager->add($deleteBannerCategory);
+
+            $this->authManager->add($createBanner);
+            $this->authManager->add($viewBanner);
+            $this->authManager->add($indexBanner);
+            $this->authManager->add($updateBanner);
+            $this->authManager->add($deleteBanner);
+
             echo 'New permissions has been added.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -449,6 +485,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateHistory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteHistory);
 
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createBanner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewBanner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexBanner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateBanner);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteBanner);
+
             /** Developer */
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createSetting);
@@ -468,6 +510,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteImageCategory);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createBannerCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewBannerCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexBannerCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateBannerCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteBannerCategory);
 
             echo 'All child permissions has been added.'.PHP_EOL;
 

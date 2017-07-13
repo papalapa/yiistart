@@ -29,7 +29,7 @@
      * @property integer             $updated_by
      * @property string              $created_at
      * @property string              $updated_at
-     * @property ImagesTranslation[] $imagesTranslations
+     * @property ImagesTranslation[] $translations
      * @property ImageCategory       $category
      */
     class Images extends MultilingualActiveRecord
@@ -169,7 +169,7 @@
         /**
          * @return \yii\db\ActiveQuery
          */
-        public function getImagesTranslations()
+        public function getTranslations()
         {
             return $this->hasMany(ImagesTranslation::className(), ['content_id' => 'id']);
         }
