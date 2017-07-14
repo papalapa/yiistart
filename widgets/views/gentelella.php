@@ -2,7 +2,7 @@
 
     /* @var $this \yii\web\View */
     /* @var $content string */
-    /* @var $menu array - Site menu*/
+    /* @var $menu array - Site menu */
     /* @var $general array - General menu */
 
     use papalapa\yiistart\assets\AppAsset;
@@ -91,6 +91,11 @@
                                         <li>
                                             <a title="Yii webshell" href="<?= Url::to(['/shell']) ?>">
                                                 <i class="fa fa-fw fa-terminal pull-right"></i> Yii терминал
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a title="File manager" href="<?= Url::to(['/site/manager']) ?>">
+                                                <i class="fa fa-fw fa-hdd-o pull-right"></i> File manager
                                             </a>
                                         </li>
                                     <? endif; ?>

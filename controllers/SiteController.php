@@ -40,6 +40,11 @@
                             'allow'   => true,
                         ],
                         [
+                            'actions' => ['manager'],
+                            'allow'   => true,
+                            'roles'   => ['developer'],
+                        ],
+                        [
                             'actions' => ['index'],
                             'allow'   => true,
                             'roles'   => ['manager', 'admin', 'developer'],
@@ -67,5 +72,13 @@
         public function actionIndex()
         {
             return $this->render('@vendor/papalapa/yiistart/widgets/views/index');
+        }
+
+        /**
+         * @return string
+         */
+        public function actionManager()
+        {
+            return $this->render('@vendor/papalapa/yiistart/widgets/views/manager');
         }
     }

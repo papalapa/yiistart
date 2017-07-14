@@ -20,7 +20,7 @@
         </a>
     <? else : ?>
         <i class="<?= $model->getAttribute($attribute) ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger' ?>"></i>
-        <a href="<?= Url::to(['toggle', 'id' => $model->primaryKey, 'attribute' => $attribute]) ?>"
+        <a href="<?= Url::to(['toggle', 'id' => $model->primaryKey, 'attribute' => $attribute]) ?>" title="<?= $model->getAttribute($attribute) ? 'Выключить' : 'Включить' ?>"
            class="inline-block <?= is_null($model->getAttribute($attribute)) ? '' : ($model->getAttribute($attribute) ? 'text-success' : 'text-danger') ?>">
             <i class="<?= is_null($model->getAttribute($attribute)) ? 'fa fa-toggle-off' : 'fa fa-toggle-on '.($model->getAttribute($attribute) ? '' : 'fa-flip-horizontal') ?>"></i>
         </a>

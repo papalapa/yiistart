@@ -11,10 +11,10 @@
 ?>
 <div class="pjax-reorder-attribute-<?= $attribute ?>-handler" id="pjax-reorder-attribute-<?= $attribute ?>-<?= $model->primaryKey ?>" data-pjax-container="">
     <a href="<?= Url::to(['reorder', 'id' => $model->primaryKey, 'attribute' => $attribute, 'direction' => -1]) ?>"
-       class="label label-danger">▼</a>
+       class="label label-danger" title="Спустить на один уровень">▼</a>
     <? if (!is_null($model->getAttribute($attribute))) : ?>
         <span class="label label-primary"><?= $model->getAttribute($attribute) ?></span>
     <? endif; ?>
     <a href="<?= Url::to(['reorder', 'id' => $model->primaryKey, 'attribute' => $attribute, 'direction' => 1]) ?>"
-       class="label label-success">▲</a>
+       class="label label-success" title="Поднять на один уровень">▲</a>
 </div>
