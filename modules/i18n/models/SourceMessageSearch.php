@@ -82,6 +82,8 @@
                   ->andFilterWhere(['like', 'message', $this->message])
                   ->groupBy('id');
 
+            $query->with('messages');
+
             return $dataProvider;
         }
     }
