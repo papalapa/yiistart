@@ -79,7 +79,8 @@
             }
 
             $query->andFilterWhere(['like', 'category', $this->category])
-                  ->andFilterWhere(['like', 'message', $this->message]);
+                  ->andFilterWhere(['like', 'message', $this->message])
+                  ->groupBy('id');
 
             return $dataProvider;
         }
