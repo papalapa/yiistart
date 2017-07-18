@@ -13,6 +13,20 @@
     class GiiModule extends Module
     {
         /**
+         * @var array
+         */
+        public $generators = [
+            'crud' => [
+                'class'               => 'yii\gii\generators\crud\Generator',
+                'baseControllerClass' => 'papalapa\yiistart\controllers\ManageController',
+                'templates'           => [
+                    'manage'              => '@vendor/papalapa/yiistart/widgets/gii/manage',
+                    'manage-multilingual' => '@vendor/papalapa/yiistart/widgets/gii/manage-multilingual',
+                ],
+            ],
+        ];
+
+        /**
          * @return bool
          * @throws \yii\web\ForbiddenHttpException
          */
