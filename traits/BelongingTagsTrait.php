@@ -23,9 +23,8 @@
         {
             /* @var \yii\db\ActiveRecord $this */
             return $this->hasMany(BelongingTags::className(), ['content_id' => 'id'])
-                ->andFilterWhere(['content_type' => static::contentType()])
-                ->andWhere(['is_outdated' => false])
-                // ->orderBy(['[[order]]' => SORT_ASC])->addOrderBy(['[[tag]]' => SORT_ASC])
-                ;
+                        ->andFilterWhere(['content_type' => static::contentType()])
+                        ->andWhere(['is_outdated' => false])
+                        ->orderBy(['[[order]]' => SORT_ASC])->addOrderBy(['[[tag]]' => SORT_ASC]);
         }
     }
