@@ -19,6 +19,8 @@
             'crud' => [
                 'class'               => 'yii\gii\generators\crud\Generator',
                 'baseControllerClass' => 'papalapa\yiistart\controllers\ManageController',
+                'template'            => 'manage',
+                'enablePjax'          => true,
                 'templates'           => [
                     'manage'              => '@vendor/papalapa/yiistart/widgets/gii/manage',
                     'manage-multilingual' => '@vendor/papalapa/yiistart/widgets/gii/manage-multilingual',
