@@ -49,6 +49,7 @@
                 //['class' => 'yii\grid\SerialColumn'],
                 'id',
                 'header',
+                'url',
                 // 'text:ntext',
                 // 'context:ntext',
                 // 'image',
