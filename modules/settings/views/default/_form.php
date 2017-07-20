@@ -14,7 +14,8 @@
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Название', 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]);
+    <?= $form->field($model, 'title')
+             ->textInput(['maxlength' => true, 'placeholder' => 'Название', 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]);
     ?>
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true, 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]); ?>
@@ -25,6 +26,16 @@
             if (Yii::$app->language <> $locale) {
                 echo $form->field($model, 'value_'.$locale)->textInput(['maxlength' => true]);
             }
+        }
+    ?>
+
+    <?
+        if (Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER && $model->comment) {
+            ?>
+            <pre><b>Комментарий:</b><br /><?= $model->comment ?></pre>
+            <?
+        } else {
+            echo $form->field($model, 'comment')->textInput(['maxlength' => true]);
         }
     ?>
 

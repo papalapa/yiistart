@@ -21,6 +21,7 @@
                 'title'      => $this->string(64)->defaultValue(null),
                 'key'        => $this->string(64)->notNull()->unique(),
                 'value'      => $this->text()->defaultValue(null),
+                'comment'    => $this->string(1024)->defaultValue(null),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),

@@ -16,6 +16,7 @@
      * @property string                $title
      * @property string                $key
      * @property string                $value
+     * @property string                $comment
      * @property integer               $is_active
      * @property integer               $created_by
      * @property integer               $updated_by
@@ -45,6 +46,7 @@
                 'title'      => 'Название',
                 'key'        => 'Ключ',
                 'value'      => 'Значение',
+                'comment'    => 'Комментарий',
                 'is_active'  => 'Активность',
                 'created_by' => 'Кем создано',
                 'updated_by' => 'Кем изменено',
@@ -81,7 +83,7 @@
         {
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
-                self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'comment', 'is_active'],
             ]);
         }
 
@@ -93,6 +95,8 @@
             return $this->localizedRules([
                 [['title'], WhiteSpaceNormalizerValidator::className()],
                 [['title'], 'string', 'max' => 64],
+
+                [['comment'], 'string', 'max' => 1024],
 
                 [['key'], WhiteSpaceNormalizerValidator::className()],
                 [['key'], 'required'],
@@ -179,7 +183,7 @@
 
             if (!is_null($function)) {
                 if (is_callable($function)) {
-                    $values = array_map($function, (array)$values);
+                    $values = array_map($function, (array) $values);
                 } else {
                     \Yii::error('Аргумент не является анонимной фукнцией и не может быть вызван.');
                 }

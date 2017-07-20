@@ -45,6 +45,7 @@
                 'title',
                 'key',
                 'value:ntext',
+                'comment',
                 [
                     'attribute' => 'is_active',
                     'value'     => Html::tag('i', null,
