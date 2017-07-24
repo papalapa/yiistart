@@ -60,7 +60,6 @@
                 [['language'], 'string', 'max' => 16],
                 [['language'], 'in', 'range' => i18n::locales()],
 
-                [['translation'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
                 [['translation'], WhiteSpaceNormalizerValidator::className()],
                 [['translation'], 'string'],
             ];
