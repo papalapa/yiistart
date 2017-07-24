@@ -169,8 +169,12 @@
                 [
                     ['value'],
                     function ($attribute, $params, $validator) {
-                        if (!preg_match($this->pattern, $this->{$attribute})) {
-                            $this->addError($attribute, 'Значение не соответствует требуемому шаблону');
+                        try {
+                            if (!preg_match($this->pattern, $this->{$attribute})) {
+                                $this->addError($attribute, 'Значение не соответствует требуемому шаблону');
+                            }
+                        } catch (\Exception $e) {
+                            $this->addError('pattern', 'Шаблон указан некорректно');
                         }
                     },
                     'when' => function ($model) {
