@@ -1,8 +1,9 @@
 <?php
 
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
-    use papalapa\yiistart\widgets\MultilingualDetailView;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
@@ -38,14 +39,27 @@
             ],
         ]);
 
-        echo MultilingualDetailView::widget([
+        $widgetClass = $model->multilingual ? 'papalapa\yiistart\widgets\MultilingualDetailView' : 'yii\widgets\DetailView';
+
+        echo $widgetClass::widget([
             'model'      => $model,
             'attributes' => [
                 // 'id',
                 'title',
                 'key',
                 'value:ntext',
+                [
+                    'attribute' => 'type',
+                    'value'     => ArrayHelper::getValue(Settings::types(), $model->type),
+                ],
+                'pattern',
                 'comment',
+                [
+                    'attribute' => 'multilingual',
+                    'value'     => Html::tag('i', null,
+                        ['class' => $model->multilingual ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger']),
+                    'format'    => 'html',
+                ],
                 [
                     'attribute' => 'is_active',
                     'value'     => Html::tag('i', null,

@@ -3,6 +3,9 @@
     namespace papalapa\yiistart\modules\settings\models;
 
     use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\validators\FilePathValidator;
+    use papalapa\yiistart\validators\TelephoneValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
     use yii\behaviors\TimestampBehavior;
@@ -15,6 +18,9 @@
      * @property integer               $id
      * @property string                $title
      * @property string                $key
+     * @property integer               $type
+     * @property string                $pattern
+     * @property boolean               $multilingual
      * @property string                $value
      * @property string                $comment
      * @property integer               $is_active
@@ -27,6 +33,14 @@
     class Settings extends MultilingualActiveRecord
     {
         const SCENARIO_DEVELOPER = 'developer';
+        const TYPE_STRING        = 0;
+        const TYPE_TEXT          = 5;
+        const TYPE_HTML          = 10;
+        const TYPE_MAP           = 20;
+        const TYPE_TEL           = 30;
+        const TYPE_EMAIL         = 40;
+        const TYPE_BOOLEAN       = 50;
+        const TYPE_IMAGE         = 60;
 
         /**
          * @inheritdoc
@@ -42,16 +56,19 @@
         public function attributeLabels()
         {
             return $this->localizedAttributes([
-                'id'         => 'ID',
-                'title'      => 'Название',
-                'key'        => 'Ключ',
-                'value'      => 'Значение',
-                'comment'    => 'Комментарий',
-                'is_active'  => 'Активность',
-                'created_by' => 'Кем создано',
-                'updated_by' => 'Кем изменено',
-                'created_at' => 'Дата создания',
-                'updated_at' => 'Дата изменения',
+                'id'           => 'ID',
+                'title'        => 'Название',
+                'key'          => 'Ключ',
+                'type'         => 'Тип поля',
+                'pattern'      => 'Шаблон',
+                'value'        => 'Значение',
+                'multilingual' => 'Мультиязычный',
+                'comment'      => 'Комментарий',
+                'is_active'    => 'Активность',
+                'created_by'   => 'Кем создано',
+                'updated_by'   => 'Кем изменено',
+                'created_at'   => 'Дата создания',
+                'updated_at'   => 'Дата изменения',
             ]);
         }
 
@@ -83,7 +100,7 @@
         {
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
-                self::SCENARIO_DEVELOPER => ['title', 'key', 'value', 'comment', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['title', 'key', 'pattern', 'type', 'multilingual', 'value', 'comment', 'is_active'],
             ]);
         }
 
@@ -107,11 +124,104 @@
                 [['value'], WhiteSpaceNormalizerValidator::className()],
                 [['value'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
                 [['value'], 'string'],
+                [
+                    ['value'], 'email',
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_EMAIL;
+                    },
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['value'], TelephoneValidator::className(),
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_TEL;
+                    },
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['value'], 'boolean',
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_BOOLEAN;
+                    },
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['value'], 'default', 'value' => 0,
+                    'when'                        => function ($model) {
+                        return $model->type == self::TYPE_BOOLEAN;
+                    },
+                    'enableClientValidation'      => false,
+                ],
+                [
+                    ['value'], 'string',
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_IMAGE;
+                    },
+                    'max'                    => 128,
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['value'], FilePathValidator::className(),
+                    'when' => function ($model) {
+                        return $model->type == self::TYPE_IMAGE;
+                    },
+                ],
+                [
+                    ['value'],
+                    function ($attribute, $params, $validator) {
+                        if (!preg_match($this->pattern, $this->{$attribute})) {
+                            $this->addError($attribute, 'Значение не соответствует требуемому шаблону');
+                        }
+                    },
+                    'when' => function ($model) {
+                        return $model->pattern;
+                    },
+                ],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],
                 [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_DEVELOPER]],
+
+                [['multilingual'], 'boolean'],
+                [['multilingual'], 'default', 'value' => 0],
+
+                [['type'], 'default', 'value' => self::TYPE_TEXT],
+                [['type'], 'in', 'range' => array_keys(self::types())],
             ]);
+        }
+
+        /**
+         * Reset multilingual fields on non-multilingual setting
+         */
+        public function beforeValidate()
+        {
+            if (!$this->multilingual) {
+                foreach (i18n::locales() as $locale) {
+                    $this->{'value_'.$locale} = null;
+                }
+            }
+
+            return parent::beforeValidate();
+        }
+
+        /**
+         * Fill multilingual fields the same values as default on multilingual setting
+         * @param bool $insert
+         * @return bool
+         */
+        public function beforeSave($insert)
+        {
+            if (parent::beforeSave($insert)) {
+                if (!$this->multilingual) {
+                    foreach (i18n::locales() as $locale) {
+                        $this->{'value_'.$locale} = $this->value;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -123,6 +233,23 @@
             parent::afterSave($insert, $changedAttributes);
 
             TagDependency::invalidate(\Yii::$app->cache, get_called_class());
+        }
+
+        /**
+         * @return array
+         */
+        public static function types()
+        {
+            return [
+                self::TYPE_STRING  => 'Текстовое поле',
+                self::TYPE_TEXT    => 'Текст',
+                self::TYPE_HTML    => 'HTML код',
+                self::TYPE_MAP     => 'Метка на карте',
+                self::TYPE_TEL     => 'Телефон',
+                self::TYPE_EMAIL   => 'Email',
+                self::TYPE_BOOLEAN => 'Переключатель',
+                self::TYPE_IMAGE   => 'Изображение',
+            ];
         }
 
         /**
