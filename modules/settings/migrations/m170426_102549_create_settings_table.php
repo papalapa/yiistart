@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\modules\settings\migrations;
 
+    use papalapa\yiistart\modules\settings\models\Settings;
     use yii\db\Migration;
 
     /**
@@ -17,16 +18,19 @@
         {
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{settings}}', [
-                'id'         => $this->primaryKey(),
-                'title'      => $this->string(64)->defaultValue(null),
-                'key'        => $this->string(64)->notNull()->unique(),
-                'value'      => $this->text()->defaultValue(null),
-                'comment'    => $this->string(1024)->defaultValue(null),
-                'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),
-                'created_by' => $this->integer()->unsigned()->notNull(),
-                'updated_by' => $this->integer()->unsigned()->notNull(),
-                'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
-                'updated_at' => $this->timestamp()->defaultValue(null),
+                'id'           => $this->primaryKey(),
+                'title'        => $this->string(64)->defaultValue(null),
+                'key'          => $this->string(64)->notNull()->unique(),
+                'type'         => $this->smallInteger()->unsigned()->defaultValue(Settings::TYPE_TEXT),
+                'pattern'      => $this->text()->defaultValue(null),
+                'multilingual' => $this->boolean()->unsigned()->defaultValue(false),
+                'value'        => $this->text()->defaultValue(null),
+                'comment'      => $this->string(1024)->defaultValue(null),
+                'is_active'    => $this->boolean()->unsigned()->notNull()->defaultValue(false),
+                'created_by'   => $this->integer()->unsigned()->notNull(),
+                'updated_by'   => $this->integer()->unsigned()->notNull(),
+                'created_at'   => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+                'updated_at'   => $this->timestamp()->defaultValue(null),
             ], $tableOptions);
 
             $this->alterColumn('{{settings}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');

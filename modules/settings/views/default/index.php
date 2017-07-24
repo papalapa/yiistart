@@ -4,10 +4,11 @@
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridDateColumn;
-    use papalapa\yiistart\widgets\GridIntegerColumn;
+    use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\Pjax;
 
@@ -45,20 +46,27 @@
             'filterModel'  => $searchModel,
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
-                [
-                    'class'     => GridIntegerColumn::className(),
-                    'attribute' => 'id',
-                ],
-                'title',
+                // 'id',
                 'key',
-                'value:ntext',
+                'title',
+                [
+                    'attribute' => 'value',
+                    'class'     => GridTextColumn::className(),
+                ],
+                [
+                    'attribute' => 'type',
+                    'filter'    => Settings::types(),
+                    'content'   => function ($model) /* @var $model Settings */ {
+                        return ArrayHelper::getValue(Settings::types(), $model->type);
+                    },
+                ],
                 [
                     'class'      => GridToggleColumn::className(),
                     'attribute'  => 'is_active',
                     'labelTitle' => 'Активность',
                     'labelIco'   => 'fa fa-eye',
                 ],
-                [
+                /*[
                     'class'     => GridUserEmailColumn::className(),
                     'attribute' => 'created_by',
                 ],
@@ -75,7 +83,7 @@
                     'class'     => GridDateColumn::className(),
                     'attribute' => 'updated_at',
                     'model'     => $searchModel,
-                ],
+                ],*/
                 [
                     'class'       => GridActionColumn::className(),
                     'permissions' => [

@@ -4,7 +4,6 @@
 
     use yii\base\Model;
     use yii\data\ActiveDataProvider;
-    use yii\helpers\ArrayHelper;
 
     /**
      * Class SettingsSearch
@@ -27,7 +26,8 @@
         public function rules()
         {
             return [
-                [['id'], 'integer'],
+                [['id', 'type'], 'integer'],
+                [['type'], 'in', 'range' => array_keys(Settings::types())],
                 [['is_active'], 'boolean'],
                 [['title'], 'string'],
                 [['key', 'value'], 'safe'],
@@ -61,12 +61,13 @@
             // grid filtering conditions
             $query->andFilterWhere([
                 'id'        => $this->id,
+                'type'      => $this->type,
                 'is_active' => $this->is_active,
             ]);
 
             $query->andFilterWhere(['like', 'title', $this->title])
-                ->andFilterWhere(['like', 'key', $this->key])
-                ->andFilterWhere(['like', 'value', $this->value]);
+                  ->andFilterWhere(['like', 'key', $this->key])
+                  ->andFilterWhere(['like', 'value', $this->value]);
 
             $query->andFilterWhere(['>=', 'created_at', $this->created_at]);
             $query->andFilterWhere(['>=', 'updated_at', $this->updated_at]);
