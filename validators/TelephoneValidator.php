@@ -26,6 +26,10 @@
          * @var int
          */
         public $max = 20;
+        /**
+         * @var string
+         */
+        public $message = 'Значение «{attribute}» не является правильным номером телефона.';
 
         /**
          * @param mixed $value

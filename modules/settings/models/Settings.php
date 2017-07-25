@@ -41,6 +41,7 @@
         const TYPE_EMAIL         = 40;
         const TYPE_BOOLEAN       = 50;
         const TYPE_IMAGE         = 60;
+        const TYPE_URL           = 70;
 
         /**
          * @inheritdoc
@@ -124,20 +125,89 @@
                 [['value'], WhiteSpaceNormalizerValidator::className()],
                 [['value'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
                 [['value'], 'string'],
+
+                /* ========================================================================================================== */
+                /* Email validation rules */
+                /* ========================================================================================================== */
                 [
-                    ['value'], 'email',
+                    /* Split multiple emails comma separated and return array of emails */
+                    ['value'], 'filter',
+                    'filter' => function ($value) {
+                        return (array) preg_split('/\s*[\;\,]\s*/', $value);
+                    },
+                    'when'   => function ($model) {
+                        return $model->type == self::TYPE_EMAIL;
+                    },
+                ],
+                [
+                    /* Check each email */
+                    ['value'], 'each',
+                    'rule'                   => ['email'],
                     'when'                   => function ($model) {
                         return $model->type == self::TYPE_EMAIL;
                     },
                     'enableClientValidation' => false,
                 ],
                 [
-                    ['value'], TelephoneValidator::className(),
+                    /* Join emails with comma */
+                    ['value'], 'filter',
+                    'filter'      => function ($value) {
+                        return implode(', ', $value);
+                    },
+                    'when'        => function ($model) {
+                        return $model->type == self::TYPE_EMAIL;
+                    },
+                    'skipOnError' => false,
+                ],
+
+                /* ========================================================================================================== */
+                /* Url validation rule */
+                /* ========================================================================================================== */
+                [
+                    ['value'], 'url',
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_URL;
+                    },
+                    'enableClientValidation' => false,
+                ],
+
+                /* ========================================================================================================== */
+                /* Tel validation rules */
+                /* ========================================================================================================== */
+                [
+                    /* Split multiple tels comma separated and return array of tels */
+                    ['value'], 'filter',
+                    'filter' => function ($value) {
+                        return (array) preg_split('/\s*[\;\,]\s*/', $value);
+                    },
+                    'when'   => function ($model) {
+                        return $model->type == self::TYPE_TEL;
+                    },
+                ],
+                [
+                    /* Check each tel */
+                    ['value'], 'each',
+                    'rule'                   => [TelephoneValidator::className()],
                     'when'                   => function ($model) {
                         return $model->type == self::TYPE_TEL;
                     },
                     'enableClientValidation' => false,
                 ],
+                [
+                    /* Join tels with comma */
+                    ['value'], 'filter',
+                    'filter'      => function ($value) {
+                        return implode(', ', $value);
+                    },
+                    'when'        => function ($model) {
+                        return $model->type == self::TYPE_TEL;
+                    },
+                    'skipOnError' => false,
+                ],
+
+                /* ========================================================================================================== */
+                /* Boolean flag validation rules */
+                /* ========================================================================================================== */
                 [
                     ['value'], 'boolean',
                     'when'                   => function ($model) {
@@ -152,6 +222,10 @@
                     },
                     'enableClientValidation'      => false,
                 ],
+
+                /* ========================================================================================================== */
+                /* Image validation rules */
+                /* ========================================================================================================== */
                 [
                     ['value'], 'string',
                     'when'                   => function ($model) {
@@ -166,6 +240,10 @@
                         return $model->type == self::TYPE_IMAGE;
                     },
                 ],
+
+                /* ========================================================================================================== */
+                /* Pattern matching validation rule */
+                /* ========================================================================================================== */
                 [
                     ['value'],
                     function ($attribute, $params, $validator) {
@@ -195,7 +273,7 @@
         }
 
         /**
-         * Reset multilingual fields on non-multilingual setting
+         * Reset multilingual attributes on non-multilingual setting
          */
         public function beforeValidate()
         {
@@ -253,6 +331,7 @@
                 self::TYPE_EMAIL   => 'Email',
                 self::TYPE_BOOLEAN => 'Переключатель',
                 self::TYPE_IMAGE   => 'Изображение',
+                self::TYPE_URL     => 'URL ссылка',
             ];
         }
 
