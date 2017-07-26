@@ -24,8 +24,7 @@
                 $sourceMessage->setAttributes(['category' => $event->category, 'message' => $event->message]);
                 $sourceMessage->save();
 
-                $sourceMessageCategory = SourceMessageCategories::find()->where(['[[category]]' => $event->category])->one();
-                if (is_null($sourceMessageCategory)) {
+                if (!$sourceMessage->category) {
                     $sourceMessageCategory = new SourceMessageCategories([
                         'category' => $event->category,
                     ]);
