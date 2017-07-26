@@ -2,6 +2,8 @@
 
     namespace papalapa\yiistart\modules\i18n\migrations;
 
+    require \Yii::getAlias('@yii/i18n/migrations/m150207_210500_i18n_init.php');
+
     /**
      * Class m170726_105542_create_source_message_categories
      * @package papalapa\yiistart\modules\i18n\migrations
