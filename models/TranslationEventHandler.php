@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\models;
 
     use papalapa\yiistart\modules\i18n\models\SourceMessage;
+    use papalapa\yiistart\modules\i18n\models\SourceMessageCategories;
     use yii\i18n\MissingTranslationEvent;
 
     /**
@@ -22,6 +23,14 @@
                 $sourceMessage = new SourceMessage();
                 $sourceMessage->setAttributes(['category' => $event->category, 'message' => $event->message]);
                 $sourceMessage->save();
+
+                $sourceMessageCategory = SourceMessageCategories::find()->where(['[[category]]' => $event->category])->one();
+                if (is_null($sourceMessageCategory)) {
+                    $sourceMessageCategory = new SourceMessageCategories([
+                        'category' => $event->category,
+                    ]);
+                    $sourceMessageCategory->save();
+                }
 
                 \Yii::warning(sprintf('Translation (%s|%s) created as "%s"', $event->category, $event->language, $event->message));
             }

@@ -2,6 +2,7 @@
 
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\i18n\models\SourceMessage;
+    use papalapa\yiistart\modules\i18n\models\SourceMessageCategories;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridTextColumn;
@@ -24,11 +25,17 @@
     <?
         echo ControlButtonsPanel::widget([
             'items' => [
-                'createTranslation' => [
+                'createTranslation'          => [
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
                     'class' => 'btn btn-success',
+                ],
+                'indexSourceMessageCategory' => [
+                    'title' => 'Категории',
+                    'url'   => ['/i18n/categories'],
+                    'ico'   => 'fa fa-th-large',
+                    'class' => 'btn btn-default',
                 ],
             ],
         ]);
@@ -49,9 +56,12 @@
         $columns[] = [
             'attribute' => 'category',
             'label'     => 'Категория',
-            'filter'    => ArrayHelper::map($categories, 'category', 'category'),
+            'filter'    => ArrayHelper::map(
+                SourceMessageCategories::find()->select(['category', 'translate'])
+                                       ->where(['AND', ['IS NOT', 'translate', null], ['<>', 'translate', '']])->all(),
+                'category', 'translate'),
             'value'     => function ($model) /* @var $model SourceMessage */ {
-                return $model->category;
+                return $model->categoryDescription ? $model->categoryDescription->translate : $model->category;
             },
         ];
         foreach (i18n::locales() as $locale) {

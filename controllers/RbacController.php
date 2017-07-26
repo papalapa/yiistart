@@ -160,6 +160,18 @@
             $deleteTranslation              = $this->authManager->createPermission('deleteTranslation');
             $deleteTranslation->description = 'Удаление переводов';
 
+            /** Управление описаниями категорий переводов */
+            $createSourceMessageCategory              = $this->authManager->createPermission('createSourceMessageCategory');
+            $createSourceMessageCategory->description = 'Создание описаний категорий переводов';
+            $viewSourceMessageCategory                = $this->authManager->createPermission('viewSourceMessageCategory');
+            $viewSourceMessageCategory->description   = 'Просмотр описаний категорий переводов';
+            $indexSourceMessageCategory               = $this->authManager->createPermission('indexSourceMessageCategory');
+            $indexSourceMessageCategory->description  = 'Листинг описаний категорий переводов';
+            $updateSourceMessageCategory              = $this->authManager->createPermission('updateSourceMessageCategory');
+            $updateSourceMessageCategory->description = 'Изменение описаний категорий переводов';
+            $deleteSourceMessageCategory              = $this->authManager->createPermission('deleteSourceMessageCategory');
+            $deleteSourceMessageCategory->description = 'Удаление описаний категорий переводов';
+
             /** Управление настройками */
             $createSetting              = $this->authManager->createPermission('createSetting');
             $createSetting->description = 'Создание настроек';
@@ -333,6 +345,12 @@
             $this->authManager->add($updateTranslation);
             $this->authManager->add($deleteTranslation);
 
+            $this->authManager->add($createSourceMessageCategory);
+            $this->authManager->add($viewSourceMessageCategory);
+            $this->authManager->add($indexSourceMessageCategory);
+            $this->authManager->add($updateSourceMessageCategory);
+            $this->authManager->add($deleteSourceMessageCategory);
+
             $this->authManager->add($createSetting);
             $this->authManager->add($viewSetting);
             $this->authManager->add($indexSetting);
@@ -498,6 +516,12 @@
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElement);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteElement);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createSourceMessageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewSourceMessageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexSourceMessageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateSourceMessageCategory);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteSourceMessageCategory);
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createElementCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewElementCategory);

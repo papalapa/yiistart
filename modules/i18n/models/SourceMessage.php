@@ -7,10 +7,11 @@
 
     /**
      * This is the model class for table "source_message".
-     * @property integer   $id
-     * @property string    $category
-     * @property string    $message
-     * @property Message[] $messages
+     * @property integer                 $id
+     * @property string                  $category
+     * @property string                  $message
+     * @property Message[]               $messages
+     * @property SourceMessageCategories $categoryDescription
      */
     class SourceMessage extends ActiveRecord
     {
@@ -98,5 +99,13 @@
             }
 
             return true;
+        }
+
+        /**
+         * @return \yii\db\ActiveQuery
+         */
+        public function getCategoryDescription()
+        {
+            return $this->hasOne(SourceMessageCategories::className(), ['category' => 'category']);
         }
     }
