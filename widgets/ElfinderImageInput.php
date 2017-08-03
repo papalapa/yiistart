@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\widgets;
 
+    use papalapa\yiistart\assets\AppAsset;
     use yii\helpers\Html;
     use yii\helpers\Inflector;
 
@@ -67,10 +68,18 @@
                 $this->path = Inflector::camel2id((new \ReflectionClass($this->model))->getShortName(), '_');
             }
 
+            $assetBundle = \Yii::$app->assetManager->getBundle(AppAsset::className());
+            $blankImage  = $assetBundle->baseUrl.'/image/no_image.png';
+
             $this->template = implode(null, [
                 Html::beginTag('div', ['class' => 'input-group elfinder-image-widget']),
                 Html::beginTag('span', ['class' => 'input-group-btn elfinder-image-wrapper']),
-                Html::img(null, ['class' => 'btn btn-default elfinder-image', 'data-src' => $this->model->{$this->attribute}, 'height' => 34]),
+                Html::img(null, [
+                    'class'    => 'btn btn-default elfinder-image',
+                    'data-src' => $this->model->{$this->attribute},
+                    'height'   => 34,
+                    'onerror'  => "this.onerror=null;this.src='{$blankImage}';",
+                ]),
                 Html::endTag('span'),
                 '{input}',
                 Html::beginTag('span', ['class' => 'input-group-addon']),
