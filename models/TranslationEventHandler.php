@@ -24,7 +24,7 @@
                 $sourceMessage->setAttributes(['category' => $event->category, 'message' => $event->message]);
                 $sourceMessage->save();
 
-                if (!$sourceMessage->category) {
+                if (!$sourceMessage->categoryDescription) {
                     $sourceMessageCategory = new SourceMessageCategories([
                         'category' => $event->category,
                     ]);
