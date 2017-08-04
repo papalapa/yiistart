@@ -1,8 +1,10 @@
 <?php
 
+    use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\MultilingualDetailView;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
@@ -49,7 +51,11 @@
         'attributes' => [
             [
                 'attribute' => 'position',
-                'value'     => $model->position,
+                'value'     => ArrayHelper::getValue(Menu::positions(), $model->position),
+            ],
+            [
+                'attribute' => 'parent',
+                'value'     => ($root = ArrayHelper::getValue(Menu::roots(), $model->parent)) ? $root->title : null,
             ],
             'order',
             'title',

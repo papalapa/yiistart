@@ -40,17 +40,27 @@
             }
         ?>
 
-        <?
-            echo $form->field($model, 'text')->widget(CKEditor::className(), ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]);
-            foreach (i18n::locales() as $locale) {
-                if (Yii::$app->language <> $locale) {
-                    echo $form->field($model, 'text_'.$locale)->widget(CKEditor::className(),
-                        ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]);
-                }
-            }
-
-            echo $form->field($model, 'description')->textarea(['rows' => 2, 'maxlength' => true, 'readonly' => Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER]);
-        ?>
+        <ul class="nav nav-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
+            <? foreach (i18n::locales() as $locale): ?>
+                <li class="<?= Yii::$app->language == $locale ? 'active' : null ?>">
+                    <a href="#lang-<?= $locale ?>" data-toggle="tab"><?= $locale ?></a>
+                </li>
+            <? endforeach; ?>
+        </ul>
+        <br />
+        <div class="tab-content">
+            <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
+                <?= $form->field($model, 'text')->widget(CKEditor::className(), ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]) ?>
+            </div>
+            <? foreach (i18n::locales() as $locale): ?>
+                <? if (Yii::$app->language <> $locale): ?>
+                    <div class="tab-pane" id="lang-<?= $locale ?>">
+                        <?= $form->field($model, 'text_'.$locale)->widget(CKEditor::className(),
+                            ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]) ?>
+                    </div>
+                <? endif; ?>
+            <? endforeach; ?>
+        </div>
 
         <br />
 

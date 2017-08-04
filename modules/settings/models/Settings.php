@@ -267,7 +267,7 @@
                 [['multilingual'], 'boolean'],
                 [['multilingual'], 'default', 'value' => 0],
 
-                [['type'], 'default', 'value' => self::TYPE_TEXT],
+                [['type'], 'default', 'value' => self::TYPE_STRING],
                 [['type'], 'in', 'range' => array_keys(self::types())],
             ]);
         }

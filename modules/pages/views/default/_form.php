@@ -27,32 +27,51 @@
                         if (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
                             echo $form->field($model, 'url')->textInput(['maxlength' => true]);
                         }
+                    ?>
+                    <ul class="nav nav-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
+                        <? foreach (i18n::locales() as $locale): ?>
+                            <li class="<?= Yii::$app->language == $locale ? 'active' : null ?>">
+                                <a href="#lang-<?= $locale ?>" data-toggle="tab"><?= $locale ?></a>
+                            </li>
+                        <? endforeach; ?>
+                    </ul>
+                    <br />
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
+                            <?
+                                echo $form->field($model, 'header')->textInput(['maxlength' => true]);
 
-                        echo $form->field($model, 'header')->textInput(['maxlength' => true]);
-                        foreach (i18n::locales() as $locale) {
-                            if (Yii::$app->language <> $locale) {
-                                echo $form->field($model, 'header_'.$locale)->textInput(['maxlength' => true]);
-                            }
-                        }
-
-                        if ($model->isNewRecord || $model->has_context) {
-                            echo $form->field($model, 'context')->widget(CKEditor::className());
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'context_'.$locale)->widget(CKEditor::className());
+                                if ($model->isNewRecord || $model->has_context) {
+                                    echo $form->field($model, 'context')->widget(CKEditor::className());
                                 }
-                            }
-                        }
 
-                        if ($model->isNewRecord || $model->has_text) {
-                            echo $form->field($model, 'text')->widget(CKEditor::className());
-                            foreach (i18n::locales() as $locale) {
-                                if (Yii::$app->language <> $locale) {
-                                    echo $form->field($model, 'text_'.$locale)->widget(CKEditor::className());
+                                if ($model->isNewRecord || $model->has_text) {
+                                    echo $form->field($model, 'text')->widget(CKEditor::className());
                                 }
-                            }
-                        }
+                            ?>
+                        </div>
+                        <? foreach (i18n::locales() as $locale): ?>
+                            <? if (Yii::$app->language <> $locale): ?>
+                                <div class="tab-pane" id="lang-<?= $locale ?>">
+                                    <?
+                                        echo $form->field($model, 'header_'.$locale)->textInput(['maxlength' => true]);
 
+                                        if ($model->isNewRecord || $model->has_context) {
+                                            echo $form->field($model, 'context_'.$locale)->widget(CKEditor::className());
+                                        }
+
+                                        if ($model->isNewRecord || $model->has_text) {
+                                            echo $form->field($model, 'text_'.$locale)->widget(CKEditor::className());
+                                        }
+                                    ?>
+                                </div>
+                            <? endif; ?>
+                        <? endforeach; ?>
+                    </div>
+
+                    <br />
+
+                    <?
                         if ($model->isNewRecord || $model->has_image) {
                             echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), [
                                 'filter' => 'image',

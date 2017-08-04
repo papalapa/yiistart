@@ -5,6 +5,7 @@
     use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
+    use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
 
     /* @var $this yii\web\View */
@@ -21,6 +22,19 @@
             'data'          => Menu::positions(),
             'options'       => [
                 'placeholder' => 'Выберите расположение',
+            ],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ]);
+    ?>
+
+    <?
+        $roots = Menu::find()->select(['id', 'title'])->where(['OR', ['parent' => null], ['parent' => '']])->orderBy(['title' => SORT_ASC])->all();
+        echo $form->field($model, 'parent')->widget(Select2::className(), [
+            'data'          => ArrayHelper::map($roots, 'id', 'title'),
+            'options'       => [
+                'placeholder' => 'Выберите вложенность',
             ],
             'pluginOptions' => [
                 'allowClear' => true,

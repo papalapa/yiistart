@@ -15,6 +15,7 @@
     /**
      * This is the model class for table "menu".
      * @property integer           $id
+     * @property integer           $parent
      * @property string            $position
      * @property string            $url
      * @property string            $title
@@ -50,6 +51,7 @@
         {
             return $this->localizedAttributes([
                 'id'         => 'ID',
+                'parent'     => 'Родительский пункт',
                 'position'   => 'Расположение',
                 'url'        => 'Ссылка',
                 'title'      => 'Название',
@@ -89,6 +91,15 @@
         public function rules()
         {
             return $this->localizedRules([
+                [['parent'], 'integer'],
+                [
+                    ['parent'], 'exist',
+                    'targetAttribute' => 'id',
+                    'filter'          => function ($q) /* @var $q \yii\db\ActiveQuery */ {
+                        return $q->where(['OR', ['IS', 'parent', null], ['=', 'parent', '']]);
+                    },
+                ],
+
                 [['url'], WhiteSpaceNormalizerValidator::className()],
                 [['url'], 'required'],
                 [['url'], 'string', 'max' => 64],
@@ -118,12 +129,21 @@
                 [['title'], 'string', 'max' => 32],
 
                 [['order'], 'integer'],
-                [['order'], ReorderValidator::className(), 'extraFields' => ['position']],
+                [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent']],
                 [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],
             ]);
+        }
+
+        /**
+         * Top menu elements only
+         * @return array|\yii\db\ActiveRecord[]
+         */
+        public static function roots()
+        {
+            return self::find()->where(['OR', ['parent' => null], ['parent' => '']])->orderBy(['title' => SORT_ASC])->indexBy('id')->all();
         }
 
         /**

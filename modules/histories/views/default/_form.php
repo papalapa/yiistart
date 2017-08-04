@@ -18,19 +18,30 @@
 
     <?= $form->field($model, 'date')->widget(DateTimePicker::className())->hint('Примечание: не может быть двух одинаковых дат') ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <? foreach (i18n::locales() as $locale): ?>
-        <? if (Yii::$app->language <> $locale): ?>
-            <?= $form->field($model, sprintf('title_%s', $locale))->textInput(['maxlength' => true]) ?>
-        <? endif; ?>
-    <? endforeach; ?>
+    <ul class="nav nav-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
+        <? foreach (i18n::locales() as $locale): ?>
+            <li class="<?= Yii::$app->language == $locale ? 'active' : null ?>">
+                <a href="#lang-<?= $locale ?>" data-toggle="tab"><?= $locale ?></a>
+            </li>
+        <? endforeach; ?>
+    </ul>
+    <br />
+    <div class="tab-content">
+        <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'text')->widget(CKEditor::className()) ?>
+        </div>
+        <? foreach (i18n::locales() as $locale): ?>
+            <? if (Yii::$app->language <> $locale): ?>
+                <div class="tab-pane" id="lang-<?= $locale ?>">
+                    <?= $form->field($model, sprintf('title_%s', $locale))->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, sprintf('text_%s', $locale))->widget(CKEditor::className()) ?>
+                </div>
+            <? endif; ?>
+        <? endforeach; ?>
+    </div>
 
-    <?= $form->field($model, 'text')->widget(CKEditor::className()) ?>
-    <? foreach (i18n::locales() as $locale): ?>
-        <? if (Yii::$app->language <> $locale): ?>
-            <?= $form->field($model, sprintf('text_%s', $locale))->widget(CKEditor::className()) ?>
-        <? endif; ?>
-    <? endforeach; ?>
+    <br />
 
     <?= $form->field($model, 'image')->widget(ElfinderImageInput::className()) ?>
 

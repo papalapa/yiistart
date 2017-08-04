@@ -17,23 +17,30 @@
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?
-        echo $form->field($model, 'title')->textInput(['maxlength' => true]);
-        foreach (i18n::locales() as $locale) {
-            if (Yii::$app->language <> $locale) {
-                echo $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]);
-            }
-        }
-    ?>
+    <ul class="nav nav-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
+        <? foreach (i18n::locales() as $locale): ?>
+            <li class="<?= Yii::$app->language == $locale ? 'active' : null ?>">
+                <a href="#lang-<?= $locale ?>" data-toggle="tab"><?= $locale ?></a>
+            </li>
+        <? endforeach; ?>
+    </ul>
+    <br />
+    <div class="tab-content">
+        <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
+        </div>
+        <? foreach (i18n::locales() as $locale): ?>
+            <? if (Yii::$app->language <> $locale): ?>
+                <div class="tab-pane" id="lang-<?= $locale ?>">
+                    <?= $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'alt_'.$locale)->textInput(['maxlength' => true]) ?>
+                </div>
+            <? endif; ?>
+        <? endforeach; ?>
+    </div>
 
-    <?
-        echo $form->field($model, 'alt')->textInput(['maxlength' => true]);
-        foreach (i18n::locales() as $locale) {
-            if (Yii::$app->language <> $locale) {
-                echo $form->field($model, 'alt_'.$locale)->textInput(['maxlength' => true]);
-            }
-        }
-    ?>
+    <br />
 
     <?= $form->field($model, 'image')->widget(ElfinderImageInput::className(), ['filter' => ['image', 'application/pdf']]) ?>
 

@@ -84,6 +84,6 @@
             $html[] = $locale ? ' '.$locale : null;
             $html[] = Html::endTag('span');
 
-            return implode(null, $html);
+            return implode(' ', $html);
         }
     }

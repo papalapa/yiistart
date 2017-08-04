@@ -19,10 +19,11 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{menu}}', [
                 'id'         => $this->primaryKey(),
+                'parent'     => $this->integer()->unsigned(),
                 'position'   => $this->string(32)->defaultValue(Menu::POSITION_MAIN),
                 'url'        => $this->string(64)->notNull(),
                 'title'      => $this->string(64)->notNull(),
-                'order'      => $this->smallInteger()->unsigned()->notNull()->unique(),
+                'order'      => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(0),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),

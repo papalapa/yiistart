@@ -2,6 +2,7 @@
 
     use kartik\select2\Select2;
     use papalapa\yiistart\modules\banners\models\BannersCategory;
+    use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use papalapa\yiistart\widgets\ElfinderImageInput;
@@ -34,9 +35,30 @@
         ]);
     ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <ul class="nav nav-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
+        <? foreach (i18n::locales() as $locale): ?>
+            <li class="<?= Yii::$app->language == $locale ? 'active' : null ?>">
+                <a href="#lang-<?= $locale ?>" data-toggle="tab"><?= $locale ?></a>
+            </li>
+        <? endforeach; ?>
+    </ul>
+    <br />
+    <div class="tab-content">
+        <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
+        </div>
+        <? foreach (i18n::locales() as $locale): ?>
+            <? if (Yii::$app->language <> $locale): ?>
+                <div class="tab-pane" id="lang-<?= $locale ?>">
+                    <?= $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]) ?>
+
+                    <?= $form->field($model, 'text_'.$locale)->textInput(['maxlength' => true]) ?>
+                </div>
+            <? endif; ?>
+        <? endforeach; ?>
+    </div>
 
     <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
 

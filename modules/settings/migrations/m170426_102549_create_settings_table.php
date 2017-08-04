@@ -21,7 +21,7 @@
                 'id'           => $this->primaryKey(),
                 'title'        => $this->string(64)->defaultValue(null),
                 'key'          => $this->string(64)->notNull()->unique(),
-                'type'         => $this->smallInteger()->unsigned()->defaultValue(Settings::TYPE_TEXT),
+                'type'         => $this->smallInteger()->unsigned()->defaultValue(Settings::TYPE_STRING),
                 'pattern'      => $this->text()->defaultValue(null),
                 'multilingual' => $this->boolean()->unsigned()->defaultValue(false),
                 'value'        => $this->text()->defaultValue(null),
