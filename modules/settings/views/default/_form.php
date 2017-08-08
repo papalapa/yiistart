@@ -114,6 +114,7 @@
     <?
         if (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) {
             echo $form->field($model, 'multilingual')->checkbox();
+            echo $form->field($model, 'is_visible')->checkbox();
         }
     ?>
 

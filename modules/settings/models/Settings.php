@@ -23,7 +23,8 @@
      * @property boolean               $multilingual
      * @property string                $value
      * @property string                $comment
-     * @property integer               $is_active
+     * @property boolean               $is_active
+     * @property boolean               $is_visible
      * @property integer               $created_by
      * @property integer               $updated_by
      * @property string                $created_at
@@ -66,6 +67,7 @@
                 'multilingual' => 'Мультиязычный',
                 'comment'      => 'Комментарий',
                 'is_active'    => 'Активность',
+                'is_visible'   => 'Видимость в списке',
                 'created_by'   => 'Кем создано',
                 'updated_by'   => 'Кем изменено',
                 'created_at'   => 'Дата создания',
@@ -101,7 +103,7 @@
         {
             return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['value', 'is_active'],
-                self::SCENARIO_DEVELOPER => ['title', 'key', 'pattern', 'type', 'multilingual', 'value', 'comment', 'is_active'],
+                self::SCENARIO_DEVELOPER => ['title', 'key', 'pattern', 'type', 'multilingual', 'value', 'comment', 'is_active', 'is_visible'],
             ]);
         }
 
@@ -123,7 +125,6 @@
                 [['key'], 'unique'],
 
                 [['value'], WhiteSpaceNormalizerValidator::className()],
-                [['value'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
                 [['value'], 'string'],
 
                 /* ========================================================================================================== */
@@ -261,8 +262,11 @@
                 ],
 
                 [['is_active'], 'boolean'],
-                [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],
-                [['is_active'], 'default', 'value' => 1, 'on' => [self::SCENARIO_DEVELOPER]],
+                [['is_active'], 'default', 'value' => false, 'on' => [self::SCENARIO_DEFAULT]],
+                [['is_active'], 'default', 'value' => true, 'on' => [self::SCENARIO_DEVELOPER]],
+
+                [['is_visible'], 'boolean'],
+                [['is_visible'], 'default', 'value' => true],
 
                 [['multilingual'], 'boolean'],
                 [['multilingual'], 'default', 'value' => 0],

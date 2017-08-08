@@ -10,8 +10,8 @@
 
     /**
      * Class TrackingBehavior
-     * TODO: need to refactor
-     * @property ActiveRecord $owner
+     * @property string $model_name
+     * @property string $model_pk
      * @package papalapa\yiistart\behaviors
      */
     class TrackingBehavior extends Behavior
@@ -19,6 +19,10 @@
         const EVENT_TOUCH = 'eventTouch';
         const EVENT_TRACK = 'eventTrack';
         const EVENT_VIEW  = 'eventView';
+        /**
+         * @var ActiveRecord
+         */
+        public $owner;
         /**
          * @var string
          */
@@ -34,11 +38,11 @@
         public function init()
         {
             if (!is_string($this->viewCountAttribute) || $this->viewCountAttribute === '') {
-                throw new InvalidConfigException('Property "viewCountAttribute" must be a string in behavior ' . __CLASS__);
+                throw new InvalidConfigException('Property "viewCountAttribute" must be a string in behavior '.__CLASS__);
             }
 
             if (!is_string($this->viewedAtAttribute) || $this->viewedAtAttribute === '') {
-                throw new InvalidConfigException('Property "viewedAtAttribute" must be a string in behavior ' . __CLASS__);
+                throw new InvalidConfigException('Property "viewedAtAttribute" must be a string in behavior '.__CLASS__);
             }
 
             parent::init();
@@ -79,11 +83,11 @@
         {
             $view_count = $this->owner->getAttribute($this->viewCountAttribute);
             $result     = $this->owner->updateAttributes([
-                $this->viewCountAttribute => new Expression("[[{$this->viewCountAttribute}]] + 1"),
+                $this->viewCountAttribute => ++$view_count,
                 $this->viewedAtAttribute  => new Expression('NOW()'),
             ]);
             if ($result) {
-                $this->owner->setAttribute($this->viewCountAttribute, ++$view_count);
+                $this->owner->setAttribute($this->viewCountAttribute, $view_count);
             }
         }
 
@@ -95,12 +99,12 @@
         {
             $this->touchEvent();
 
-            $modelName = Inflector::camel2id((new \ReflectionClass($this->owner->className()))->getShortName());
-            $modelId   = $this->owner->getAttribute('id');
+            $name = Inflector::camel2id((new \ReflectionClass($this->owner->className()))->getShortName());
+            $pk   = $this->owner->getPrimaryKey();
 
             \Yii::$app->db->createCommand()->insert(self::tableName(), [
-                'model_name' => $modelName,
-                'model_id'   => $modelId,
+                'model_name' => $name,
+                'model_pk'   => $pk,
             ])->execute();
         }
     }

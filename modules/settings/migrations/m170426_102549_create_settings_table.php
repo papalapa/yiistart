@@ -27,6 +27,7 @@
                 'value'        => $this->text()->defaultValue(null),
                 'comment'      => $this->string(1024)->defaultValue(null),
                 'is_active'    => $this->boolean()->unsigned()->notNull()->defaultValue(false),
+                'is_visible'   => $this->boolean()->unsigned()->notNull()->defaultValue(true),
                 'created_by'   => $this->integer()->unsigned()->notNull(),
                 'updated_by'   => $this->integer()->unsigned()->notNull(),
                 'created_at'   => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),

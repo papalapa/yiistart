@@ -2,6 +2,7 @@
 
     namespace papalapa\yiistart\modules\settings\models;
 
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use yii\base\Model;
     use yii\data\ActiveDataProvider;
 
@@ -71,6 +72,10 @@
 
             $query->andFilterWhere(['>=', 'created_at', $this->created_at]);
             $query->andFilterWhere(['>=', 'updated_at', $this->updated_at]);
+
+            if (\Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) {
+                $query->andWhere(['is_visible' => true]);
+            }
 
             return $dataProvider;
         }
