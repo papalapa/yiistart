@@ -1,5 +1,6 @@
 <?php
 
+    use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
@@ -69,6 +70,7 @@
                     'attribute' => 'multilingual',
                     'class'     => GridExistColumn::className(),
                     'filter'    => [0 => 'нет', 1 => 'да'],
+                    'visible'   => count(i18n::locales()) > 1,
                 ],
                 /*[
                     'class'     => GridUserEmailColumn::className(),
