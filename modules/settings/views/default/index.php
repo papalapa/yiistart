@@ -3,10 +3,9 @@
     use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
-    use papalapa\yiistart\widgets\GridDateColumn;
+    use papalapa\yiistart\widgets\GridExistColumn;
     use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
-    use papalapa\yiistart\widgets\GridUserEmailColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
@@ -65,6 +64,11 @@
                     'attribute'  => 'is_active',
                     'labelTitle' => 'Активность',
                     'labelIco'   => 'fa fa-eye',
+                ],
+                [
+                    'attribute' => 'multilingual',
+                    'class'     => GridExistColumn::className(),
+                    'filter'    => [0 => 'нет', 1 => 'да'],
                 ],
                 /*[
                     'class'     => GridUserEmailColumn::className(),

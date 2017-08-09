@@ -30,6 +30,7 @@
                 [['id', 'type'], 'integer'],
                 [['type'], 'in', 'range' => array_keys(Settings::types())],
                 [['is_active'], 'boolean'],
+                [['multilingual'], 'boolean'],
                 [['title'], 'string'],
                 [['key', 'value'], 'safe'],
                 [['created_at', 'updated_at'], 'date', 'format' => 'yyyy-mm-dd'],
@@ -62,9 +63,10 @@
 
             // grid filtering conditions
             $query->andFilterWhere([
-                'id'        => $this->id,
-                'type'      => $this->type,
-                'is_active' => $this->is_active,
+                'id'           => $this->id,
+                'type'         => $this->type,
+                'is_active'    => $this->is_active,
+                'multilingual' => $this->multilingual,
             ]);
 
             $query->andFilterWhere(['like', 'title', $this->title])
