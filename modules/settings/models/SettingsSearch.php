@@ -49,6 +49,7 @@
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
+                'sort'  => ['defaultOrder' => ['key' => SORT_ASC]],
             ]);
 
             $this->load($params);
