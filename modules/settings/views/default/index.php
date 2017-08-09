@@ -2,6 +2,7 @@
 
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\settings\models\Settings;
+    use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridExistColumn;
@@ -47,7 +48,10 @@
             'columns'      => [
                 // ['class' => 'yii\grid\SerialColumn'],
                 // 'id',
-                'key',
+                [
+                    'attribute' => 'key',
+                    'visible'   => Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER,
+                ],
                 'title',
                 [
                     'attribute' => 'value',
