@@ -5,6 +5,7 @@
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridExistColumn;
     use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
@@ -86,7 +87,13 @@
                     'attribute'  => 'multilingual',
                     'labelTitle' => 'Мультиязычность',
                     'labelIco'   => 'fa fa-language',
-                    'visible'    => Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER && count(i18n::locales()) > 1,
+                    'visible'    => (Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER) && (count(i18n::locales()) > 1),
+                ],
+                [
+                    'class'     => GridExistColumn::className(),
+                    'attribute' => 'multilingual',
+                    'filter'    => [0 => 'нет', 1 => 'да'],
+                    'visible'   => (Yii::$app->user->identity->role <> BaseUser::ROLE_DEVELOPER) && (count(i18n::locales()) > 1),
                 ],
                 /*[
                     'class'     => GridUserEmailColumn::className(),
