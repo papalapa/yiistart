@@ -43,11 +43,13 @@
          * @var array
          */
         protected $scenarios = [
-            'create' => Model::SCENARIO_DEFAULT,
-            'view'   => Model::SCENARIO_DEFAULT,
-            'update' => Model::SCENARIO_DEFAULT,
-            'index'  => Model::SCENARIO_DEFAULT,
-            'delete' => Model::SCENARIO_DEFAULT,
+            'create'  => Model::SCENARIO_DEFAULT,
+            'view'    => Model::SCENARIO_DEFAULT,
+            'update'  => Model::SCENARIO_DEFAULT,
+            'index'   => Model::SCENARIO_DEFAULT,
+            'delete'  => Model::SCENARIO_DEFAULT,
+            'toggle'  => Model::SCENARIO_DEFAULT,
+            'reorder' => Model::SCENARIO_DEFAULT,
         ];
 
         /**
@@ -228,6 +230,8 @@
                 return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут не найден!']);
             }
 
+            $model->scenario = $this->scenarios['toggle'];
+
             if (!$model->isAttributeSafe($attribute)) {
                 return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Заданный атрибут не доступен для изменения!']);
             }
@@ -239,7 +243,7 @@
                     $model->setAttribute($attribute, !$model->getAttribute($attribute));
                 }
             } else {
-                $model->setAttribute($attribute, (bool)$value);
+                $model->setAttribute($attribute, (bool) $value);
             }
 
             if (!$model->save()) {
@@ -287,6 +291,8 @@
             if (!$model->hasAttribute($attribute)) {
                 return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Атрибут не найден!']);
             }
+
+            $model->scenario = $this->scenarios['reorder'];
 
             if (!$model->isAttributeSafe($attribute)) {
                 return Html::tag('i', null, ['class' => 'fa fa-ban text-danger', 'title' => 'Заданный атрибут не доступен для изменения!']);

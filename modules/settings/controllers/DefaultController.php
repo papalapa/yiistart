@@ -38,6 +38,7 @@
                     $this->scenarios = array_replace($this->scenarios, [
                         'create' => Settings::SCENARIO_DEVELOPER,
                         'update' => Settings::SCENARIO_DEVELOPER,
+                        'toggle' => Settings::SCENARIO_DEVELOPER,
                     ]);
                 }
 

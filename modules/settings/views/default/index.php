@@ -5,7 +5,6 @@
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
-    use papalapa\yiistart\widgets\GridExistColumn;
     use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
@@ -52,7 +51,12 @@
                     'attribute' => 'key',
                     'visible'   => Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER,
                 ],
-                'title',
+                [
+                    'attribute' => 'title',
+                    'content'   => function ($model) /* @var $model Settings */ {
+                        return $model->title ? : Html::tag('i', $model->key, ['class' => 'text-danger']);
+                    },
+                ],
                 [
                     'attribute' => 'value',
                     'class'     => GridTextColumn::className(),
@@ -71,10 +75,18 @@
                     'labelIco'   => 'fa fa-eye',
                 ],
                 [
-                    'attribute' => 'multilingual',
-                    'class'     => GridExistColumn::className(),
-                    'filter'    => [0 => 'нет', 1 => 'да'],
-                    'visible'   => count(i18n::locales()) > 1,
+                    'class'      => GridToggleColumn::className(),
+                    'attribute'  => 'is_visible',
+                    'labelTitle' => 'Видимость',
+                    'labelIco'   => 'fa fa-check-square',
+                    'visible'    => Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER,
+                ],
+                [
+                    'class'      => GridToggleColumn::className(),
+                    'attribute'  => 'multilingual',
+                    'labelTitle' => 'Мультиязычность',
+                    'labelIco'   => 'fa fa-language',
+                    'visible'    => Yii::$app->user->identity->role == BaseUser::ROLE_DEVELOPER && count(i18n::locales()) > 1,
                 ],
                 /*[
                     'class'     => GridUserEmailColumn::className(),
