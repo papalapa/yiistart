@@ -3,6 +3,7 @@
     use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
+    use papalapa\yiistart\widgets\GridExistColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
@@ -78,6 +79,12 @@
                     'content'   => function ($model, $key, $index, $column) use ($siteUrlManager) {
                         return Html::a($model->url, $siteUrlManager->createUrl([$model->url]), ['target' => '_blank']);
                     },
+                ],
+                [
+                    'class'       => GridExistColumn::className(),
+                    'attribute'   => 'is_static',
+                    'label'       => Html::tag('i', null, ['class' => 'fa fa-external-link', 'title' => 'Статичная ссылка', 'data-toggle' => 'tooltip']),
+                    'encodeLabel' => false,
                 ],
                 [
                     'class'      => GridToggleColumn::className(),

@@ -30,7 +30,8 @@
     ?>
 
     <?
-        $roots = Menu::find()->select(['id', 'title'])->where(['OR', ['parent' => null], ['parent' => '']])->orderBy(['title' => SORT_ASC])->all();
+        $roots = Menu::find()->select(['id', 'title'])->where(['OR', ['parent' => null], ['parent' => '']])->andFilterWhere(['<>', 'id', $model->id])
+                     ->orderBy(['title' => SORT_ASC])->all();
         echo $form->field($model, 'parent')->widget(Select2::className(), [
             'data'          => ArrayHelper::map($roots, 'id', 'title'),
             'options'       => [
@@ -58,15 +59,18 @@
         }
 
         echo $form->field($model, 'url')->widget(Select2::className(), [
-            'data'          => $urls,
+            'data'          => ArrayHelper::merge([$model->url => $model->url], $urls),
             'options'       => [
-                'placeholder' => 'Выберите расположение',
+                'placeholder' => 'Выберите страницу',
             ],
             'pluginOptions' => [
+                'tags'       => true,
                 'allowClear' => true,
             ],
-        ]);
+        ])->hint('Для указания статичной ссылки отметьте соответствующую опцию:');
     ?>
+
+    <?= $form->field($model, 'is_static')->checkbox() ?>
 
     <?php
         echo $form->field($model, 'title')->textInput(['maxlength' => true]);

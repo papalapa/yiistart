@@ -20,6 +20,7 @@
      * @property string            $url
      * @property string            $title
      * @property integer           $order
+     * @property boolean           $is_static
      * @property boolean           $is_active
      * @property integer           $created_by
      * @property integer           $updated_by
@@ -56,6 +57,7 @@
                 'url'        => 'Ссылка',
                 'title'      => 'Название',
                 'order'      => 'Порядковый номер',
+                'is_static'  => 'Статичная ссылка',
                 'is_active'  => 'Активность',
                 'created_by' => 'Кем создано',
                 'updated_by' => 'Кем изменено',
@@ -96,7 +98,8 @@
                     ['parent'], 'exist',
                     'targetAttribute' => 'id',
                     'filter'          => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                        return $q->where(['OR', ['IS', 'parent', null], ['=', 'parent', '']]);
+                        return $q->where(['OR', ['IS', 'parent', null], ['=', 'parent', '']])
+                                 ->andFilterWhere(['<>', 'id', $this->id]);
                     },
                 ],
 
@@ -104,9 +107,8 @@
                 [['url'], 'required'],
                 [['url'], 'string', 'max' => 64],
                 [
-                    ['url'],
-                    'in',
-                    'range' => function () {
+                    ['url'], 'in',
+                    'range'                  => function () {
                         $siteUrlManager          = clone (\Yii::$app->urlManager);
                         $siteUrlManager->baseUrl = '/';
                         $urls                    = array_map(function ($element) use ($siteUrlManager) /* @var $element Pages */ {
@@ -115,8 +117,9 @@
 
                         return $urls;
                     },
-                    'when'  => function () {
-                        return Pages::find()->count();
+                    'enableClientValidation' => false,
+                    'when'                   => function ($model) /* @var $model self */ {
+                        return !$model->is_static && Pages::find()->count();
                     },
                 ],
 
@@ -134,6 +137,9 @@
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],
+
+                [['is_static'], 'boolean'],
+                [['is_static'], 'default', 'value' => false],
             ]);
         }
 

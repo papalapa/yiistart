@@ -120,6 +120,7 @@
                 [['url'], WhiteSpaceNormalizerValidator::className()],
                 [['url'], 'string', 'max' => 64],
                 [['url'], 'match', 'pattern' => '/^(\/[a-z]+(\-[a-z]+)*)+$/'],
+                [['url'], 'unique'],
                 [['url'], 'default', 'value' => null],
 
                 [['has_context'], 'boolean'],
@@ -169,7 +170,11 @@
         {
             $siteUrlManager          = clone (\Yii::$app->urlManager);
             $siteUrlManager->baseUrl = '/';
-            Menu::deleteAll(['url' => $siteUrlManager->createUrl(['/site/page', 'id' => $this->id])]);
+            Menu::deleteAll([
+                'url' => $this->url
+                    ? $siteUrlManager->createUrl($this->url)
+                    : $siteUrlManager->createUrl(['/site/page', 'id' => $this->id]),
+            ]);
 
             parent::afterDelete();
         }

@@ -65,6 +65,12 @@
                 'value'     => Html::a($model->url, $siteUrlManager->createUrl([$model->url]), ['target' => '_blank']),
             ],
             [
+                'attribute' => 'is_static',
+                'value'     => Html::tag('i', null,
+                    ['class' => $model->is_static ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger']),
+                'format'    => 'html',
+            ],
+            [
                 'attribute' => 'is_active',
                 'value'     => Html::tag('i', null,
                     ['class' => $model->is_active ? 'fa fa-check text-success' : 'fa fa-times-circle text-danger']),
