@@ -2,10 +2,11 @@
 
     namespace papalapa\yiistart\behaviors;
 
+    use papalapa\yiistart\models\MultilingualActiveRecord;
+    use papalapa\yiistart\models\Tracking;
     use yii\base\Behavior;
     use yii\base\InvalidConfigException;
     use yii\db\ActiveRecord;
-    use yii\db\Expression;
     use yii\helpers\Inflector;
 
     /**
@@ -16,11 +17,22 @@
      */
     class TrackingBehavior extends Behavior
     {
-        const EVENT_TOUCH = 'eventTouch';
-        const EVENT_TRACK = 'eventTrack';
-        const EVENT_VIEW  = 'eventView';
         /**
-         * @var ActiveRecord
+         * Event for update `$viewCountAttribute` attribute only
+         */
+        const EVENT_VIEW = 'eventView';
+        /**
+         * Event for update `$viewCountAttribute` attribute and touch `$viewedAtAttribute` attribute
+         */
+        const EVENT_TOUCH = 'eventTouch';
+        /**
+         * Event for update `$viewCountAttribute`, `$viewedAtAttribute`
+         * and make new record to log in tracking table
+         * @see /app/vendor/papalapa/yiistart/models/Tracking.php
+         */
+        const EVENT_TRACK = 'eventTrack';
+        /**
+         * @var ActiveRecord|MultilingualActiveRecord
          */
         public $owner;
         /**
@@ -49,14 +61,6 @@
         }
 
         /**
-         * @return string
-         */
-        public static function tableName()
-        {
-            return '{{tracking}}';
-        }
-
-        /**
          * @return array
          */
         public function events()
@@ -69,7 +73,7 @@
         }
 
         /**
-         * Update "view_count" only
+         * Update `$viewCountAttribute`
          */
         public function viewEvent()
         {
@@ -77,34 +81,27 @@
         }
 
         /**
-         * Update "view_count" and touch "viewed_at" attribute
+         * Update `$viewCountAttribute` and touch `$viewedAtAttribute` attribute
          */
         public function touchEvent()
         {
-            $view_count = $this->owner->getAttribute($this->viewCountAttribute);
-            $result     = $this->owner->updateAttributes([
-                $this->viewCountAttribute => ++$view_count,
-                $this->viewedAtAttribute  => new Expression('NOW()'),
+            $this->owner->updateAttributes([
+                $this->viewCountAttribute => $this->owner->getAttribute($this->viewCountAttribute) + 1,
+                $this->viewedAtAttribute  => date('Y-m-d H:i:s'),
             ]);
-            if ($result) {
-                $this->owner->setAttribute($this->viewCountAttribute, $view_count);
-            }
         }
 
         /**
-         * Update "view_count", touch "viewed_at" attribute and track model
+         * Update `$viewCountAttribute`, touch `$viewedAtAttribute` attribute and track model
          * @throws \yii\db\Exception
          */
         public function trackEvent()
         {
             $this->touchEvent();
 
-            $name = Inflector::camel2id((new \ReflectionClass($this->owner->className()))->getShortName());
-            $pk   = $this->owner->getPrimaryKey();
-
-            \Yii::$app->db->createCommand()->insert(self::tableName(), [
-                'model_name' => $name,
-                'model_pk'   => $pk,
-            ])->execute();
+            $track             = new Tracking();
+            $track->model_name = Inflector::camel2id((new \ReflectionClass($this->owner->className()))->getShortName());
+            $track->model_pk   = $this->owner->getPrimaryKey();
+            $track->save();
         }
     }
