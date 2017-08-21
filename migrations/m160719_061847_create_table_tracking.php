@@ -23,12 +23,12 @@
             $this->addPrimaryKey('entity', '{{tracking}}', ['[[model_name]]', '[[model_pk]]', '[[time_at]]']);
             $this->createIndex('entities_in_date', '{{tracking}}', ['[[model_name]]', '[[model_pk]]', '[[date_at]]']);
 
-            $this->db->createCommand("
+            /*$this->db->createCommand("
                 CREATE TRIGGER [[insert_into_tracking]] BEFORE INSERT ON {{tracking}} FOR EACH ROW
                 BEGIN
                     SET NEW.[[time_at]] = NOW(), NEW.[[date_at]] = CURRENT_DATE();
                 END
-            ")->execute();
+            ")->execute();*/
         }
 
         public function down()
