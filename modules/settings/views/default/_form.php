@@ -38,7 +38,7 @@
                 echo $form->field($model, 'value')->checkbox();
                 break;
             case Settings::TYPE_TEXT:
-                echo $form->field($model, 'value')->textarea(['maxlength' => true, 'rows' => 3]);
+                echo $form->field($model, 'value')->textarea(['rows' => 3]);
                 break;
             case Settings::TYPE_IMAGE:
                 echo $form->field($model, 'value')->widget(ElfinderImageInput::className());
@@ -56,7 +56,7 @@
                 ]);
                 break;
             default:
-                echo $form->field($model, 'value')->textInput(['maxlength' => true]);
+                echo $form->field($model, 'value')->textInput();
                 break;
         }
         if ($model->multilingual) {
@@ -67,7 +67,7 @@
                             echo $form->field($model, 'value_'.$locale)->checkbox();
                             break;
                         case Settings::TYPE_TEXT:
-                            echo $form->field($model, 'value_'.$locale)->textarea(['maxlength' => true, 'rows' => 3]);
+                            echo $form->field($model, 'value_'.$locale)->textarea(['rows' => 3]);
                             break;
                         case Settings::TYPE_IMAGE:
                             echo $form->field($model, 'value_'.$locale)->widget(ElfinderImageInput::className());
@@ -85,7 +85,7 @@
                             ]);
                             break;
                         default:
-                            echo $form->field($model, 'value_'.$locale)->textInput(['maxlength' => true]);
+                            echo $form->field($model, 'value_'.$locale)->textInput();
                             break;
                     }
                 }

@@ -232,7 +232,6 @@
                     'when'                   => function ($model) {
                         return $model->type == self::TYPE_IMAGE;
                     },
-                    'max'                    => 128,
                     'enableClientValidation' => false,
                 ],
                 [
