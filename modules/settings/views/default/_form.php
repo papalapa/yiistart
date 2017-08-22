@@ -1,5 +1,6 @@
 <?php
 
+    use kartik\color\ColorInput;
     use kolyunya\yii2\widgets\MapInputWidget;
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\settings\models\Settings;
@@ -43,8 +44,18 @@
             case Settings::TYPE_IMAGE:
                 echo $form->field($model, 'value')->widget(ElfinderImageInput::className());
                 break;
+            case Settings::TYPE_FILE:
+                echo $form->field($model, 'value')->widget(ElfinderImageInput::className(), ['filter' => ['application', 'image']]);
+                break;
             case Settings::TYPE_HTML:
                 echo $form->field($model, 'value')->widget(CKEditor::className());
+                break;
+            case Settings::TYPE_COLOR:
+                echo $form->field($model, 'value')->widget(ColorInput::className(), [
+                    'pluginOptions' => [
+                        'preferredFormat' => 'rgb',
+                    ],
+                ]);
                 break;
             case Settings::TYPE_MAP:
                 echo $form->field($model, 'value')->widget(MapInputWidget::className(), [
@@ -72,8 +83,19 @@
                         case Settings::TYPE_IMAGE:
                             echo $form->field($model, 'value_'.$locale)->widget(ElfinderImageInput::className());
                             break;
+                        case Settings::TYPE_FILE:
+                            echo $form->field($model, 'value_'.$locale)
+                                      ->widget(ElfinderImageInput::className(), ['filter' => ['application', 'image']]);
+                            break;
                         case Settings::TYPE_HTML:
                             echo $form->field($model, 'value_'.$locale)->widget(CKEditor::className());
+                            break;
+                        case Settings::TYPE_COLOR:
+                            echo $form->field($model, 'value_'.$locale)->widget(ColorInput::className(), [
+                                'pluginOptions' => [
+                                    'preferredFormat' => 'rgb',
+                                ],
+                            ]);
                             break;
                         case Settings::TYPE_MAP:
                             echo $form->field($model, 'value_'.$locale)->widget(MapInputWidget::className(), [

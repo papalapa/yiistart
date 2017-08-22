@@ -43,6 +43,8 @@
         const TYPE_BOOLEAN       = 50;
         const TYPE_IMAGE         = 60;
         const TYPE_URL           = 70;
+        const TYPE_FILE          = 80;
+        const TYPE_COLOR         = 90;
 
         /**
          * @inheritdoc
@@ -242,6 +244,23 @@
                 ],
 
                 /* ========================================================================================================== */
+                /* File validation rules */
+                /* ========================================================================================================== */
+                [
+                    ['value'], 'string',
+                    'when'                   => function ($model) {
+                        return $model->type == self::TYPE_FILE;
+                    },
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['value'], FilePathValidator::className(),
+                    'when' => function ($model) {
+                        return $model->type == self::TYPE_FILE;
+                    },
+                ],
+
+                /* ========================================================================================================== */
                 /* Pattern matching validation rule */
                 /* ========================================================================================================== */
                 [
@@ -335,6 +354,8 @@
                 self::TYPE_BOOLEAN => 'Переключатель',
                 self::TYPE_IMAGE   => 'Изображение',
                 self::TYPE_URL     => 'URL ссылка',
+                self::TYPE_FILE    => 'Файл',
+                self::TYPE_COLOR   => 'Цвет',
             ];
         }
 
