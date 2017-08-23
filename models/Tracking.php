@@ -69,7 +69,8 @@
         {
             return [
                 [['model_name', 'model_pk'], 'required'],
-                [['model_name', 'model_pk'], 'string', 'max' => 64],
+                [['model_name'], 'string', 'max' => 64],
+                [['model_pk'], 'integer', 'min' => 0],
             ];
         }
     }

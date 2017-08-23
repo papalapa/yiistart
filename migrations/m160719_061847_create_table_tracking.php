@@ -14,15 +14,15 @@
         {
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=MyISAM';
             $this->createTable('{{tracking}}', [
+                'id'         => $this->primaryKey(),
                 'model_name' => $this->string(64),
-                'model_pk'   => $this->string(64),
+                'model_pk'   => $this->integer()->unsigned(),
                 'time_at'    => $this->timestamp(),
                 'date_at'    => $this->date(),
             ], $tableOptions);
 
-            $this->addPrimaryKey('entity', '{{tracking}}', ['[[model_name]]', '[[model_pk]]', '[[time_at]]']);
+            $this->alterColumn('{{tracking}}', '[[id]]', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
             $this->createIndex('entities_in_date', '{{tracking}}', ['[[model_name]]', '[[model_pk]]', '[[date_at]]']);
-
             /*$this->db->createCommand("
                 CREATE TRIGGER [[insert_into_tracking]] BEFORE INSERT ON {{tracking}} FOR EACH ROW
                 BEGIN
@@ -33,9 +33,9 @@
 
         public function down()
         {
-            $this->db->createCommand("
-                DROP TRIGGER IF EXISTS {{tracking}}.[[insert_into_tracking]];
-            ")->execute();
+            //$this->db->createCommand("
+            //    DROP TRIGGER IF EXISTS {{tracking}}.[[insert_into_tracking]];
+            //")->execute();
             $this->dropTable('{{tracking}}');
         }
     }
