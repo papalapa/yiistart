@@ -67,9 +67,12 @@
         foreach (i18n::locales() as $locale) {
             $columns[] = [
                 'attribute' => 'message_'.$locale,
+                'class'     => GridTextColumn::className(),
+                'minWidth'  => 100,
+                'maxWidth'  => 200,
                 'label'     => mb_strtoupper($locale),
                 'content'   => function ($model) /* @var $model SourceMessage */ use ($locale) {
-                    return $model->messages[$locale]->translation;
+                    return isset($model->messages[$locale]) ? $model->messages[$locale]->translation : null;
                 },
             ];
         }

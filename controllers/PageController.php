@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\controllers;
 
     use papalapa\yiistart\modules\pages\models\Pages;
+    use yii\helpers\Html;
     use yii\web\Controller;
     use yii\web\NotFoundHttpException;
 
@@ -49,9 +50,9 @@
                 }
             }
 
-            $this->view->title = $model->title;
-            $this->view->registerMetaTag(['name' => 'description', 'content' => $model->description]);
-            $this->view->registerMetaTag(['name' => 'keywords', 'content' => $model->keywords]);
+            $this->view->title = Html::encode($model->title);
+            $this->view->registerMetaTag(['name' => 'description', 'content' => Html::encode($model->description)]);
+            $this->view->registerMetaTag(['name' => 'keywords', 'content' => Html::encode($model->keywords)]);
 
             return $model;
         }
