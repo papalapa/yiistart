@@ -149,7 +149,8 @@
          */
         public static function roots()
         {
-            return self::find()->where(['OR', ['parent' => null], ['parent' => '']])->orderBy(['title' => SORT_ASC])->indexBy('id')->all();
+            return self::find()->where(['OR', ['parent' => null], ['parent' => '']])
+                       ->orderBy(['position' => SORT_ASC, 'title' => SORT_ASC])->indexBy('id')->all();
         }
 
         /**

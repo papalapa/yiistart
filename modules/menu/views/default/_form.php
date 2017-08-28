@@ -33,7 +33,11 @@
         $roots = Menu::find()->select(['id', 'title'])->where(['OR', ['parent' => null], ['parent' => '']])->andFilterWhere(['<>', 'id', $model->id])
                      ->orderBy(['title' => SORT_ASC])->all();
         echo $form->field($model, 'parent')->widget(Select2::className(), [
-            'data'          => ArrayHelper::map($roots, 'id', 'title'),
+            'data'          => ArrayHelper::map(array_map(function ($element) {
+                $element->title = ArrayHelper::getValue(Menu::positions(), $element->position).' / '.$element->title;
+
+                return $element;
+            }, $roots), 'id', 'title'),
             'options'       => [
                 'placeholder' => 'Выберите вложенность',
             ],
