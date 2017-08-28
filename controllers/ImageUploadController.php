@@ -85,6 +85,8 @@
         {
             $data = [];
 
+            $token = Settings::valueOf('security.hash.token');
+
             if (\Yii::$app->request->isPost) {
                 $uploadForm        = new ImageUploadForm();
                 $uploadForm->image = UploadedFile::getInstanceByName('image');
@@ -109,7 +111,7 @@
                                 'url'       => Url::to([
                                     '/image-upload/delete',
                                     'path'  => $uploadForm->path,
-                                    'token' => \Yii::$app->security->encryptByKey($uploadForm->path, Settings::valueOf('security.hash.token')),
+                                    'token' => \Yii::$app->security->encryptByKey($uploadForm->path, $token),
                                 ]),
                             ],
                         ],
