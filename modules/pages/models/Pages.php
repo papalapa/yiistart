@@ -125,7 +125,7 @@
 
                 [['has_context'], 'boolean'],
                 [['has_context'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
-                [['has_context'], 'default', 'value' => 1],
+                [['has_context'], 'default', 'value' => 0],
                 [['has_context'], 'required'],
 
                 [['has_text'], 'boolean'],
@@ -135,7 +135,7 @@
 
                 [['has_image'], 'boolean'],
                 [['has_image'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
-                [['has_image'], 'default', 'value' => 1],
+                [['has_image'], 'default', 'value' => 0],
                 [['has_image'], 'required'],
 
                 [['is_active'], 'boolean'],

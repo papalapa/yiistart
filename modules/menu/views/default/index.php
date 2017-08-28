@@ -67,7 +67,11 @@
                 ],
                 [
                     'attribute' => 'parent',
-                    'filter'    => ArrayHelper::map($roots, 'id', 'title'),
+                    'filter'    => ArrayHelper::map(array_map(function ($element) {
+                        $element->title = ArrayHelper::getValue(Menu::positions(), $element->position).' / '.$element->title;
+
+                        return $element;
+                    }, $roots), 'id', 'title'),
                     'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ use ($roots) {
                         $root = ArrayHelper::getValue($roots, $model->parent);
 
