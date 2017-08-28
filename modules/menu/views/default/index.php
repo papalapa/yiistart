@@ -41,7 +41,6 @@
         $siteUrlManager          = clone (Yii::$app->urlManager);
         $siteUrlManager->baseUrl = '/';
 
-        $roots  = Menu::roots();
         $orders = Menu::find()->select(['order'])->orderBy(['order' => SORT_ASC])->column();
 
         echo GridView::widget([
@@ -67,11 +66,7 @@
                 ],
                 [
                     'attribute' => 'parent',
-                    'filter'    => ArrayHelper::map(array_map(function ($element) {
-                        $element->title = ArrayHelper::getValue(Menu::positions(), $element->position).' / '.$element->title;
-
-                        return $element;
-                    }, $roots), 'id', 'title'),
+                    'filter'    => ArrayHelper::map(Menu::roots(), 'id', 'title'),
                     'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ use ($roots) {
                         $root = ArrayHelper::getValue($roots, $model->parent);
 
