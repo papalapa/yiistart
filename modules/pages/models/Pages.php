@@ -125,17 +125,17 @@
 
                 [['has_context'], 'boolean'],
                 [['has_context'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
-                [['has_context'], 'default', 'value' => 0],
+                [['has_context'], 'default', 'value' => Settings::paramOf('page.default.has_context')],
                 [['has_context'], 'required'],
 
                 [['has_text'], 'boolean'],
                 [['has_text'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
-                [['has_text'], 'default', 'value' => 1],
+                [['has_text'], 'default', 'value' => Settings::paramOf('page.default.has_text')],
                 [['has_text'], 'required'],
 
                 [['has_image'], 'boolean'],
                 [['has_image'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
-                [['has_image'], 'default', 'value' => 0],
+                [['has_image'], 'default', 'value' => Settings::paramOf('page.default.has_image')],
                 [['has_image'], 'required'],
 
                 [['is_active'], 'boolean'],

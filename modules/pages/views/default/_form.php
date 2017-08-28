@@ -1,6 +1,7 @@
 <?php
 
     use papalapa\yiistart\modules\i18n\models\i18n;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\modules\users\models\BaseUser;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use papalapa\yiistart\widgets\CKEditor;
@@ -41,11 +42,11 @@
                             <?
                                 echo $form->field($model, 'header')->textInput(['maxlength' => true]);
 
-                                if ($model->isNewRecord || $model->has_context) {
+                                if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_image) {
                                     echo $form->field($model, 'context')->widget(CKEditor::className());
                                 }
 
-                                if ($model->isNewRecord || $model->has_text) {
+                                if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_image) {
                                     echo $form->field($model, 'text')->widget(CKEditor::className());
                                 }
                             ?>
@@ -56,11 +57,11 @@
                                     <?
                                         echo $form->field($model, 'header_'.$locale)->textInput(['maxlength' => true]);
 
-                                        if ($model->isNewRecord || $model->has_context) {
+                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_image) {
                                             echo $form->field($model, 'context_'.$locale)->widget(CKEditor::className());
                                         }
 
-                                        if ($model->isNewRecord || $model->has_text) {
+                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_image) {
                                             echo $form->field($model, 'text_'.$locale)->widget(CKEditor::className());
                                         }
                                     ?>
@@ -72,7 +73,7 @@
                     <br />
 
                     <?
-                        if ($model->isNewRecord || $model->has_image) {
+                        if (($model->isNewRecord && Settings::paramOf('page.default.has_image')) || $model->has_image) {
                             echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), [
                                 'filter' => 'image',
                             ]);
