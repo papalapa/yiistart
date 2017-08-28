@@ -30,8 +30,8 @@
     ?>
 
     <?
-        $roots = Menu::find()->select(['id', 'title'])->where(['OR', ['parent' => null], ['parent' => '']])->andFilterWhere(['<>', 'id', $model->id])
-                     ->orderBy(['title' => SORT_ASC])->all();
+        $roots = Menu::find()->where(['OR', ['parent' => null], ['parent' => '']])->andFilterWhere(['<>', 'id', $model->id])
+                     ->orderBy(['position' => SORT_ASC, 'title' => SORT_ASC])->all();
         echo $form->field($model, 'parent')->widget(Select2::className(), [
             'data'          => ArrayHelper::map(array_map(function ($element) {
                 $element->title = ArrayHelper::getValue(Menu::positions(), $element->position).' / '.$element->title;
