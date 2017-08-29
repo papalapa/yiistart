@@ -328,6 +328,18 @@
             $deleteBanner              = $this->authManager->createPermission('deleteBanner');
             $deleteBanner->description = 'Удаление баннерами';
 
+            /** Управление социальными сетями */
+            $createSocial              = $this->authManager->createPermission('createSocial');
+            $createSocial->description = 'Создание социальных сетей';
+            $viewSocial                = $this->authManager->createPermission('viewSocial');
+            $viewSocial->description   = 'Просмотр социальных сетей';
+            $indexSocial               = $this->authManager->createPermission('indexSocial');
+            $indexSocial->description  = 'Листинг социальных сетей';
+            $updateSocial              = $this->authManager->createPermission('updateSocial');
+            $updateSocial->description = 'Изменение социальных сетей';
+            $deleteSocial              = $this->authManager->createPermission('deleteSocial');
+            $deleteSocial->description = 'Удаление социальных сетей';
+
             echo 'New permissions has been created.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -429,6 +441,12 @@
             $this->authManager->add($updateBanner);
             $this->authManager->add($deleteBanner);
 
+            $this->authManager->add($createSocial);
+            $this->authManager->add($viewSocial);
+            $this->authManager->add($indexSocial);
+            $this->authManager->add($updateSocial);
+            $this->authManager->add($deleteSocial);
+
             echo 'New permissions has been added.'.PHP_EOL;
 
             // ------------------------------------------------------------------------------
@@ -508,6 +526,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexBanner);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateBanner);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteBanner);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $createSocial);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $viewSocial);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $indexSocial);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $updateSocial);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_ADMIN], $deleteSocial);
 
             /** Developer */
 

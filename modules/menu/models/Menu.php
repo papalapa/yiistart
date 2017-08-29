@@ -124,8 +124,8 @@
                 ],
 
                 [['position'], 'string', 'max' => 32],
-                [['position'], 'in', 'range' => array_keys(self::positions())],
                 [['position'], 'default', 'value' => self::POSITION_MAIN],
+                [['position'], 'in', 'range' => array_keys(self::positions())],
 
                 [['title'], WhiteSpaceNormalizerValidator::className()],
                 [['title'], 'required'],
