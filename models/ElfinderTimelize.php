@@ -51,7 +51,7 @@
 
             $time = time();
 
-            $name = sprintf('%s.%s', \Yii::$app->formatter->asDate($time, 'YYYYMMdd_HHmmss__') . $time, $extension);
+            $name = sprintf('%s.%s', \Yii::$app->formatter->asDate($time, 'YYYYMMdd_HHmmss__') . $time, mb_strtolower($extension));
 
             return true;
         }
