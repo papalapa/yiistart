@@ -27,6 +27,7 @@
         }
 
         /**
+         * Creating user by email address, password and role
          * @param      $email
          * @param      $password
          * @param null $role
@@ -66,6 +67,7 @@
         }
 
         /**
+         * Deleting an user
          * @param $email
          */
         public function actionDelete($email)
@@ -89,6 +91,7 @@
         }
 
         /**
+         * Changing user`s password
          * @param $email
          * @param $password
          */
@@ -116,6 +119,7 @@
         }
 
         /**
+         * Changing user`s role
          * @param $email
          * @param $role
          */
@@ -143,6 +147,7 @@
         }
 
         /**
+         * Changing user`s status
          * @param $email
          * @param $status
          */

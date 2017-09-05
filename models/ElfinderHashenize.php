@@ -49,7 +49,7 @@
                 $extension  = array_shift($extensions);
             }
 
-            $name = sprintf('%s.%s', md5(microtime(true)), $extension);
+            $name = sprintf('%s.%s', md5(microtime(true)), mb_strtolower($extension));
 
             return true;
         }

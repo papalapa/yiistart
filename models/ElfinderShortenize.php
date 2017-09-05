@@ -56,7 +56,7 @@
                 $extension  = array_shift($extensions);
             }
 
-            $name = sprintf('%s.%s', StringHelper::truncate($filename, $this->length, null), $extension);
+            $name = sprintf('%s.%s', StringHelper::truncate($filename, $this->length, null), mb_strtolower($extension));
 
             return true;
         }
