@@ -435,7 +435,7 @@
          */
         public static function paramOf($param, $default = null)
         {
-            if (false === $value = ArrayHelper::getValue(\Yii::$app->params, $param, false)) {
+            if (null === $value = ArrayHelper::getValue(\Yii::$app->params, $param)) {
                 \Yii::warning(sprintf('Используется недостающая настройка из конфигурации "%s".', $param));
 
                 return $default;
