@@ -52,16 +52,22 @@
         <br />
         <div class="tab-content">
             <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
-                <?= $form->field($model, 'text')->widget(CKEditor::className(),
-                    // config.enterMode = 2 (do not wrap in P)
-                    ['clientOptions' => ['enterMode' => 2], 'options' => ['class' => 'form-control ck-editor']]) ?>
+                <?= $form->field($model, 'text')->widget(CKEditor::className(), [
+                    'clientOptions' => [
+                        // config.enterMode = 2 (do not wrap in P)
+                        'enterMode'      => 2,
+                        // config.allowedContent = true (do not cleanup html after switching mode)
+                        'allowedContent' => true,
+                    ],
+                    'options'       => ['class' => 'form-control ck-editor'],
+                ]) ?>
             </div>
             <? foreach (i18n::locales() as $locale): ?>
                 <? if (Yii::$app->language <> $locale): ?>
                     <div class="tab-pane" id="lang-<?= $locale ?>">
                         <?= $form->field($model, 'text_'.$locale)->widget(CKEditor::className(),
                             // config.enterMode = 2 (do not wrap in P)
-                            ['clientOptions' => ['enterMode' => 2], 'options' => ['class' => 'form-control ck-editor']]) ?>
+                            ['clientOptions' => ['enterMode' => 2, 'allowedContent' => true], 'options' => ['class' => 'form-control ck-editor']]) ?>
                     </div>
                 <? endif; ?>
             <? endforeach; ?>
@@ -96,7 +102,8 @@
                 }
                 if (html){
                     editor = CKEDITOR.replace($(this).attr('id'));
-                    editor.config.enterMode = CKEDITOR.ENTER_BR;
+                    editor.config.enterMode = CKEDITOR.ENTER_BR; // 2
+                    editor.config.allowedContent = true;
                 }
             });
         });

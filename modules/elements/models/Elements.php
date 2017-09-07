@@ -138,19 +138,19 @@
                 ],
                 [
                     ['text'],
-                    'email',
-                    'when'                   => function ($model) /* @var $model Elements */ {
-                        return $model->format == self::FORMAT_EMAIL;
-                    },
-                    'enableClientValidation' => false,
-                ],
-                [
-                    ['text'],
                     TelephoneValidator::className(),
                     'when'                   => function ($model) /* @var $model Elements */ {
                         return $model->format == self::FORMAT_TEL;
                     },
                     'message'                => 'Введите корректный номер телефона',
+                    'enableClientValidation' => false,
+                ],
+                [
+                    ['text'],
+                    'email',
+                    'when'                   => function ($model) /* @var $model Elements */ {
+                        return $model->format == self::FORMAT_EMAIL;
+                    },
                     'enableClientValidation' => false,
                 ],
                 [
