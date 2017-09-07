@@ -37,6 +37,8 @@
                 echo $form->field($model, 'alias')->textInput(['maxlength' => true]);
                 echo $form->field($model, 'name')->textInput(['maxlength' => true]);
                 echo $form->field($model, 'format')->radioList(Elements::formats());
+            } else {
+                echo $form->field($model, 'format')->radioList(Elements::formats(), ['class' => 'hide']);
             }
         ?>
 
@@ -50,13 +52,16 @@
         <br />
         <div class="tab-content">
             <div class="tab-pane active" id="lang-<?= Yii::$app->language ?>">
-                <?= $form->field($model, 'text')->widget(CKEditor::className(), ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]) ?>
+                <?= $form->field($model, 'text')->widget(CKEditor::className(),
+                    // config.enterMode = 2 (do not wrap in P)
+                    ['clientOptions' => ['enterMode' => 2], 'options' => ['class' => 'form-control ck-editor']]) ?>
             </div>
             <? foreach (i18n::locales() as $locale): ?>
                 <? if (Yii::$app->language <> $locale): ?>
                     <div class="tab-pane" id="lang-<?= $locale ?>">
                         <?= $form->field($model, 'text_'.$locale)->widget(CKEditor::className(),
-                            ['options' => ['rows' => 3, 'class' => 'form-control ck-editor']]) ?>
+                            // config.enterMode = 2 (do not wrap in P)
+                            ['clientOptions' => ['enterMode' => 2], 'options' => ['class' => 'form-control ck-editor']]) ?>
                     </div>
                 <? endif; ?>
             <? endforeach; ?>
@@ -90,7 +95,8 @@
                     editor.destroy(true);
                 }
                 if (html){
-                    CKEDITOR.replace($(this).attr('id'));
+                    editor = CKEDITOR.replace($(this).attr('id'));
+                    editor.config.enterMode = CKEDITOR.ENTER_BR;
                 }
             });
         });
