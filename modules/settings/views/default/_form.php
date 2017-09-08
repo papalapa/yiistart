@@ -48,7 +48,14 @@
                 echo $form->field($model, 'value')->widget(ElfinderImageInput::className(), ['filter' => ['application', 'image']]);
                 break;
             case Settings::TYPE_HTML:
-                echo $form->field($model, 'value')->widget(CKEditor::className());
+                echo $form->field($model, 'value')->widget(CKEditor::className(), [
+                    'clientOptions' => [
+                        // config.enterMode = 2 (do not wrap in P)
+                        'enterMode'      => 2,
+                        // config.allowedContent = true (do not cleanup html after switching mode)
+                        'allowedContent' => true,
+                    ],
+                ]);
                 break;
             case Settings::TYPE_COLOR:
                 echo $form->field($model, 'value')->widget(ColorInput::className(), [
@@ -88,7 +95,14 @@
                                       ->widget(ElfinderImageInput::className(), ['filter' => ['application', 'image']]);
                             break;
                         case Settings::TYPE_HTML:
-                            echo $form->field($model, 'value_'.$locale)->widget(CKEditor::className());
+                            echo $form->field($model, 'value_'.$locale)->widget(CKEditor::className(),[
+                                'clientOptions' => [
+                                    // config.enterMode = 2 (do not wrap in P)
+                                    'enterMode'      => 2,
+                                    // config.allowedContent = true (do not cleanup html after switching mode)
+                                    'allowedContent' => true,
+                                ],
+                            ]);
                             break;
                         case Settings::TYPE_COLOR:
                             echo $form->field($model, 'value_'.$locale)->widget(ColorInput::className(), [

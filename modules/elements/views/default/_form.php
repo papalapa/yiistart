@@ -31,7 +31,7 @@
                         'placeholder' => 'Выберите категорию',
                     ],
                     'pluginOptions' => [
-                        'allowClear' => true,
+                        'allowClear' => false,
                     ],
                 ]);
                 echo $form->field($model, 'alias')->textInput(['maxlength' => true]);

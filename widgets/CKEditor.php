@@ -56,22 +56,24 @@
             }
 
             $options['toolbarGroups'] = [
-                ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
+                ['name' => 'code', 'groups' => ['mode', 'tools']],
+                ['name' => 'document', 'groups' => ['document', 'doctools']],
+                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
                 ['name' => 'editing', 'groups' => ['selection', 'find', 'spellchecker', 'editing']],
                 ['name' => 'forms', 'groups' => ['forms']],
-                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                '/',
                 ['name' => 'styles', 'groups' => ['styles']],
-                ['name' => 'tools', 'groups' => ['tools']],
-                ['name' => 'about', 'groups' => ['about']],
-                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']],
                 ['name' => 'links', 'groups' => ['links']],
-                ['name' => 'colors', 'groups' => ['colors']],
                 ['name' => 'insert', 'groups' => ['insert']],
                 ['name' => 'others', 'groups' => ['others']],
+                '/',
+                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                ['name' => 'colors', 'groups' => ['colors']],
+                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']],
+                ['name' => 'about', 'groups' => ['about']],
             ];
 
-            $options['removeButtons'] = 'Save,Font,FontSize,Styles,Flash,PageBreak,Iframe,Anchor,BidiLtr,BidiRtl,Language,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt,TextColor,BGColor,CopyFormatting,HorizontalRule,Smiley,SelectAll';
+            $options['removeButtons'] = 'Flash,PageBreak,BidiLtr,BidiRtl,Language,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt';
 
             $this->editorOptions = ArrayHelper::merge($this->clientOptions, $options);
 
