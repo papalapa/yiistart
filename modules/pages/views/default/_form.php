@@ -42,11 +42,13 @@
                             <?
                                 echo $form->field($model, 'header')->textInput(['maxlength' => true]);
 
-                                if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_image) {
-                                    echo $form->field($model, 'context')->widget(CKEditor::className());
+                                if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_context) {
+                                    echo $form->field($model, 'context')->widget(CKEditor::className(),[
+                                            'clientOptions' => ['height' => 100]
+                                    ]);
                                 }
 
-                                if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_image) {
+                                if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_text) {
                                     echo $form->field($model, 'text')->widget(CKEditor::className());
                                 }
                             ?>
@@ -57,11 +59,13 @@
                                     <?
                                         echo $form->field($model, 'header_'.$locale)->textInput(['maxlength' => true]);
 
-                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_image) {
-                                            echo $form->field($model, 'context_'.$locale)->widget(CKEditor::className());
+                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_context')) || $model->has_context) {
+                                            echo $form->field($model, 'context_'.$locale)->widget(CKEditor::className(),[
+                                                    'clientOptions' => ['height' => 100]
+                                            ]);
                                         }
 
-                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_image) {
+                                        if (($model->isNewRecord && Settings::paramOf('page.default.has_text')) || $model->has_text) {
                                             echo $form->field($model, 'text_'.$locale)->widget(CKEditor::className());
                                         }
                                     ?>
