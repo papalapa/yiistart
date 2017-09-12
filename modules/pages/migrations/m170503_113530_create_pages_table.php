@@ -25,7 +25,7 @@
                 'header'      => $this->string(256)->defaultValue(null),
                 'text'        => $this->text()->defaultValue(null),
                 'has_text'    => $this->boolean()->unsigned()->defaultValue(true),
-                'context'     => $this->string(1024)->defaultValue(null),
+                'context'     => $this->text()->defaultValue(null),
                 'has_context' => $this->boolean()->unsigned()->defaultValue(true),
                 'image'       => $this->string(128)->defaultValue(null),
                 'has_image'   => $this->boolean()->unsigned()->defaultValue(true),

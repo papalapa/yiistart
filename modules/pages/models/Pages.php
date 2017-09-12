@@ -113,9 +113,9 @@
         {
             $rules = $this->localizedRules([
                 [['text', 'title', 'header', 'context', 'description', 'keywords'], WhiteSpaceNormalizerValidator::className()],
-                [['text'], 'string'],
+                [['text', 'context'], 'string'],
                 [['title', 'header'], 'string', 'max' => 256],
-                [['description', 'keywords', 'context'], 'string', 'max' => 1024],
+                [['description', 'keywords'], 'string', 'max' => 1024],
 
                 [['url'], WhiteSpaceNormalizerValidator::className()],
                 [['url'], 'string', 'max' => 64],
