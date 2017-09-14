@@ -128,7 +128,7 @@
                 foreach ($rules as $rule) {
                     $attributes = array_shift($rule);
 
-                    foreach ((array)$attributes as $attribute) {
+                    foreach ((array) $attributes as $attribute) {
                         if (in_array($attribute, $behaviorAttributes)) {
                             foreach ($this->availableLocales($behavior) as $locale) {
                                 if (\Yii::$app->language <> $locale) {

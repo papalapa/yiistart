@@ -7,6 +7,7 @@
     use yii\base\InvalidConfigException;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Inflector;
+    use yii\validators\FileValidator;
     use yii\validators\Validator;
     use yii\web\UploadedFile;
 
@@ -54,11 +55,16 @@
                 return $this->addError($model, $attribute, 'Файл не найден', $params = []);
             }
 
-            $model->$attribute = new UploadedFile([
-                'tempName' => $file,
-                'name'     => $model->$attribute,
-                'size'     => FileHelper::size($file),
-                'type'     => FileHelper::getMimeTypeByExtension($file),
-            ]);
+            foreach ($model->getActiveValidators($attribute) as $validator) {
+                if ($validator instanceof FileValidator) {
+                    $model->$attribute = new UploadedFile([
+                        'tempName' => $file,
+                        'name'     => $model->$attribute,
+                        'size'     => FileHelper::size($file),
+                        'type'     => FileHelper::getMimeTypeByExtension($file),
+                    ]);
+                    break;
+                }
+            }
         }
     }

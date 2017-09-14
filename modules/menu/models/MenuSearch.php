@@ -28,7 +28,7 @@
             return [
                 [['order'], 'integer'],
                 [['parent'], 'integer'],
-                [['is_active'], 'boolean'],
+                [['is_active', 'is_static'], 'boolean'],
                 [['position'], 'in', 'range' => array_keys(Menu::positions())],
                 [['title', 'url'], 'safe'],
             ];
@@ -60,6 +60,7 @@
             // grid filtering conditions
             $query->andFilterWhere([
                 'is_active' => $this->is_active,
+                'is_static' => $this->is_static,
                 'parent'    => $this->parent,
                 'order'     => $this->order,
                 'position'  => $this->position,
