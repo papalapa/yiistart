@@ -105,7 +105,7 @@
 
                 [['url'], WhiteSpaceNormalizerValidator::className()],
                 [['url'], 'required'],
-                [['url'], 'string', 'max' => 64],
+                [['url'], 'string', 'max' => 1024],
                 [
                     ['url'], 'in',
                     'range'                  => function () {
@@ -129,7 +129,7 @@
 
                 [['title'], WhiteSpaceNormalizerValidator::className()],
                 [['title'], 'required'],
-                [['title'], 'string', 'max' => 32],
+                [['title'], 'string', 'max' => 64],
 
                 [['order'], 'integer'],
                 [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent']],
