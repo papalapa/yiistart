@@ -116,7 +116,7 @@
         {
             return $this->localizedRules([
                 [['title'], WhiteSpaceNormalizerValidator::className()],
-                [['title'], 'string', 'max' => 64],
+                [['title'], 'string', 'max' => 128],
 
                 [['comment'], 'string', 'max' => 1024],
 

@@ -82,8 +82,8 @@
          */
         public function rules()
         {
-            $rules = $this->localizedRules([
-                [['url'], 'string', 'max' => 256],
+            $rules = [
+                [['url'], 'string', 'max' => 1024],
                 [['url'], 'url'],
                 [['title'], 'required'],
                 [['alt', 'title'], 'string', 'max' => 128],
@@ -98,13 +98,13 @@
                 [['image'], 'required'],
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
                 [['image'], FilePathValidator::className()],
-            ]);
+            ];
 
             if ($rule = Settings::paramOf('partners.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
-            return $rules;
+            return $this->localizedRules($rules);
         }
 
         /**

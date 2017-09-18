@@ -19,7 +19,7 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{settings}}', [
                 'id'           => $this->primaryKey(),
-                'title'        => $this->string(64)->defaultValue(null),
+                'title'        => $this->string(128)->defaultValue(null),
                 'key'          => $this->string(64)->notNull()->unique(),
                 'type'         => $this->smallInteger()->unsigned()->defaultValue(Settings::TYPE_STRING),
                 'pattern'      => $this->text()->defaultValue(null),

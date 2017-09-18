@@ -20,7 +20,7 @@
 
             $this->createTable('{{partners}}', [
                 'id'         => $this->primaryKey(),
-                'url'        => $this->string(256)->defaultValue(null),
+                'url'        => $this->string(1024)->defaultValue(null),
                 'image'      => $this->string(128)->defaultValue(null),
                 'alt'        => $this->string(128)->defaultValue(null),
                 'title'      => $this->string(128)->defaultValue(null),

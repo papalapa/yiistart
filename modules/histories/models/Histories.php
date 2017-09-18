@@ -79,7 +79,7 @@
          */
         public function rules()
         {
-            $rules = $this->localizedRules([
+            $rules = [
                 [['date'], 'required'],
                 [['date'], 'date', 'format' => 'yyyy-mm-dd'],
                 [['date'], 'unique'],
@@ -93,13 +93,13 @@
 
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
                 [['image'], FilePathValidator::className()],
-            ]);
+            ];
 
             if ($rule = Settings::paramOf('histories.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
-            return $rules;
+            return $this->localizedRules($rules);
         }
 
         /**

@@ -18,7 +18,7 @@
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             $this->createTable('{{pages}}', [
                 'id'          => $this->primaryKey(),
-                'url'         => $this->string(64)->defaultValue(null),
+                'url'         => $this->string(128)->defaultValue(null),
                 'title'       => $this->string(256)->defaultValue(null),
                 'description' => $this->string(1024)->defaultValue(null),
                 'keywords'    => $this->string(1024)->defaultValue(null),

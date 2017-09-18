@@ -73,7 +73,8 @@
             return [
                 [['alias', 'name'], WhiteSpaceNormalizerValidator::className()],
                 [['alias', 'name'], 'required'],
-                [['alias', 'name'], 'string', 'max' => 64],
+                [['alias'], 'string', 'max' => 64],
+                [['name'], 'string', 'max' => 128],
                 [['alias'], 'match', 'pattern' => '/^[a-z]+(\.[a-z]+)*$/'],
                 [['alias'], 'unique'],
 

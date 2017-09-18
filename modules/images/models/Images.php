@@ -104,7 +104,7 @@
          */
         public function rules()
         {
-            $rules = $this->localizedRules([
+            $rules = [
                 [['category_id'], 'required'],
                 [['category_id'], 'integer'],
                 [
@@ -138,13 +138,13 @@
                 [['image'], 'required'],
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
                 [['image'], FilePathValidator::className()],
-            ]);
+            ];
 
             if ($rule = Settings::paramOf('images.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
-            return $rules;
+            return $this->localizedRules($rules);
         }
 
         /**
@@ -156,8 +156,8 @@
             if (parent::beforeSave($insert)) {
                 $path         = \Yii::getAlias("@frontend/web{$this->image}");
                 $image        = getimagesize($path);
-                $this->width  = !empty($image[0]) ? (int)$image[0] : null;
-                $this->height = !empty($image[1]) ? (int)$image[1] : null;
+                $this->width  = !empty($image[0]) ? (int) $image[0] : null;
+                $this->height = !empty($image[1]) ? (int) $image[1] : null;
                 $this->size   = FileHelper::size($path);
 
                 return true;

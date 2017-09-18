@@ -86,12 +86,14 @@
          */
         public function rules()
         {
-            $rules = $this->localizedRules([
+            $rules = [
                 [['category_id'], 'integer'],
                 [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BannersCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
 
                 [['title', 'text', 'link'], WhiteSpaceNormalizerValidator::className()],
-                [['title', 'text', 'link'], 'string', 'max' => 128],
+                [['title'], 'string', 'max' => 256],
+                [['link'], 'string', 'max' => 1024],
+                [['text'], 'string'],
 
                 [['order'], 'integer'],
                 [['order'], ReorderValidator::className(), 'extraFields' => ['category_id']],
@@ -103,13 +105,13 @@
                 [['image'], 'required'],
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
                 [['image'], FilePathValidator::className()],
-            ]);
+            ];
 
             if ($rule = Settings::paramOf('banners.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
-            return $rules;
+            return $this->localizedRules($rules);
         }
 
         /**

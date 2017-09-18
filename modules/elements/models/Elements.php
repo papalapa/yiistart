@@ -161,7 +161,7 @@
                 ],
 
                 [['name'], WhiteSpaceNormalizerValidator::className()],
-                [['name'], 'string', 'max' => 64],
+                [['name'], 'string', 'max' => 128],
 
                 [['format'], 'string', 'max' => 16],
                 [['format'], 'in', 'range' => array_keys(self::formats())],
@@ -171,7 +171,7 @@
                 [['pattern'], 'string', 'max' => 128],
 
                 [['description'], WhiteSpaceNormalizerValidator::className()],
-                [['description'], 'string', 'max' => 256],
+                [['description'], 'string'],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEFAULT]],

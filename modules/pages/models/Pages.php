@@ -111,14 +111,14 @@
          */
         public function rules()
         {
-            $rules = $this->localizedRules([
+            $rules = [
                 [['text', 'title', 'header', 'context', 'description', 'keywords'], WhiteSpaceNormalizerValidator::className()],
                 [['text', 'context'], 'string'],
                 [['title', 'header'], 'string', 'max' => 256],
                 [['description', 'keywords'], 'string', 'max' => 1024],
 
                 [['url'], WhiteSpaceNormalizerValidator::className()],
-                [['url'], 'string', 'max' => 64],
+                [['url'], 'string', 'max' => 128],
                 [['url'], 'match', 'pattern' => '/^(\/[a-z]+(\-[a-z]+)*)+$/'],
                 [['url'], 'unique'],
                 [['url'], 'default', 'value' => null],
@@ -143,13 +143,13 @@
 
                 [['image'], 'string', 'max' => 128, 'enableClientValidation' => false],
                 [['image'], FilePathValidator::className()],
-            ]);
+            ];
 
             if ($rule = Settings::paramOf('page.upload.rule', false)) {
                 $rules[] = $rule;
             }
 
-            return $rules;
+            return $this->localizedRules($rules);
         }
 
         /**

@@ -20,7 +20,7 @@
             $this->createTable('{{image_category}}', [
                 'id'         => $this->primaryKey(),
                 'alias'      => $this->string(64)->notNull()->unique(),
-                'name'       => $this->string(64)->notNull(),
+                'name'       => $this->string(128)->notNull(),
                 'is_visible' => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'created_by' => $this->integer()->unsigned()->notNull(),

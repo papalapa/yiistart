@@ -20,7 +20,7 @@
             $this->createTable('{{banners_category}}', [
                 'id'         => $this->primaryKey(),
                 'alias'      => $this->string(64)->notNull()->unique(),
-                'name'       => $this->string(64)->notNull(),
+                'name'       => $this->string(128)->notNull(),
                 'is_visible' => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(false),
                 'created_by' => $this->integer()->unsigned()->notNull(),
@@ -34,9 +34,9 @@
             $this->createTable('{{banners}}', [
                 'id'          => $this->primaryKey(),
                 'category_id' => $this->integer()->unsigned()->defaultValue(null),
-                'title'       => $this->string(128)->defaultValue(null),
-                'text'        => $this->string(128)->defaultValue(null),
-                'link'        => $this->string(128)->defaultValue(null),
+                'title'       => $this->string(256)->defaultValue(null),
+                'text'        => $this->text()->defaultValue(null),
+                'link'        => $this->string(1024)->defaultValue(null),
                 'image'       => $this->string(128)->notNull(),
                 'order'       => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
                 'is_active'   => $this->boolean()->unsigned()->notNull()->defaultValue(false),
