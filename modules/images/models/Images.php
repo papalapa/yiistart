@@ -93,10 +93,10 @@
          */
         public function scenarios()
         {
-            return [
+            return $this->localizedScenarios([
                 self::SCENARIO_DEFAULT   => ['category_id', 'title', 'text', 'order', 'is_active', 'image'],
                 self::SCENARIO_DEVELOPER => ['category_id', 'title', 'text', 'order', 'is_active', 'image'],
-            ];
+            ]);
         }
 
         /**
