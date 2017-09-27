@@ -25,6 +25,11 @@
          * @var array
          */
         public $filter = [0 => 'нет', 1 => 'есть'];
+        /**
+         * Image height
+         * @var int
+         */
+        public $height = 40;
 
         /**
          * @inheritdoc
@@ -33,7 +38,7 @@
         {
             $this->content = function ($model) /* @var $model ActiveRecord */ {
                 if ($model->hasAttribute($this->attribute) && $model->getAttribute($this->attribute)) {
-                    $image = Html::img($model->getAttribute($this->attribute), ['height' => 40]);
+                    $image = Html::img($model->getAttribute($this->attribute), ['height' => $this->height]);
                     if ($this->linked) {
                         $siteUrlManager          = clone \Yii::$app->urlManager;
                         $siteUrlManager->baseUrl = '/';
