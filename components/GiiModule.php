@@ -26,6 +26,10 @@
                     'manage-multilingual' => '@vendor/papalapa/yiistart/widgets/gii/manage-multilingual',
                 ],
             ],
+            'job'  => [
+                'class' => 'yii\queue\gii\Generator',
+                'ns'    => 'common\job',
+            ],
         ];
 
         /**
