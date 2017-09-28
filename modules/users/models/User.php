@@ -92,8 +92,36 @@
                 [['status'], 'default', 'value' => BaseUser::STATUS_READY],
 
                 [['role'], 'integer', 'min' => 0],
-                [['role'], 'in', 'range' => [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN]],
+                [
+                    ['role'], 'in',
+                    'range' => \Yii::$app->user->identity->role === BaseUser::ROLE_DEVELOPER
+                        ? [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN, BaseUser::ROLE_DEVELOPER]
+                        : [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN],
+                ],
                 [['role'], 'default', 'value' => BaseUser::ROLE_USER],
             ];
+        }
+
+        /**
+         * Prevent user deleting
+         * @return bool
+         */
+        public function beforeDelete()
+        {
+            if (parent::beforeDelete()) {
+                if (\Yii::$app->user->id === $this->id) {
+                    \Yii::$app->session->addFlash('error', 'Нельзя удалить свою учётную запись.');
+
+                    return false;
+                } elseif (\Yii::$app->user->identity->role < $this->role) {
+                    \Yii::$app->session->addFlash('error', 'Нельзя удалить учётную запись пользователя с ролью выше вашей.');
+
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
