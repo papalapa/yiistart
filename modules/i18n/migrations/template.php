@@ -39,7 +39,7 @@ $this->addForeignKey("fk_{$this->translationTable}__{$this->table}", "{{{$this->
 
 public function down()
 {
-$this->dropForeignKey("fk_{$this->translationTable}_content_id__{$this->table}_id", "{{{$this->translationTable}}}");
+$this->dropForeignKey("fk_{$this->translationTable}__{$this->table}_id", "{{{$this->translationTable}}}");
 $this->dropTable("{{{$this->translationTable}}}");
 }
 }
