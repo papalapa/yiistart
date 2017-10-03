@@ -32,7 +32,7 @@ $this->alterColumn("{{{$this->translationTable}}}", '[[id]]', 'INT UNSIGNED NOT 
 $this->createIndex("idx_{$this->translationTable}_content_id", "{{{$this->translationTable}}}", ['[[content_id]]']);
 $this->createIndex("idx_{$this->translationTable}_language", "{{{$this->translationTable}}}", ['[[language]]']);
 $this->createIndex("idx_{$this->translationTable}_language_content_id", "{{{$this->translationTable}}}", ['[[language]]', '[[content_id]]'], true);
-$this->addForeignKey("fk_{$this->translationTable}_content_id__{$this->table}_id", "{{{$this->translationTable}}}", ['[[content_id]]'],
+$this->addForeignKey("fk_{$this->translationTable}__{$this->table}", "{{{$this->translationTable}}}", ['[[content_id]]'],
 "{{{$this->table}}}", ['[[id]]'],
 'CASCADE', 'CASCADE');
 }
