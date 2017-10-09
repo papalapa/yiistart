@@ -395,7 +395,7 @@
             }
 
             if (!$model->is_active) {
-                \Yii::warning(sprintf('Используется отключенная настройка "%s".', $key));
+                \Yii::info(sprintf('Используется отключенная настройка "%s".', $key));
 
                 return $default;
             }
