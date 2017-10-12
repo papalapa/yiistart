@@ -94,7 +94,7 @@
                 [['role'], 'integer', 'min' => 0],
                 [
                     ['role'], 'in',
-                    'range' => \Yii::$app->user->identity->role === BaseUser::ROLE_DEVELOPER
+                    'range' => !\Yii::$app->user->isGuest && \Yii::$app->user->identity->role === BaseUser::ROLE_DEVELOPER
                         ? [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN, BaseUser::ROLE_DEVELOPER]
                         : [BaseUser::ROLE_USER, BaseUser::ROLE_AUTHOR, BaseUser::ROLE_MANAGER, BaseUser::ROLE_ADMIN],
                 ],

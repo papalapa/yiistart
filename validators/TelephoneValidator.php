@@ -15,7 +15,7 @@
          * Telephone pattern
          * @var string
          */
-        public $pattern = '/^(\+?\d+( ?\(\d+\))?|\(\+?\d+\)) ?(\d+(-| )?)*\d+$/';
+        public $pattern = '/^\+?(\d+(-| )?)?(\(\d+\)(-| )?)?\d+((-| )\d+)*$/';
         /**
          * Minimum telephone length
          * @var int
