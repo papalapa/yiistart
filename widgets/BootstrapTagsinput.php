@@ -15,6 +15,10 @@
     class BootstrapTagsinput extends InputWidget
     {
         /**
+         * @var boolean
+         */
+        public $multiple = false;
+        /**
          * @var array
          */
         public $pluginOptions = [
@@ -46,9 +50,18 @@
         {
             $this->registerClientScripts();
 
-            return implode(null, [
-                Html::activeTextInput($this->model, $this->attribute, $this->options),
-            ]);
+            return $this->multiple
+                ? Html::activeDropDownList(
+                    $this->model,
+                    $this->attribute,
+                    array_combine($this->model->{$this->attribute}, $this->model->{$this->attribute}),
+                    ArrayHelper::merge($this->options, ['multiple' => true])
+                )
+                : Html::activeTextInput(
+                    $this->model,
+                    $this->attribute,
+                    $this->options
+                );
         }
 
         /**
