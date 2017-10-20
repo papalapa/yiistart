@@ -25,6 +25,11 @@
          * @var string
          */
         public $uploadController = 'upload';
+        /**
+         * Directory name of this model to store files
+         * @var
+         */
+        public $dirname;
 
         /**
          * @param \yii\base\Model $model
@@ -33,6 +38,10 @@
          */
         public function validateAttribute($model, $attribute)
         {
+            if ($model->{$attribute} instanceof UploadedFile) {
+                $model->{$attribute} = $model->{$attribute}->name;
+            }
+
             $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
             $this->uploadController = Settings::paramOf(sprintf('%s.upload.controller', $camel), $this->uploadController);
 
@@ -43,7 +52,7 @@
                 throw new InvalidConfigException('File uploader is not defined on "controllerMap" in config.php');
             }
 
-            $dirname = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
+            $dirname = $this->dirname ? : Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
 
             if (FileHelper::normalizePath($path.DIRECTORY_SEPARATOR.$dirname) <> pathinfo($model->$attribute, PATHINFO_DIRNAME)) {
                 return $this->addError($model, $attribute, 'Путь к файлу не соответствует указанной модели', $params = []);
