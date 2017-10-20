@@ -29,7 +29,13 @@
          * Directory name of this model to store files
          * @var
          */
-        public $dirname;
+        public $storeDirectory;
+        /**
+         * Allow or disallow sub directories
+         * For example: $storeStrict = true, allowed /uploads/news, disallowed /uploads/news/1234
+         * @var bool
+         */
+        public $strictPath = false;
 
         /**
          * @param \yii\base\Model $model
@@ -42,19 +48,37 @@
                 $model->{$attribute} = $model->{$attribute}->name;
             }
 
-            $camel                  = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
-            $this->uploadController = Settings::paramOf(sprintf('%s.upload.controller', $camel), $this->uploadController);
+            // get name of model in camel case
+            $modelName = Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
 
+            // search for individual controller name to handle file uploading in params.php
+            $this->uploadController = Settings::paramOf(sprintf('%s.upload.controller', $modelName), $this->uploadController);
+
+            // base path of webroot
             $basePath = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'basePath'], false);
-            $path     = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);
 
-            if (!$basePath || !$path) {
+            // path for uploading
+            $path = ArrayHelper::getValue(\Yii::$app->controllerMap, [$this->uploadController, 'root', 'path'], false);
+
+            if (false === $basePath || false === $path) {
                 throw new InvalidConfigException('File uploader is not defined on "controllerMap" in config.php');
             }
 
-            $dirname = $this->dirname ? : Inflector::camel2id((new \ReflectionClass($model))->getShortName(), '_');
+            // path for store files for current model
+            $this->storeDirectory = $this->storeDirectory ? : $modelName;
 
-            if (FileHelper::normalizePath($path.DIRECTORY_SEPARATOR.$dirname) <> pathinfo($model->$attribute, PATHINFO_DIRNAME)) {
+            // directory name of uploaded file
+            $uploadDirname = pathinfo($model->$attribute, PATHINFO_DIRNAME);
+
+            // directory name for storing file
+            $storeDirname = FileHelper::normalizePath($path.DIRECTORY_SEPARATOR.$this->storeDirectory);
+
+            // in strict mode $uploadDirname must have an equivalent value with $storeDirname
+            // otherwise $uploadDirname value must starts with $storeDirname
+            if (
+                ($this->strictPath && strcmp($uploadDirname, $storeDirname) <> 0)
+                || 0 !== strpos($uploadDirname, $storeDirname)
+            ) {
                 return $this->addError($model, $attribute, 'Путь к файлу не соответствует указанной модели', $params = []);
             }
 
