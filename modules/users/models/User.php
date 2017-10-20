@@ -24,7 +24,8 @@
      */
     class User extends BaseUser
     {
-        const SCENARIO_UPDATE = 'update';
+        const SCENARIO_UPDATE      = 'update';
+        const SCENARIO_SELF_DELETE = 'self-delete';
 
         /**
          * @inheritdoc
@@ -109,14 +110,16 @@
         public function beforeDelete()
         {
             if (parent::beforeDelete()) {
-                if (\Yii::$app->user->id === $this->id) {
-                    \Yii::$app->session->addFlash('error', 'Нельзя удалить свою учётную запись.');
+                if ($this->scenario <> self::SCENARIO_SELF_DELETE) {
+                    if (\Yii::$app->user->id === $this->id) {
+                        \Yii::$app->session->addFlash('error', 'Нельзя удалить свою учётную запись.');
 
-                    return false;
-                } elseif (\Yii::$app->user->identity->role < $this->role) {
-                    \Yii::$app->session->addFlash('error', 'Нельзя удалить учётную запись пользователя с ролью выше вашей.');
+                        return false;
+                    } elseif (\Yii::$app->user->identity->role < $this->role) {
+                        \Yii::$app->session->addFlash('error', 'Нельзя удалить учётную запись пользователя с ролью выше вашей.');
 
-                    return false;
+                        return false;
+                    }
                 }
 
                 return true;
