@@ -54,7 +54,7 @@
                 ? Html::activeDropDownList(
                     $this->model,
                     $this->attribute,
-                    array_combine($this->model->{$this->attribute}, $this->model->{$this->attribute}),
+                    array_combine((array) $this->model->{$this->attribute}, (array) $this->model->{$this->attribute}),
                     ArrayHelper::merge($this->options, ['multiple' => true])
                 )
                 : Html::activeTextInput(
