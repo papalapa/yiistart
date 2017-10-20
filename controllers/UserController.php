@@ -59,7 +59,6 @@
                 $user->status = BaseUser::STATUS_ACTIVE;
                 $user->role   = $role;
                 $user->generateAuthKey();
-                $user->generateToken();
                 $user->setPassword($password);
                 $user->save(false);
                 echo sprintf('User created and activated (role = %s)', $role).PHP_EOL;
@@ -113,6 +112,7 @@
             } else {
                 $user = BaseUser::findByEmail($email);
                 $user->setPassword($password);
+                $user->generateAuthKey();
                 $user->save(false);
                 echo 'Password changed'.PHP_EOL;
             }
@@ -169,6 +169,7 @@
             } else {
                 $user         = BaseUser::findByEmail($email);
                 $user->status = $status;
+                $user->generateAuthKey();
                 $user->save(false);
                 echo 'Status changed'.PHP_EOL;
             }

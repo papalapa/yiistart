@@ -3,7 +3,6 @@
     namespace papalapa\yiistart\modules\users\models;
 
     use yii\behaviors\TimestampBehavior;
-    use yii\db\Expression;
     use yii\helpers\ArrayHelper;
 
     /**
@@ -63,7 +62,7 @@
             return [
                 'TimestampBehavior' => [
                     'class' => TimestampBehavior::className(),
-                    'value' => new Expression('NOW()'),
+                    'value' => date('Y-m-d H:i:s'),
                 ],
             ];
         }
