@@ -98,7 +98,7 @@
                     ['parent'], 'exist',
                     'targetAttribute' => 'id',
                     'filter'          => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                        return $q->where(['OR', ['IS', 'parent', null], ['=', 'parent', '']])
+                        return $q->where(['OR', ['parent' => null], ['parent' => '']])
                                  ->andFilterWhere(['<>', 'id', $this->id]);
                     },
                 ],
@@ -141,6 +141,23 @@
                 [['is_static'], 'boolean'],
                 [['is_static'], 'default', 'value' => false],
             ]);
+        }
+
+        /**
+         * @param bool $insert
+         * @return bool
+         */
+        public function beforeSave($insert)
+        {
+            if (parent::beforeSave($insert)) {
+                if (!empty($this->parent) && $parent = self::findOne($this->parent)) {
+                    $this->position = $parent->position;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         /**
