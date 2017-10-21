@@ -20,6 +20,7 @@
      * @property string            $url
      * @property string            $title
      * @property integer           $order
+     * @property integer           $level
      * @property boolean           $is_static
      * @property boolean           $is_active
      * @property integer           $created_by
@@ -57,6 +58,7 @@
                 'url'        => 'Ссылка',
                 'title'      => 'Название',
                 'order'      => 'Порядковый номер',
+                'level'      => 'Логическая вложенность',
                 'is_static'  => 'Статичная ссылка',
                 'is_active'  => 'Активность',
                 'created_by' => 'Кем создано',
@@ -140,6 +142,8 @@
 
                 [['is_static'], 'boolean'],
                 [['is_static'], 'default', 'value' => false],
+
+                [['!level'], 'default', 'value' => 0],
             ]);
         }
 
@@ -152,6 +156,14 @@
             if (parent::beforeSave($insert)) {
                 if (!empty($this->parent) && $parent = self::findOne($this->parent)) {
                     $this->position = $parent->position;
+                    $this->level    = $parent->level + 1;
+                }
+                if ($this->level > $maxLevel = self::maxLevelOf($this->position)) {
+                    $this->addError('parent', vsprintf('Превышен максимальный уровень вложенности для меню «%s»', [
+                        ArrayHelper::getValue(self::positions(), $this->position),
+                    ]));
+
+                    return false;
                 }
 
                 return true;
@@ -188,6 +200,17 @@
             $positions = Settings::paramOf('menu.positions', $initialPositions);
 
             return $positions;
+        }
+
+        /**
+         * @param $position
+         * @return mixed
+         */
+        public static function maxLevelOf($position)
+        {
+            $depths = Settings::paramOf('menu.depth', [$position => Settings::paramOf('menu.level.max', false)]);
+
+            return ArrayHelper::getValue($depths, $position);
         }
 
         /**
