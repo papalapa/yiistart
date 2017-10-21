@@ -45,12 +45,12 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     * @var array
     */
     protected $permissions = [
-        // TODO: replace _
-        'create' => 'create_',
-        'view'   => 'view_',
-        'update' => 'update_',
-        'index'  => 'index_',
-        'delete' => 'delete_',
+        // TODO: put rules
+        'create' => 'createContent',
+        'view'   => 'viewContent',
+        'update' => 'updateContent',
+        'index'  => 'indexContent',
+        'delete' => 'deleteContent',
     ];
 
     /**

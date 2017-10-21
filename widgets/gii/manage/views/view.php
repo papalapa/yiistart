@@ -28,15 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= '<?=' ?> ControlButtonsPanel::widget([
             'items' => [
-                // TODO: replace _
-                'update_' => [
+                 // TODO: put rule
+                'updateContent' => [
                     'title' => 'Изменить',
                     'url'   => ['update', 'id' => $model->id],
                     'ico'   => 'fa fa-pencil',
                     'class' => 'btn btn-success',
                 ],
-                // TODO: replace _
-                'delete_' => [
+                // TODO: put rule
+                'deleteContent' => [
                     'title' => 'Удалить',
                     'url'   => ['delete', 'id' => $model->id],
                     'class' => 'btn btn-danger',

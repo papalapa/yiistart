@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= '<?=' ?> ControlButtonsPanel::widget([
             'items' => [
-                // TODO: replace _
-                'create_'        => [
+                // TODO: put rule
+                'createContent' => [
                     'title' => 'Создать',
                     'url'   => ['create'],
                     'ico'   => 'fa fa-plus-circle',
@@ -77,10 +77,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             [
                 'class'       => GridActionColumn::className(),
                 'permissions' => [
-                    // TODO: replace _
-                    'view'   => 'view_',
-                    'update' => 'update_',
-                    'delete' => 'delete_',
+                    // TODO: put rules
+                    'view'   => 'viewContent',
+                    'update' => 'updateContent',
+                    'delete' => 'deleteContent',
                 ],
             ],
         ],

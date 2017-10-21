@@ -24,6 +24,7 @@
                 'url'        => $this->string(1024)->notNull(),
                 'title'      => $this->string(128)->notNull(),
                 'order'      => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
+                'level'      => $this->smallInteger()->unsigned()->notNull()->defaultValue(0),
                 'is_static'  => $this->boolean()->unsigned()->notNull()->defaultValue(0),
                 'is_active'  => $this->boolean()->unsigned()->notNull()->defaultValue(0),
                 'created_by' => $this->integer()->unsigned()->notNull(),
