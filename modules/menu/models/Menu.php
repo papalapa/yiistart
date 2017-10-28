@@ -207,7 +207,7 @@
          */
         public static function maxLevelOf($position)
         {
-            $depths = Settings::paramOf('menu.depth', [$position => Settings::paramOf('menu.level.max', false)]);
+            $depths = Settings::paramOf('menu.depth', [$position => Settings::paramOf('menu.level.max', 0)]);
 
             return ArrayHelper::getValue($depths, $position);
         }
