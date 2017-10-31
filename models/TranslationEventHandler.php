@@ -25,13 +25,11 @@
                 $sourceMessage->save();
 
                 if (!$sourceMessage->categoryDescription) {
-                    $sourceMessageCategory = new SourceMessageCategories([
-                        'category' => $event->category,
-                    ]);
+                    $sourceMessageCategory = new SourceMessageCategories(['category' => $event->category]);
                     $sourceMessageCategory->save();
                 }
 
-                \Yii::warning(sprintf('Translation (%s|%s) created as "%s"', $event->category, $event->language, $event->message));
+                \Yii::warning(sprintf('Missing translation (%s|%s) created as "%s"', $event->category, $event->language, $event->message));
             }
 
             $sourceMessage->initMessages();

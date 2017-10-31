@@ -4,6 +4,7 @@
 
     use yii\base\Model;
     use yii\data\ActiveDataProvider;
+    use yii\db\Expression;
 
     /**
      * Class SourceMessageSearch
@@ -41,7 +42,8 @@
          */
         public function search($params)
         {
-            $query = SourceMessage::find();
+            $query = SourceMessage::find()->from(['SRM' => SourceMessageSearch::tableName()]);
+            $query->select(['id' => 'SRM.id', 'category' => 'SRM.category', 'message' => 'SRM.message']);
 
             // add conditions that should always apply here
 
@@ -58,31 +60,24 @@
             }
 
             // grid filtering conditions
-            $query->andFilterWhere([
-                'id' => $this->id,
-            ]);
+            $query->andFilterWhere(['SRM.id' => $this->id])
+                  ->andFilterWhere(['like', 'SRM.category', $this->category])
+                  ->andFilterWhere(['like', 'SRM.message', $this->message]);
 
             if (!is_null($this->is_translated) && $this->is_translated !== '') {
+                $query->addSelect(['translates' => new Expression('COUNT(MSG.id)')]);
+                $query->innerJoin(['MSG' => Message::tableName()], 'SRM.id = MSG.id')
+                      ->where(['AND', ['IS NOT', 'MSG.translation', null], ['<>', 'MSG.translation', '']]);
                 if ($this->is_translated) {
-                    $query->joinWith([
-                        'messages' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                            return $q->where(['OR', ['IS NOT', 'translation', null], ['<>', 'translation', '']]);
-                        },
-                    ]);
+                    $query->having(['translates' => count(i18n::locales())]);
                 } else {
-                    $query->joinWith([
-                        'messages' => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                            return $q->where(['OR', ['IS', 'translation', null], ['=', 'translation', '']]);
-                        },
-                    ]);
+                    $query->having(['<', 'translates', count(i18n::locales())]);
                 }
             }
 
-            $query->andFilterWhere(['like', 'category', $this->category])
-                  ->andFilterWhere(['like', 'message', $this->message])
-                  ->groupBy('id');
+            $query->groupBy('SRM.id');
 
-            $query->with('messages');
+            $query->with(['messages', 'categoryDescription']);
 
             return $dataProvider;
         }

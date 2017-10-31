@@ -44,25 +44,22 @@
     <?php Pjax::begin(['id' => 'pjax-i18n-index', 'options' => ['class' => 'pjax-spinner table-responsive'], 'timeout' => 10000]); ?>
 
     <?
-        $categories = SourceMessage::find()->select(['category'])->distinct('category')->all();
-
         $columns   = [];
-        $columns[] = [
-            'attribute' => 'message',
-            'class'     => GridTextColumn::className(),
-            'minWidth'  => 100,
-            'maxWidth'  => 200,
-        ];
         $columns[] = [
             'attribute' => 'category',
             'label'     => 'Категория',
-            'filter'    => ArrayHelper::map(
-                SourceMessageCategories::find()->select(['category', 'translate'])
+            'filter'    => ArrayHelper::map(SourceMessageCategories::find()->select(['category', 'translate'])
                                        ->where(['AND', ['IS NOT', 'translate', null], ['<>', 'translate', '']])->all(),
                 'category', 'translate'),
             'value'     => function ($model) /* @var $model SourceMessage */ {
                 return $model->categoryDescription ? $model->categoryDescription->translate : $model->category;
             },
+        ];
+        $columns[] = [
+            'attribute' => 'message',
+            'class'     => GridTextColumn::className(),
+            'minWidth'  => 100,
+            'maxWidth'  => 200,
         ];
         foreach (i18n::locales() as $locale) {
             $columns[] = [
