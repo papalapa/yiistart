@@ -78,15 +78,15 @@
         {
             \Yii::$app->view->registerJs("
                 $(document).on('click', '.pjax-reorder-attribute-{$this->attribute}-handler a', function (event) {
-                    var container = $(this).closest('[data-pjax-container]');
+                    var container = '#' + $(this).closest('[data-pjax-container]').attr('id');
                     $.pjax.click(event, {
                         cache:               false,
-                        skipOuterContainers: true,
-                        container:           container,
                         push:                false,
                         replace:             false,
                         timeout:             10000,
-                        scrollTo:            false
+                        scrollTo:            false,
+                        container:           container,
+                        skipOuterContainers: true
                     });
                 });
             ");
