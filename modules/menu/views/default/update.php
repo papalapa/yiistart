@@ -5,9 +5,9 @@
     /* @var $this yii\web\View */
     /* @var $model papalapa\yiistart\modules\menu\models\Menu */
 
-    $this->title                   = 'Изменение пункта меню: ' . $model->title;
+    $this->title                   = 'Изменение пункта меню: ' . $model->name;
     $this->params['breadcrumbs'][] = ['label' => 'Меню', 'url' => ['index']];
-    $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+    $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = 'Изменение';
 ?>
 <div class="menu-update">

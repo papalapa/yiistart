@@ -15,10 +15,10 @@
     /**
      * This is the model class for table "menu".
      * @property integer           $id
-     * @property integer           $parent
+     * @property integer           $parent_id
      * @property string            $position
      * @property string            $url
-     * @property string            $title
+     * @property string            $name
      * @property integer           $order
      * @property integer           $level
      * @property boolean           $is_static
@@ -28,6 +28,7 @@
      * @property string            $created_at
      * @property string            $updated_at
      * @property MenuTranslation[] $translations
+     * @property Menu              $parent
      */
     class Menu extends MultilingualActiveRecord
     {
@@ -53,10 +54,10 @@
         {
             return $this->localizedAttributes([
                 'id'         => 'ID',
-                'parent'     => 'Родительский пункт',
+                'parent_id'  => 'Родительский пункт',
                 'position'   => 'Расположение',
                 'url'        => 'Ссылка',
-                'title'      => 'Название',
+                'name'       => 'Название',
                 'order'      => 'Порядковый номер',
                 'is_static'  => 'Статичная ссылка',
                 'is_active'  => 'Активность',
@@ -83,7 +84,7 @@
                 'MultilingualBehavior' => [
                     'langClassName' => MenuTranslation::className(),
                     'tableName'     => MenuTranslation::tableName(),
-                    'attributes'    => ['title'],
+                    'attributes'    => ['name'],
                 ],
             ]);
         }
@@ -94,12 +95,12 @@
         public function rules()
         {
             return $this->localizedRules([
-                [['parent'], 'integer'],
+                [['parent_id'], 'integer'],
                 [
-                    ['parent'], 'exist',
+                    ['parent_id'], 'exist',
                     'targetAttribute' => 'id',
                     'filter'          => function ($q) /* @var $q \yii\db\ActiveQuery */ {
-                        return $q->where(['OR', ['parent' => null], ['parent' => '']])
+                        return $q->where(['OR', ['parent_id' => null], ['parent_id' => '']])
                                  ->andFilterWhere(['<>', 'id', $this->id]);
                     },
                 ],
@@ -128,9 +129,9 @@
                 [['position'], 'default', 'value' => self::POSITION_MAIN],
                 [['position'], 'in', 'range' => array_keys(self::positions())],
 
-                [['title'], WhiteSpaceNormalizerValidator::className()],
-                [['title'], 'required'],
-                [['title'], 'string', 'max' => 64],
+                [['name'], WhiteSpaceNormalizerValidator::className()],
+                [['name'], 'required'],
+                [['name'], 'string', 'max' => 64],
 
                 [['order'], 'integer'],
                 [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent']],
@@ -153,12 +154,12 @@
         public function beforeSave($insert)
         {
             if (parent::beforeSave($insert)) {
-                if (!empty($this->parent) && $parent = self::findOne($this->parent)) {
+                if (!empty($this->parent_id) && $parent = self::findOne($this->parent_id)) {
                     $this->position = $parent->position;
                     $this->level    = $parent->level + 1;
                 }
                 if ($this->level > $maxLevel = self::maxLevelOf($this->position)) {
-                    $this->addError('parent', vsprintf('Превышен максимальный уровень вложенности для меню «%s»', [
+                    $this->addError('parent_id', vsprintf('Превышен максимальный уровень вложенности для меню «%s»', [
                         ArrayHelper::getValue(self::positions(), $this->position),
                     ]));
 
@@ -172,17 +173,21 @@
         }
 
         /**
-         * Top menu elements only
-         * @return array|\yii\db\ActiveRecord[]
+         * @return bool
          */
-        public static function roots()
+        public function beforeDelete()
         {
-            return array_map(function ($element) {
-                $element->title = ArrayHelper::getValue(static::positions(), $element->position).' / '.$element->title;
+            if (parent::beforeDelete()) {
+                if (Menu::find()->where(['parent_id' => $this->id])->exists()) {
+                    \Yii::$app->session->addFlash('error', 'Есть вложенные пункты меню');
 
-                return $element;
-            }, self::find()->where(['OR', ['parent' => null], ['parent' => '']])
-                   ->orderBy(['position' => SORT_ASC, 'title' => SORT_ASC])->indexBy('id')->all());
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -218,5 +223,13 @@
         public function getTranslations()
         {
             return $this->hasMany(MenuTranslation::className(), ['content_id' => 'id']);
+        }
+
+        /**
+         * @return \yii\db\ActiveQuery
+         */
+        public function getParent()
+        {
+            return $this->hasOne(self::className(), ['id' => 'parent_id']);
         }
     }

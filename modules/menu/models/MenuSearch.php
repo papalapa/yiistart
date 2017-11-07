@@ -27,7 +27,7 @@
         {
             return [
                 [['order'], 'integer'],
-                [['parent'], 'integer'],
+                [['parent_id'], 'integer'],
                 [['is_active', 'is_static'], 'boolean'],
                 [['position'], 'in', 'range' => array_keys(Menu::positions())],
                 [['title', 'url'], 'safe'],
@@ -41,7 +41,7 @@
          */
         public function search($params)
         {
-            $query = Menu::find()->multilingual();
+            $query = Menu::find()->multilingual()->with('parent');
 
             // add conditions that should always apply here
 
@@ -61,12 +61,12 @@
             $query->andFilterWhere([
                 'is_active' => $this->is_active,
                 'is_static' => $this->is_static,
-                'parent'    => $this->parent,
+                'parent_id' => $this->parent_id,
                 'order'     => $this->order,
                 'position'  => $this->position,
             ]);
 
-            $query->andFilterWhere(['like', 'title', $this->title])
+            $query->andFilterWhere(['like', 'name', $this->name])
                   ->andFilterWhere(['like', 'url', $this->url]);
 
             return $dataProvider;

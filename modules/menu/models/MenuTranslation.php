@@ -10,7 +10,7 @@
      * @property integer $id
      * @property string  $language
      * @property integer $content_id
-     * @property string  $title
+     * @property string  $name
      * @property Menu    $content
      */
     class MenuTranslation extends ActiveRecord
@@ -32,7 +32,7 @@
                 'id'         => 'ID',
                 'language'   => 'Language',
                 'content_id' => 'Content ID',
-                'title'      => 'Title',
+                'name'       => 'Name',
             ];
         }
 
@@ -42,9 +42,9 @@
         public function rules()
         {
             return [
-                [['title'], 'required'],
-                [['title'], WhiteSpaceNormalizerValidator::className()],
-                [['title'], 'string', 'max' => 16],
+                [['name'], 'required'],
+                [['name'], WhiteSpaceNormalizerValidator::className()],
+                [['name'], 'string', 'max' => 64],
 
                 [['content_id'], 'required'],
                 [['content_id'], 'integer'],

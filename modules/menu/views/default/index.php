@@ -5,6 +5,7 @@
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridExistColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
+    use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
     use yii\grid\GridView;
     use yii\helpers\ArrayHelper;
@@ -41,8 +42,14 @@
         $siteUrlManager          = clone (Yii::$app->urlManager);
         $siteUrlManager->baseUrl = '/';
 
-        $roots  = Menu::roots();
-        $orders = Menu::find()->select(['order'])->orderBy(['order' => SORT_ASC])->column();
+        $filterParents = Menu::find()->orderBy(['parent_id' => SORT_ASC, 'level' => SORT_ASC, 'name' => SORT_ASC])
+                             ->select(['id', 'level', 'name'])->indexBy('id')->all();
+        foreach ($filterParents as $id => $filterParent) {
+            $filterParents[$id] = [
+                'id'   => $id,
+                'name' => sprintf('%s %s', str_repeat('—', $filterParent['level']), $filterParent['name']),
+            ];
+        }
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
@@ -63,19 +70,22 @@
                     },
                 ],
                 [
-                    'attribute' => 'title',
+                    'attribute' => 'name',
                 ],
                 [
-                    'attribute' => 'parent',
-                    'filter'    => ArrayHelper::map($roots, 'id', 'title'),
-                    'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ use ($roots) {
-                        $root = ArrayHelper::getValue($roots, $model->parent);
+                    'attribute' => 'parent_id',
+                    'filter'    => ArrayHelper::map($filterParents, 'id', 'name'),
+                    'content'   => function ($model, $key, $index, $column) /* @var Menu $model */ {
+                        if ($model->parent_id) {
+                            return sprintf('%s &mdash; %s', ArrayHelper::getValue(Menu::positions(), $model->parent->position), $model->parent->name);
+                        }
 
-                        return $root ? $root->title : null;
+                        return null;
                     },
                 ],
                 [
                     'attribute' => 'url',
+                    'class'     => GridTextColumn::className(),
                     'content'   => function ($model, $key, $index, $column) use ($siteUrlManager) {
                         return Html::a($model->url, $siteUrlManager->createUrl([$model->url]), ['target' => '_blank']);
                     },

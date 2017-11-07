@@ -1,5 +1,6 @@
 <?php
 
+    use kartik\depdrop\DepDrop;
     use kartik\select2\Select2;
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\menu\models\Menu;
@@ -7,6 +8,7 @@
     use papalapa\yiistart\widgets\BootstrapActiveForm;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
+    use yii\helpers\Url;
 
     /* @var $this yii\web\View */
     /* @var $model papalapa\yiistart\modules\menu\models\Menu */
@@ -17,35 +19,47 @@
 
     <?php $form = BootstrapActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'position')->widget(Select2::className(), [
+        'data'          => Menu::positions(),
+        'options'       => [
+            'placeholder' => 'Выберите расположение',
+        ],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ])->hint('Расположение для вложенных пунктов меню при сохранении автоматически принимает позицию родительской ссылки') ?>
+
     <?
-        echo $form->field($model, 'position')->widget(Select2::className(), [
-            'data'          => Menu::positions(),
-            'options'       => [
-                'placeholder' => 'Выберите расположение',
-            ],
+        $parents = [];
+        if ($model->position) {
+            $parents = Menu::find()->andFilterWhere(['<>', 'id', $model->id])
+                           ->andWhere(['position' => $model->position])
+                           ->andWhere(['<', 'level', Menu::maxLevelOf($model->position)])
+                           ->orderBy(['parent_id' => SORT_ASC, 'level' => SORT_ASC, 'name' => SORT_ASC])
+                           ->asArray()->indexBy('id')->all();
+
+            foreach ($parents as $id => $parent) {
+                $parents[$id] = [
+                    'id'   => $id,
+                    'name' => sprintf('%s %s', str_repeat('—', $parent['level']), $parent['name']),
+                ];
+            }
+        }
+    ?>
+    <?= $form->field($model, 'parent_id')->widget(DepDrop::className(), [
+        'data'           => ArrayHelper::map($parents, 'id', 'name'),
+        'type'           => DepDrop::TYPE_SELECT2,
+        'pluginOptions'  => [
+            'depends'     => [Html::getInputId($model, 'position')],
+            'url'         => Url::to(['position-parents', 'id' => $model->id]),
+            'placeholder' => 'Выберите вложенность',
+        ],
+        'select2Options' => [
             'pluginOptions' => [
                 'allowClear' => true,
             ],
-        ])->hint('Расположение для вложенных пунктов меню при сохранении автоматически принимает позицию родительской ссылки');
-    ?>
-
-    <?
-        $roots = Menu::find()->where(['OR', ['parent' => null], ['parent' => '']])->andFilterWhere(['<>', 'id', $model->id])
-                     ->orderBy(['position' => SORT_ASC, 'title' => SORT_ASC])->all();
-        echo $form->field($model, 'parent')->widget(Select2::className(), [
-            'data'          => ArrayHelper::map(array_map(function ($element) {
-                $element->title = ArrayHelper::getValue(Menu::positions(), $element->position).' / '.$element->title;
-
-                return $element;
-            }, $roots), 'id', 'title'),
-            'options'       => [
-                'placeholder' => 'Выберите вложенность',
-            ],
-            'pluginOptions' => [
-                'allowClear' => true,
-            ],
-        ]);
-    ?>
+        ],
+    ]) ?>
 
     <?
         $urls                    = [];
@@ -77,10 +91,10 @@
     <?= $form->field($model, 'is_static')->checkbox() ?>
 
     <?php
-        echo $form->field($model, 'title')->textInput(['maxlength' => true]);
+        echo $form->field($model, 'name')->textInput(['maxlength' => true]);
         foreach (i18n::locales() as $locale) {
             if (Yii::$app->language <> $locale) {
-                echo $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]);
+                echo $form->field($model, 'name_'.$locale)->textInput(['maxlength' => true]);
             }
         }
     ?>

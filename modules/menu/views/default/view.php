@@ -10,7 +10,7 @@
     /* @var $this yii\web\View */
     /* @var $model papalapa\yiistart\modules\menu\models\Menu */
 
-    $this->title                   = $model->title;
+    $this->title                   = $model->name;
     $this->params['breadcrumbs'][] = ['label' => 'Меню', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -54,11 +54,11 @@
                 'value'     => ArrayHelper::getValue(Menu::positions(), $model->position),
             ],
             [
-                'attribute' => 'parent',
-                'value'     => ($root = ArrayHelper::getValue(Menu::roots(), $model->parent)) ? $root->title : null,
+                'attribute' => 'parent_id',
+                'value'     => $model->parent_id ? Menu::findOne($model->parent_id)->name : null,
             ],
             'order',
-            'title',
+            'name',
             [
                 'attribute' => 'url',
                 'format'    => 'raw',
