@@ -134,7 +134,7 @@
                 [['name'], 'string', 'max' => 64],
 
                 [['order'], 'integer'],
-                [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent']],
+                [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent_id']],
                 [['order'], 'required'],
 
                 [['is_active'], 'boolean'],
