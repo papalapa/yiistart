@@ -218,6 +218,14 @@
         }
 
         /**
+         * @return MenuQuery
+         */
+        public static function find()
+        {
+            return new MenuQuery(get_called_class());
+        }
+
+        /**
          * @return \yii\db\ActiveQuery
          */
         public function getTranslations()
