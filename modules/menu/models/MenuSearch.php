@@ -30,7 +30,7 @@
                 [['parent_id'], 'integer'],
                 [['is_active', 'is_static'], 'boolean'],
                 [['position'], 'in', 'range' => array_keys(Menu::positions())],
-                [['title', 'url'], 'safe'],
+                [['name', 'url'], 'safe'],
             ];
         }
 
