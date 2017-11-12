@@ -11,6 +11,7 @@
     use yii\behaviors\TimestampBehavior;
     use yii\db\Expression;
     use yii\helpers\ArrayHelper;
+    use yii\web\Controller;
 
     /**
      * This is the model class for table "menu".
@@ -239,5 +240,33 @@
         public function getParent()
         {
             return $this->hasOne(self::className(), ['id' => 'parent_id']);
+        }
+
+        /**
+         * Checks that requested url and menu item are identical
+         * @param string $pageController
+         * @param string $pageAction
+         * @return bool
+         */
+        public function isRequested($pageController = 'site', $pageAction = 'page')
+        {
+            $requestedControllerAction = parse_url($this->url, PHP_URL_PATH);
+            list($controller, $actionID) = \Yii::$app->createController($requestedControllerAction);
+
+            if ($controller instanceof Controller) {
+                $actionID = $actionID ? : $controller->defaultAction;
+
+                parse_str(parse_url($this->url, PHP_URL_QUERY), $queryParams);
+
+                if (\Yii::$app->controller->id == $controller->id && \Yii::$app->controller->action->id == $actionID) {
+                    if (\Yii::$app->controller->id == $pageController && \Yii::$app->controller->action->id == $pageAction) {
+                        return \Yii::$app->request->getQueryParam('id') == ArrayHelper::getValue($queryParams, 'id');
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
