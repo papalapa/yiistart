@@ -24,7 +24,7 @@
              */
             $this->content = function ($model) {
                 return $model->getAttribute($this->attribute)
-                    ? BaseUser::findOne(['id' => $model->getAttribute($this->attribute)])->email
+                    ? (($user = BaseUser::findOne(['id' => $model->getAttribute($this->attribute)])) ? $user->email : null)
                     : null;
             };
 

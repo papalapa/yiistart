@@ -63,7 +63,7 @@
 
             /**
              * Using TagsAjaxController action
-             * @see papalapa\yiistart\controllers\TagsAjaxController
+             * @see \papalapa\yiistart\controllers\TagsAjaxController
              */
             $this->pluginOptions['ajax']['url']            = Url::to(['/tags-ajax']);
             $this->pluginOptions['ajax']['data']           = new JsExpression("function(params){ return {tag: params.term, content: '{$content}'}}");

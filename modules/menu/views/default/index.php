@@ -1,9 +1,11 @@
 <?php
 
     use papalapa\yiistart\modules\menu\models\Menu;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\ControlButtonsPanel;
     use papalapa\yiistart\widgets\GridActionColumn;
     use papalapa\yiistart\widgets\GridExistColumn;
+    use papalapa\yiistart\widgets\GridImageColumn;
     use papalapa\yiistart\widgets\GridOrderColumn;
     use papalapa\yiistart\widgets\GridTextColumn;
     use papalapa\yiistart\widgets\GridToggleColumn;
@@ -70,7 +72,20 @@
                     },
                 ],
                 [
+                    'attribute' => 'image',
+                    'class'     => GridImageColumn::className(),
+                    'visible'   => Settings::paramOf('menu.model.has_image'),
+                ],
+                [
                     'attribute' => 'name',
+                ],
+                [
+                    'attribute' => 'css_class',
+                    'visible'   => Settings::paramOf('menu.model.has_css_class'),
+                ],
+                [
+                    'attribute' => 'template',
+                    'visible'   => Settings::paramOf('menu.model.has_template'),
                 ],
                 [
                     'attribute' => 'parent_id',

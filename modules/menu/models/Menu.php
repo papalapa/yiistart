@@ -5,6 +5,7 @@
     use papalapa\yiistart\models\MultilingualActiveRecord;
     use papalapa\yiistart\modules\pages\models\Pages;
     use papalapa\yiistart\modules\settings\models\Settings;
+    use papalapa\yiistart\validators\FilePathValidator;
     use papalapa\yiistart\validators\ReorderValidator;
     use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\behaviors\BlameableBehavior;
@@ -20,6 +21,9 @@
      * @property string            $position
      * @property string            $url
      * @property string            $name
+     * @property string            $image
+     * @property string            $css_class
+     * @property string            $template
      * @property integer           $order
      * @property integer           $level
      * @property boolean           $is_static
@@ -59,6 +63,9 @@
                 'position'   => 'Расположение',
                 'url'        => 'Ссылка',
                 'name'       => 'Название',
+                'image'      => 'Изображение',
+                'css_class'  => 'CSS-класс пункта меню',
+                'template'   => 'Шаблон для рендера',
                 'order'      => 'Порядковый номер',
                 'is_static'  => 'Статичная ссылка',
                 'is_active'  => 'Активность',
@@ -134,9 +141,14 @@
                 [['name'], 'required'],
                 [['name'], 'string', 'max' => 64],
 
+                [['css_class', 'template'], 'string', 'max' => 128],
+
                 [['order'], 'integer'],
                 [['order'], ReorderValidator::className(), 'extraFields' => ['position', 'parent_id']],
                 [['order'], 'required'],
+
+                [['image'], 'string', 'max' => 128],
+                [['image'], FilePathValidator::className()],
 
                 [['is_active'], 'boolean'],
                 [['is_active'], 'default', 'value' => false],
@@ -213,7 +225,7 @@
          */
         public static function maxLevelOf($position)
         {
-            $depths = Settings::paramOf('menu.depth', [$position => Settings::paramOf('menu.level.max', 0)]);
+            $depths = Settings::paramOf('menu.levels', [$position => Settings::paramOf('menu.level.max', 0)]);
 
             return ArrayHelper::getValue($depths, $position);
         }

@@ -3,6 +3,7 @@
     namespace papalapa\yiistart\widgets;
 
     use yii\grid\DataColumn;
+    use yii\helpers\Html;
 
     /**
      * Class GridTextColumn
@@ -20,11 +21,14 @@
         public $minWidth = 300;
 
         /**
-         * @inheritdoc
+         * @param mixed $model
+         * @param mixed $key
+         * @param int   $index
+         * @return string
          */
-        public function init()
+        protected function renderDataCellContent($model, $key, $index)
         {
-            $this->contentOptions = [
+            $options = [
                 'style' => [
                     'width'       => 'auto',
                     'min-width'   => sprintf('%dpx', $this->minWidth),
@@ -34,6 +38,6 @@
                 ],
             ];
 
-            parent::init();
+            return Html::tag('div', parent::renderDataCellContent($model, $key, $index), $options);
         }
     }

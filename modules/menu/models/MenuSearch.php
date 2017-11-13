@@ -28,9 +28,9 @@
             return [
                 [['order'], 'integer'],
                 [['parent_id'], 'integer'],
-                [['is_active', 'is_static'], 'boolean'],
+                [['is_active', 'is_static', 'image'], 'boolean'],
                 [['position'], 'in', 'range' => array_keys(Menu::positions())],
-                [['name', 'url'], 'safe'],
+                [['name', 'url', 'css_class', 'template'], 'safe'],
             ];
         }
 
@@ -66,7 +66,17 @@
                 'position'  => $this->position,
             ]);
 
+            if (!is_null($this->image) && $this->image !== '') {
+                if ($this->image) {
+                    $query->andWhere(['AND', ['!=', 'image', ''], ['IS NOT', 'image', null]]);
+                } else {
+                    $query->andWhere(['OR', ['=', 'image', ''], ['IS', 'image', null]]);
+                }
+            }
+
             $query->andFilterWhere(['like', 'name', $this->name])
+                  ->andFilterWhere(['like', 'css_class', $this->css_class])
+                  ->andFilterWhere(['like', 'template', $this->template])
                   ->andFilterWhere(['like', 'url', $this->url]);
 
             return $dataProvider;

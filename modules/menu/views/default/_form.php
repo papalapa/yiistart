@@ -5,7 +5,9 @@
     use papalapa\yiistart\modules\i18n\models\i18n;
     use papalapa\yiistart\modules\menu\models\Menu;
     use papalapa\yiistart\modules\pages\models\Pages;
+    use papalapa\yiistart\modules\settings\models\Settings;
     use papalapa\yiistart\widgets\BootstrapActiveForm;
+    use papalapa\yiistart\widgets\ElfinderImageInput;
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\helpers\Url;
@@ -97,9 +99,19 @@
                 echo $form->field($model, 'name_'.$locale)->textInput(['maxlength' => true]);
             }
         }
-    ?>
 
-    <?php
+        if (Settings::paramOf('menu.model.has_image')) {
+            echo $form->field($model, 'image')->widget(ElfinderImageInput::className(), ['filter' => 'image']);
+        }
+
+        if (Settings::paramOf('menu.model.has_css_class')) {
+            echo $form->field($model, 'css_class')->textInput(['maxlength' => true]);
+        }
+
+        if (Settings::paramOf('menu.model.has_template')) {
+            echo $form->field($model, 'template')->textInput(['maxlength' => true]);
+        }
+
         if ($model->isNewRecord && !$model->hasErrors()) {
             $model->order = $model::find()->max('[[order]]') + 1;
         }
