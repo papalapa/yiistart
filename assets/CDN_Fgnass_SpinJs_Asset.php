@@ -14,6 +14,5 @@
     {
         public $js = [
             'https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js',
-            'http://spin.js.org/jquery.spin.js',
         ];
     }

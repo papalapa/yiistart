@@ -33,6 +33,8 @@ use papalapa\yiistart\widgets\BootstrapActiveForm;
         echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
     }
 } ?>
+    <hr />
+
     <div class="form-group">
         <?= "<?= " ?>Html::submitButton(Html::tag('i', null, ['class' => 'fa fa-check']).' '.($model->isNewRecord
                      ? <?= $generator->generateString('Создать') ?> : <?= $generator->generateString('Изменить') ?>), ['class' => $model->isNewRecord

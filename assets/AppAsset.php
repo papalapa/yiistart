@@ -11,6 +11,8 @@
             'css/styles.css',
         ];
         public $js         = [
+            'js/spin.js',
+            'js/jquery.spin.js',
             'js/domready.js',
         ];
         public $depends    = [

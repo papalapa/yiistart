@@ -1,27 +1,33 @@
 <?php
 
-    namespace papalapa\yiistart\modules\images\models;
+    namespace papalapa\yiistart\modules\image\models;
 
-    use papalapa\yiistart\validators\WhiteSpaceNormalizerValidator;
     use yii\db\ActiveRecord;
 
     /**
-     * This is the model class for table "image_translation".
+     * This is the model class for table "app_image_translation".
+     *
      * @property integer $id
      * @property string  $language
      * @property integer $content_id
+     * @property string  $name
+     * @property string  $alt
      * @property string  $title
+     * @property string  $src
+     * @property string  $twin
      * @property string  $text
-     * @property Images  $content
+     * @property string  $caption
+     *
+     * @property Image   $content
      */
-    class ImagesTranslation extends ActiveRecord
+    class ImageTranslation extends ActiveRecord
     {
         /**
          * @inheritdoc
          */
         public static function tableName()
         {
-            return 'images_translation';
+            return 'app_image_translation';
         }
 
         /**
@@ -33,8 +39,13 @@
                 'id'         => 'ID',
                 'language'   => 'Language',
                 'content_id' => 'Content ID',
+                'name'       => 'Name',
+                'alt'        => 'Alt',
                 'title'      => 'Title',
+                'src'        => 'Src',
+                'twin'       => 'Twin',
                 'text'       => 'Text',
+                'caption'    => 'Caption',
             ];
         }
 
@@ -46,11 +57,12 @@
             return [
                 [['content_id'], 'required'],
                 [['content_id'], 'integer'],
-                [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => Images::className(), 'targetAttribute' => ['content_id' => 'id']],
+                [['content_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['content_id' => 'id']],
 
-                [['title', 'text'], WhiteSpaceNormalizerValidator::className()],
-                [['title'], 'string', 'max' => 128],
-                [['text'], 'string'],
+                [['text', 'caption'], 'string'],
+                [['name'], 'string', 'max' => 128],
+                [['alt', 'title'], 'string', 'max' => 64],
+                [['src', 'twin'], 'string', 'max' => 128],
 
                 [['language'], 'required'],
                 [['language'], 'string', 'max' => 16],
@@ -68,6 +80,6 @@
          */
         public function getContent()
         {
-            return $this->hasOne(Images::className(), ['id' => 'content_id']);
+            return $this->hasOne(Image::className(), ['id' => 'content_id']);
         }
     }

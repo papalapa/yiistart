@@ -268,6 +268,18 @@
             $deleteImageCategory              = $this->authManager->createPermission('deleteImageCategory');
             $deleteImageCategory->description = 'Удаление категорий изображений';
 
+            /** Управление альбомами изображений */
+            $createAlbum              = $this->authManager->createPermission('createAlbum');
+            $createAlbum->description = 'Создание альбомов изображений';
+            $viewAlbum                = $this->authManager->createPermission('viewAlbum');
+            $viewAlbum->description   = 'Просмотр альбомов изображений';
+            $indexAlbum               = $this->authManager->createPermission('indexAlbum');
+            $indexAlbum->description  = 'Листинг альбомов изображений';
+            $updateAlbum              = $this->authManager->createPermission('updateAlbum');
+            $updateAlbum->description = 'Изменение альбомов изображений';
+            $deleteAlbum              = $this->authManager->createPermission('deleteAlbum');
+            $deleteAlbum->description = 'Удаление альбомов изображений';
+
             /** Управление изображениями */
             $createImage              = $this->authManager->createPermission('createImage');
             $createImage->description = 'Создание изображений';
@@ -410,6 +422,12 @@
             $this->authManager->add($indexImageCategory);
             $this->authManager->add($updateImageCategory);
             $this->authManager->add($deleteImageCategory);
+
+            $this->authManager->add($createAlbum);
+            $this->authManager->add($viewAlbum);
+            $this->authManager->add($indexAlbum);
+            $this->authManager->add($updateAlbum);
+            $this->authManager->add($deleteAlbum);
 
             $this->authManager->add($createImage);
             $this->authManager->add($viewImage);
@@ -558,6 +576,12 @@
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateImageCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteImageCategory);
+
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createAlbum);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewAlbum);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $indexAlbum);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $updateAlbum);
+            $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $deleteAlbum);
 
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $createBannerCategory);
             $this->authManager->addChild($this->roles[BaseUser::ROLE_DEVELOPER], $viewBannerCategory);

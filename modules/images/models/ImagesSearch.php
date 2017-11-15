@@ -75,8 +75,6 @@
 
             $query->andFilterWhere(['like', 'title', $this->title]);
 
-            $query->with('category');
-
             return $dataProvider;
         }
     }
