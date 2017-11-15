@@ -168,7 +168,7 @@
                             ->innerJoin(['{{ALBUM}}' => Album::tableName()], '{{IMAGE}}.[[album_id]] = {{ALBUM}}.[[id]]')
                             ->where(['{{ALBUM}}.[[alias]]' => $model->alias, '{{ALBUM}}.[[is_active]]' => true])
                             ->andWhere(['{{IMAGE}}.[[is_active]]' => true])
-                            ->orderBy(['{{IMAGES}}.[[order]]' => SORT_ASC])
+                            ->orderBy(['{{IMAGE}}.[[order]]' => SORT_ASC])
                             ->with('album')->all();
             }
 

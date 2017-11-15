@@ -58,7 +58,7 @@
 
         <div class="hide" data-link-with="options">
 
-            <pre data-description-text=""></pre>
+            <pre class="hide" data-description-text=""></pre>
 
             <ul class="nav nav-tabs language-tabs<?= count(i18n::locales()) == 1 ? ' hidden' : null ?>">
                 <? foreach (i18n::locales() as $locale): ?>
@@ -73,6 +73,7 @@
                     <div data-option="name">
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
+
                     <div data-option="alt">
                         <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
                     </div>
@@ -103,6 +104,7 @@
                             <div data-option="name">
                                 <?= $form->field($model, 'name_'.$locale)->textInput(['maxlength' => true]) ?>
                             </div>
+
                             <div data-option="alt">
                                 <?= $form->field($model, 'alt_'.$locale)->textInput(['maxlength' => true]) ?>
                             </div>
@@ -199,7 +201,7 @@
                 container.find('[data-option=' + key + ']').toggleClass('hide', !options[key]);
             }
             // show description if exists
-            $('[data-description-text]').html(description.text).toggleClass('hide', description.text === '');
+            $('[data-description-text]').html(description.text).toggleClass('hide', !description.text);
             // hide language tabs if active options are not exists
             $('.language-tabs').toggleClass('hide', container.find('.language-tab [data-option]:not(.hide)').length === 0);
             // show options
