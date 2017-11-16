@@ -115,7 +115,7 @@
             'validator_extensions',
             'validator_min_size',
             'validator_max_size',
-            'description:ntext',
+            'description:html',
             [
                 'attribute' => 'is_multilingual_images',
                 'value'     => Html::tag('i', null,

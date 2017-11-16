@@ -99,7 +99,7 @@
         public function scenarios()
         {
             return $this->localizedScenarios([
-                self::SCENARIO_DEFAULT   => ['title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active'],
+                self::SCENARIO_DEFAULT   => ['title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', '!has_context', '!has_text', '!has_image'],
                 self::SCENARIO_DEVELOPER => [
                     'title', 'description', 'keywords', 'header', 'context', 'text', 'image', 'is_active', 'url', 'has_context', 'has_text', 'has_image',
                 ],
@@ -124,17 +124,14 @@
                 [['url'], 'default', 'value' => null],
 
                 [['has_context'], 'boolean'],
-                [['has_context'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_context'], 'default', 'value' => (bool) Settings::paramOf('page.default.has_context')],
                 [['has_context'], 'required'],
 
                 [['has_text'], 'boolean'],
-                [['has_text'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_text'], 'default', 'value' => (bool) Settings::paramOf('page.default.has_text')],
                 [['has_text'], 'required'],
 
                 [['has_image'], 'boolean'],
-                [['has_image'], 'default', 'value' => 0, 'on' => [self::SCENARIO_DEVELOPER]],
                 [['has_image'], 'default', 'value' => (bool) Settings::paramOf('page.default.has_image')],
                 [['has_image'], 'required'],
 
