@@ -29,10 +29,10 @@
                 'data'    => ArrayHelper::map($albums, 'id', 'name'),
                 'options' => [
                     'placeholder' => 'Выберите категорию',
-                    'data-link'   => 'options', // link with div[data-link-with=options]
+                    'data-link'   => 'params', // link with div[data-link-with=options]
                     'options'     => array_map(function ($element) /* @var $element Album */ {
                         return [
-                            'data-options'     => [
+                            'data-params'      => [
                                 'name'              => (bool) $element['has_name'],
                                 'text'              => (bool) $element['has_text'],
                                 'caption'           => (bool) $element['has_caption'],
@@ -56,7 +56,7 @@
 
         <br />
 
-        <div class="hide" data-link-with="options">
+        <div class="hide" data-link-with="params">
 
             <pre class="hide" data-description-text=""></pre>
 
@@ -70,62 +70,62 @@
             <br />
             <div class="tab-content">
                 <div class="tab-pane language-tab active" id="lang-<?= Yii::$app->language ?>">
-                    <div data-option="name">
+                    <div data-param="name">
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
 
-                    <div data-option="alt">
+                    <div data-param="alt">
                         <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
                     </div>
 
-                    <div data-option="title">
+                    <div data-param="title">
                         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                     </div>
 
-                    <div data-option="text">
+                    <div data-param="text">
                         <?= $form->field($model, 'text')->widget(CKEditor::className()) ?>
                     </div>
 
-                    <div data-option="caption">
+                    <div data-param="caption">
                         <?= $form->field($model, 'caption')->widget(CKEditor::className()) ?>
                     </div>
 
-                    <div data-option="multilingual-src">
+                    <div data-param="multilingual-src">
                         <?= $form->field($model, 'src')->widget(ElfinderImageInput::className()) ?>
                     </div>
 
-                    <div data-option="multilingual-twin">
+                    <div data-param="multilingual-twin">
                         <?= $form->field($model, 'twin')->widget(ElfinderImageInput::className()) ?>
                     </div>
                 </div>
                 <? foreach (i18n::locales() as $locale): ?>
                     <? if (Yii::$app->language <> $locale): ?>
                         <div class="tab-pane language-tab" id="lang-<?= $locale ?>">
-                            <div data-option="name">
+                            <div data-param="name">
                                 <?= $form->field($model, 'name_'.$locale)->textInput(['maxlength' => true]) ?>
                             </div>
 
-                            <div data-option="alt">
+                            <div data-param="alt">
                                 <?= $form->field($model, 'alt_'.$locale)->textInput(['maxlength' => true]) ?>
                             </div>
 
-                            <div data-option="title">
+                            <div data-param="title">
                                 <?= $form->field($model, 'title_'.$locale)->textInput(['maxlength' => true]) ?>
                             </div>
 
-                            <div data-option="text">
+                            <div data-param="text">
                                 <?= $form->field($model, 'text_'.$locale)->widget(CKEditor::className()) ?>
                             </div>
 
-                            <div data-option="caption">
+                            <div data-param="caption">
                                 <?= $form->field($model, 'caption_'.$locale)->widget(CKEditor::className()) ?>
                             </div>
 
-                            <div data-option="multilingual-src">
+                            <div data-param="multilingual-src">
                                 <?= $form->field($model, 'src_'.$locale)->widget(ElfinderImageInput::className()) ?>
                             </div>
 
-                            <div data-option="multilingual-twin">
+                            <div data-param="multilingual-twin">
                                 <?= $form->field($model, 'twin_'.$locale)->widget(ElfinderImageInput::className()) ?>
                             </div>
                         </div>
@@ -135,27 +135,39 @@
 
             <hr />
 
-            <div data-option="src">
-                <?= $form->field($model, 'src')->widget(ElfinderImageInput::className()) ?>
+            <div data-param="src">
+                <?= $form->field($model, 'src')->widget(ElfinderImageInput::className(), [
+                    'options' => [
+                        'id'       => 'elfinder-widget-for-src',
+                        'class'    => 'form-control',
+                        'readonly' => 'readonly',
+                    ],
+                ]) ?>
             </div>
 
-            <div data-option="cssclass">
+            <div data-param="cssclass">
                 <?= $form->field($model, 'cssclass')->textInput(['maxlength' => true]) ?>
             </div>
 
-            <div data-option="twin">
-                <?= $form->field($model, 'twin')->widget(ElfinderImageInput::className()) ?>
+            <div data-param="twin">
+                <?= $form->field($model, 'twin')->widget(ElfinderImageInput::className(), [
+                    'options' => [
+                        'id'       => 'elfinder-widget-for-twin',
+                        'class'    => 'form-control',
+                        'readonly' => 'readonly',
+                    ],
+                ]) ?>
             </div>
 
-            <div data-option="twin_cssclass">
+            <div data-param="twin_cssclass">
                 <?= $form->field($model, 'twin_cssclass')->textInput(['maxlength' => true]) ?>
             </div>
 
-            <div data-option="link">
+            <div data-param="link">
                 <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
             </div>
 
-            <div data-option="link_cssclass">
+            <div data-param="link_cssclass">
                 <?= $form->field($model, 'link_cssclass')->textInput(['maxlength' => true]) ?>
             </div>
 
@@ -189,22 +201,36 @@
 
 <?
     $this->registerJs("
-        $('[data-link=options]').on('select2:selecting', function(){
-            // hide all of options on selecting
-            $('[data-link-with=options]').addClass('hide');
-        }).on('select2:select', function(){
-            var container = $('[data-link-with=options]'); 
-            var options = $(this).find('option:selected').data('options');
-            var description = $(this).find('option:selected').data('description');
-            // hide or show options
-            for (var key in options){
-                container.find('[data-option=' + key + ']').toggleClass('hide', !options[key]);
-            }
-            // show description if exists
-            $('[data-description-text]').html(description.text).toggleClass('hide', !description.text);
-            // hide language tabs if active options are not exists
-            $('.language-tabs').toggleClass('hide', container.find('.language-tab [data-option]:not(.hide)').length === 0);
-            // show options
-            container.removeClass('hide');
+        $('[data-link=params]').on('select2:select', function(){
+            var container = $('[data-link-with=params]');
+            container.addClass('hide');
+            
+            /**
+            * Get `data-params` attribute of selected option
+            * @type {*|jQuery}
+            */
+            var option = $(this).find('option:selected');
+            var params = option.data('params') || null;
+            if (option && params){
+                for (var param in params){
+                    if(params.hasOwnProperty(param)) {
+                        container.find('[data-param=' + param + ']').toggleClass('hide', !params[param]);
+                    }
+                }
+                
+                /**
+                * Showing description
+                * @type {*|jQuery}
+                */
+                var description = option.data('description');
+                var text = (description && description.hasOwnProperty('text')) ? description[text] : null;
+                $('[data-description-text]').html(text).toggleClass('hide', !text);
+                
+                // hide language tabs if active options are not exists
+                $('.language-tabs').toggleClass('hide', container.find('.language-tab [data-param]:not(.hide)').length === 0);
+                
+                // show options
+                container.removeClass('hide');    
+            }            
         }).trigger('select2:select');
     ");

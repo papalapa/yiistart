@@ -254,7 +254,7 @@
 
             \Yii::$app->session->setFlash('info', 'Изменения приняты!');
 
-            return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-toggle-column.php',
+            return $this->renderAjax('@papalapa/yiistart/widgets/views/grid-toggle-column.php',
                 ['model' => $model, 'attribute' => $attribute]);
         }
 
@@ -316,7 +316,7 @@
                 \Yii::$app->session->setFlash('error', $e->getMessage());
             }
 
-            return $this->renderAjax('@vendor/papalapa/yiistart/widgets/views/grid-order-column.php',
+            return $this->renderAjax('@papalapa/yiistart/widgets/views/grid-order-column.php',
                 ['model' => $model, 'attribute' => $attribute]);
         }
 
