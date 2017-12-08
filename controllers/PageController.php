@@ -48,7 +48,7 @@
                 }
             }
             else {
-                if ($model->url){
+                if (!is_array($alias) && $model->url){
                     return $this->redirect([$model->url]);
                 }
             }
