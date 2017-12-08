@@ -244,7 +244,7 @@
             }
 
             if (!$model->is_active) {
-                \Yii::warning(sprintf('Используется отключенный HTML элемент "%s".', $key));
+                \Yii::info(sprintf('Используется отключенный HTML элемент "%s".', $key));
 
                 return $default;
             }
