@@ -49,7 +49,7 @@
             }
             else {
                 if (!is_array($alias) && $model->url){
-                    return $this->redirect([$model->url]);
+                    return $this->redirect([$model->url])->send();
                 }
             }
 
