@@ -29,24 +29,27 @@
     class PageController extends Controller
     {
         /**
-         * @param string|integer|array $alias
-         * @param bool                 $strict
-         * @param string|null          $error
-         * @return \papalapa\yiistart\modules\pages\models\Pages
-         * @throws \yii\web\NotFoundHttpException
+         * @param        $alias
+         * @param bool   $strict
+         * @param string $error
+         * @return mixed|null|Pages|\yii\web\Response
+         * @throws NotFoundHttpException
          */
         protected function findPage($alias, $strict = false, $error = 'Страница не найдена')
         {
             /* @var $model Pages */
             $model = Pages::pageOf($alias);
 
-            if ($strict) {
-                if (is_null($model) || !$model->is_active) {
+            if (is_null($model) || !$model->is_active) {
+                if ($strict) {
                     throw new NotFoundHttpException($error);
-                }
-            } else {
-                if (is_null($model) || !$model->is_active) {
+                } else {
                     return null;
+                }
+            }
+            else {
+                if ($model->url){
+                    return $this->redirect([$model->url]);
                 }
             }
 
