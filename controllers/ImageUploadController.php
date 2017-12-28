@@ -105,9 +105,7 @@
                         'initialPreviewConfig' => [
                             [
                                 'caption'   => basename($uploadForm->path),
-                                'frameAttr' => [
-                                    'style' => 'height:160px',
-                                ],
+                                'frameAttr' => [],
                                 'url'       => Url::to([
                                     '/image-upload/delete',
                                     'path'  => $uploadForm->path,

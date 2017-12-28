@@ -49,14 +49,17 @@
             if (!$this->model->hasErrors()) {
                 foreach ($this->model->{$this->initialAttribute} as $path) {
                     $this->pluginOptions['initialPreview'][]       = Html::img($path,
-                            ['class' => 'file-preview-image', 'style' => 'max-height:100%;max-width:100%;'])
-                                                                     .Html::hiddenInput(sprintf('%s[%s][]', $this->model->formName(),
+                            [
+                                'class' => 'file-preview-image',
+                                'style' => [
+                                    'max-width'  => '100%;',
+                                    'max-height' => '100%',
+                                ],
+                            ]).Html::hiddenInput(sprintf('%s[%s][]', $this->model->formName(),
                             $this->initialAttribute), $path);
                     $this->pluginOptions['initialPreviewConfig'][] = [
                         'caption'   => basename($path),
-                        'frameAttr' => [
-                            'style' => 'height:160px',
-                        ],
+                        'frameAttr' => [],
                         'url'       => Url::to([
                             '/image-upload/delete',
                             'path'  => $path,
